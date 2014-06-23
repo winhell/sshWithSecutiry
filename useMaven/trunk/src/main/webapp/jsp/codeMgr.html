@@ -1,0 +1,28 @@
+
+<script type="text/javascript">
+
+codeOptions = {func:"code",height:210,width:800};
+
+</script>
+
+<div class="easyui-layout" data-options="fit : true,border : false">
+
+<div data-options="region:'center',border:false">
+    <table id="code_gridTable" title="字典管理" class="easyui-datagrid"
+    	data-options="fit:true, fitColumns:true,toolbar:'#dicttoolbar',idfield:'id',url:'getAllCode.action',singleSelect:true,striped:true">
+    <thead>
+    <tr>
+    	<th field="ck" checkbox="true"></th>
+    	<th field="name" width="100px">内容</th>
+    	<th field="typeid" width="100px">类型代码</th>
+    	<th field="code" width="100px">字典代码</th>
+   	</tr>
+     </thead>
+    </table>
+    	<div id="dicttoolbar">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addRecord(codeOptions)">增加项目</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteRecord(codeOptions)">删除项目</a>
+	</div>
+    
+</div>
+</div>
