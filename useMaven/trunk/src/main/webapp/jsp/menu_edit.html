@@ -1,0 +1,36 @@
+<div style="padding: 15px; overflow: hidden">
+<form id="editForm" method="post">
+<table class="tableForm" width="100%">
+<tr>
+<td>
+菜单名称
+</td>
+<td>
+<input id="id" name="menu.id" hidden/>
+<input id="name" name="menu.name" class="easyui-validatebox" data-options="required:true"/>
+</td>
+<td>链接</td>
+<td>
+<input id="url" name="menu.url"/>
+</td>
+</tr>
+<tr>
+<td>图标</td>
+<td>
+<input id="icon" name="menu.icon"/>
+</td>
+<td>显示顺序</td>
+<td>
+<input id="showorder" name="menu.showorder" class="easyui-validatebox" data-options="required:true">
+</td>
+</tr>
+<tr>
+<td>上级菜单</td>
+<td colspan="3">
+<input id="parentId" name="menu.parentId" class="easyui-combobox"
+data-options="valueField:'id',textField:'name',url:'ma_getTree.action'"/>
+</td>
+</tr>
+</table>
+</form>
+</div>

@@ -1,0 +1,151 @@
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+//参数传递使用传统模式：?xx=xx&xx=xx
+//不加此行则使用数组模式：?xx[]=xxx&xx[]=xxx
+jQuery.ajaxSettings.traditional = true;
+
+//动态添加行
+$('.colNamesSelect').on('change',changeType);
+
+function addRow(){
+	var idNum;
+    var table = $('#searchTable');
+	var row1 = table.find('tr:last');
+	idNum = Number(row1.attr('id').substring(row1.attr('id').length-1)) + 1;
+    var newRow = $('<tr></tr>');
+	newRow.attr('id','rows'+idNum);
+	var newSelect = $('#colNames0').clone(true);
+    var newCond = $('#condNames0').clone(true);
+	newSelect.attr('id','colNames'+idNum);
+    newCond.attr('id','condNames'+idNum);
+	newRow.append($('<td></td>').append(newSelect));
+    newRow.append($('<td></td>').append(newCond));
+    newRow.append('<td>&nbsp;</td>');
+	// 新加行显示删除按键
+	newRow.append($('<td></td>').append('&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="delRow(\''+newRow.attr('id')+'\')">删除条件</a>'));
+    table.append(newRow);
+}
+//动态删除行
+function delRow(id) {
+    $("#" + id).remove();
+}
+
+function search(){
+    var isWrong=false;
+    $.each($('.colLimit,.colNamesSelect,.conNameSelect'),function(index,elm){
+        if(elm.value=="-1"||elm.value==""){
+            $.messager.alert("Error","条件或参数错误！");
+            isWrong = true;
+        }
+    });
+    if(isWrong)
+        return;
+    $('#gridTable').datagrid({
+        url:'pjSearch.action',
+        queryParams:{
+            valueList:$('.colLimit').fieldValue(),
+            fieldList: $('select[name=fieldList]').fieldValue(),
+            condList: $('select[name=condList]').fieldValue()
+        }
+    });
+}
+
+function exportExcel(){
+
+}
+
+function changeType(){
+	var me = $(this);
+	var idNum = Number($(this).attr('id').substring($(this).attr('id').length-1)) + 1;
+	var valueId = "colValue" + idNum;
+    var insertPoint = me.parent().next().next();
+
+	$("#"+valueId).parent().html('&nbsp;');
+	if(me.find('option:selected').data("opclass")=="selection"){
+
+        var insertValue = $('<select id="'+valueId+'" name="valueList" class="colLimit"></select>');
+        $('#' + valueId).remove();
+		insertPoint.append(insertValue);
+		$.getJSON('getCodeList.action',{code:me.val()},function(data){
+			$.each(data,function(index,item){
+				insertValue.append("<option value='"+item.code+"'>"+item.name+"</option>");
+			});
+		});
+	}else
+		insertPoint.append('<input id="'+valueId+'" name="valueList" class="colLimit"/>');
+}
+//-->
+</SCRIPT>
+<div class="easyui-layout" data-options="fit : true,border : false">
+    <div data-options="region:'north',title:'按条件查询项目(日期格式请使用20xx-0x-0x)',border:false,iconCls:'icon-columns'"
+         style="height: 180px; background: #f4f4f4;padding:15px;">
+        <table align="center" id="searchTable" style="text-align:left; width: 720px;">
+            <thead>
+            <tr>
+                <th style="width: 180px;">查询字段</th>
+                <th style="width: 180px;">查询条件</th>
+                <th style="width: 180px;">查询值</th>
+                <th style="width: 180px;">操作</th>
+            </tr>
+            </thead>
+            <tr id="rows0">
+                <td>
+                    <select id="colNames0"  name="fieldList" class="colNamesSelect" style="width: 100px;">
+                        <option value="-1">--请选择--</option>
+                        <option data-opclass="textinput" value="applyer">项目负责人</option>
+                        <option data-opclass="textinput" value="depart">单位</option>
+                        <option data-opclass="selection" value="ProjectType">计划类别</option>
+                        <option data-opclass="selection" value="Progress">完成情况</option>
+                        <option data-opclass="selection" value="Proporty">课题性质</option>
+                        <option data-opclass="dateinput" value="registerDate">提交日期</option>
+                    </select>
+                    <a href="#" id="delA1" onclick="return false;" title="删除条件"  class="delRow_Link" ></a>
+                </td>
+                <td>
+                    <select id="condNames0" name="condList" class="conNameSelect">
+                        <option value="-1">--条件--</option>
+                        <option value="=">等于</option>
+                        <option value="<>">不等于</option>
+                        <option value="like">like</option>
+                        <option value=">">大于</option>
+                        <option value="<">小于</option>
+                    </select>
+                </td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </table>
+        <table id="searchButton" align="center">
+            <tr>
+                <td colspan="2"><button onclick="addRow()">添加查询条件</button></td>
+                <td colspan="2"><button onclick="search()">数据查询</button> </td>
+            </tr>
+        </table>
+    </div>
+
+    <div data-options="region:'center',border:false">
+        <table id="gridTable" title="查询结果" class="easyui-datagrid"
+               data-options="fit:true, fitColumns:true,pagination:true,toolbar:'#projstoolbar',idfield:'id',singleSelect:false,striped:true,
+			pageSize : 7,	pageList : [ 10, 20, 30, 40, 50 ]">
+            <thead>
+            <tr>
+                <th data-options="field:'ck',checkbox:true"></th>
+                <th data-options="field:'name',width:100">项目名称</th>
+                <th data-options="field:'projectTypeName',width:100">计划类别</th>
+                <th data-options="field:'proportyName',width:100">课题性质</th>
+                <th data-options="field:'applyer',width:100">项目负责人</th>
+                <th data-options="field:'registerId',width:100">注册号</th>
+                <th data-options="field:'depart',width:100">承担单位</th>
+                <th data-options="field:'progressName',width:100">项目进度</th>
+                <th data-options="field:'contract',width:100">合同编号</th>
+                <th data-options="field:'registerDate',sortable:'true',width:100">申报时间</th>
+            </tr>
+            </thead>
+        </table>
+        <div id="projstoolbar">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="exportExcel()">导出Excel</a>
+        </div>
+
+    </div>
+</div>

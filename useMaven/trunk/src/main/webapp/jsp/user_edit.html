@@ -1,0 +1,31 @@
+<div style="padding: 15px; overflow: hidden">
+<form id="editForm" method="post">
+<table class="tableForm" width="100%">
+<tr>
+<td>
+登录名
+</td>
+<td>
+<input id="id" name="user.id" hidden/>
+<input id="name" name="user.name" class="easyui-validatebox" data-options="required:true"/>
+</td>
+<td>新密码</td>
+<td>
+<input id="newPassword" name="user.password"/>
+</td>
+</tr>
+<tr>
+<td>所在单位</td>
+<td>
+<input id="depart" name="user.depart"/>
+</td>
+<td>所在用户组</td>
+<td>
+<input id="roleId" name="user.roleId" class="easyui-combobox"
+data-options="valueField:'id',textField:'name',url:'getAllRoles.action'"/>
+</td>
+</tr>
+
+</table>
+</form>
+</div>
