@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by Administrator on 14-4-29.
  */
 @Controller
-@RequestMapping(value = "/jsp")
+@RequestMapping(value = "/mainpage")
 public class UserController extends BaseController{
 
     Logger logger = Logger.getLogger(this.getClass());

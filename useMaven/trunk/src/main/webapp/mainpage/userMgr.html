@@ -1,0 +1,191 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">
+           用户管理
+        </h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li class="btn-group">
+                <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+				<span>
+					Actions
+				</span>
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                    <li>
+                        <a href="#">
+                            Action
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Another action
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Something else here
+                        </a>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li>
+                        <a href="#">
+                            Separated link
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="index.html">
+                    Home
+                </a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">
+                </a>
+            </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>用户列表
+                </div>
+                <div class="actions">
+                <a href="admin/member/add.jsp" class="btn blue"><i class="fa fa-plus"></i> 增加</a>
+                <a href="javascript:;" class="btn yellow" id="edit">
+                    <i class="fa fa-pencil"></i>
+                    编辑
+                </a>
+                <a href="javascript:;" class="btn red" id="delete">
+                    <i class="fa fa-trash-o"></i>
+                    删除
+                </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+
+                <table class="table table-striped table-bordered table-hover" id="member-table">
+                    <thead>
+                    <tr>
+                        <th style="width:40px;">
+                            <input type="checkbox" class="group-checkable" data-set="#member-table .checkboxes">
+                        </th>
+                        <th style="width:20px;">用户名</th>
+                        <th style="width:20px;">用户角色</th>
+                        <th style="width:20px;">创建时间</th>
+                        <th style="width:20px;">所在单位</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+<script type="text/javascript" src="assets/plugins/jquery-bootpag/jquery.bootpag.min.js"></script>
+<script type="text/javascript" src="assets/plugins/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.datatable.manager.js"></script>
+<script>
+    $(function () {
+        var opts = {
+            action: "listuser.action",
+            param: {
+                page: 1,
+                rows: 10
+            },
+            aoColumns: [
+                {
+                    "mData": "id",
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return "<input class='checkboxes' type='checkbox' value='" + data + "'/>";
+                    }
+                },
+                {
+                    "mData": "name",
+                    "bSortable": false
+                },
+                {
+                    "mData":"rolesName",
+                    "bSortable":false
+                },
+                {
+                    "mData": "createtime",
+                    "bSortable": false
+                },{
+                    "mData":"departId",
+                    "bSortable":false
+                }
+            ],
+            dataProp: "rows",
+            pageProp: "total",
+            bootpag: {
+                maxVisible: 5
+            }
+        }
+        $("#member-table").tableManager(opts);
+
+        /*修改*/
+        /*$("#edit").click(function () {
+         var tableManager = $("#role-table").data("tableManager");
+         var idList = tableManager.getCheckedList();
+         var tips = [];
+         tips.push("<i class='fa fa-exclamation-circle'></i>");
+         switch (idList.length) {
+         case 0:
+         tips.push("未选中任何记录");
+         break;
+         case 1:
+         var url = "admin/member/edit.jsp?id=" + idList[0]
+         window.location.href = url;
+         break;
+         default:
+         var $tooltip = $("<i class='fa fa-exclamation-circle'></i>");
+         tips.push("同一时间只能编辑一条记录.");
+         break;
+         }
+         $(".form-tips").html(tips.join(""));
+         });
+
+         *//*删除*//*
+         $("#delete").click(function () {
+         var tableManager = $("#role-table").data("tableManager");
+         var idList = tableManager.getCheckedList();
+         var tips = [];
+         tips.push("<i class='fa fa-exclamation-circle'></i>");
+         if (idList.length == 0) {
+         tips.push("未选中任何记录.");
+         $(".form-tips").html(tips.join(""));
+         }
+         else {
+         var option = {
+         title: "删除确定",
+         content: "确定要删除选择的内容吗?"
+         }
+         $.fn.Util.Confirm(option, function () {
+         $.post("rl_deleRole.action", {idList: idList.join(",")}, function (result) {
+         if (result.status == "success") {
+         window.location = "admin/member/list.jsp";
+         }
+         else {
+         tips.push("删除失败:", result.reason);
+         $(".form-tips").html(tips.join(""));
+         }
+         }, "json");
+         });
+         }
+         });*/
+    });
+</script>

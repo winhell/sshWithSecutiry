@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class indexAction {
     @RequestMapping(value = "/index")
     public String index(){
-        return "redirect:/jsp/index.jsp";
+        return "redirect:/mainpage/index.html";
     }
 }
