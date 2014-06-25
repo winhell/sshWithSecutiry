@@ -32,7 +32,9 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/listuser")
     @ResponseBody
     public Map getUserList(int page,int rows){
-        return personService.findByMap(null,page,rows,null,false);
+        Map<String,Object> result = personService.findByMap(null,page,rows,null,false);
+        result.put("status","success");
+        return result;
     }
 
     @RequestMapping(value = "/adduser")
