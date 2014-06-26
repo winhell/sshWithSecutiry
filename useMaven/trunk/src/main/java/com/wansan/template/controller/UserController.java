@@ -44,10 +44,10 @@ public class UserController extends BaseController{
         Person oper = getLoginPerson(personService);
         try{
             personService.txSave(person,oper);
-            result.put("result", ResultEnum.SUCCESS);
+            result.put("status", ResultEnum.SUCCESS);
             result.put("msg","用户添加成功！");
         }catch (HibernateException e){
-            result.put("result",ResultEnum.FAIL);
+            result.put("status",ResultEnum.FAIL);
             result.put("msg","用户添加失败！");
             logger.error("用户添加失败！");
             logger.error(e.getMessage());
