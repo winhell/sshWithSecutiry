@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by Administrator on 14-4-30.
  */
 @Controller
-@RequestMapping(value = "/jsp")
+@RequestMapping(value = "/mainpage")
 public class RoleController extends BaseController {
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource
@@ -34,7 +34,7 @@ public class RoleController extends BaseController {
 
     @RequestMapping(value = "/roleMgr")
     public String gotoMgr(){
-        return "roleMgr";
+        return "system/roleMgr";
     }
 
     @RequestMapping(value = "/getAllRoles")

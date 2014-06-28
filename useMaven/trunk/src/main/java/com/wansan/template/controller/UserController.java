@@ -26,7 +26,7 @@ public class UserController extends BaseController{
 
     @RequestMapping(value = "/userMgr")
     public String gotoMgr(){
-        return "userMgr";
+        return "system/userMgr";
     }
 
     @RequestMapping(value = "/listuser")
