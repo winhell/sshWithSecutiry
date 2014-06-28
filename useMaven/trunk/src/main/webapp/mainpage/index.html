@@ -148,118 +148,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					</span>
             </a>
         </li>
-        <li>
-            <a href="javascript:;">
-                <i class="fa fa-cogs"></i>
-					<span class="title">
-						 系统设置
-					</span>
-					<span class="selected">
-					</span>
-					<span class="arrow open">
-					</span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a class="ajaxify" href="userMgr.html">
-                        用户管理
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="roleMgr.html">
-                        角色管理
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_3.html">
-                        权限管理
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_2.html">
-                        菜单管理
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_3.html">
-                        资源管理
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_3.html">
-                        日志管理
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;">
-                <i class="fa fa-cogs"></i>
-					<span class="title">
-						 Ajax Submenu 2
-					</span>
-					<span class="selected">
-					</span>
-					<span class="arrow">
-					</span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_2.html">
-                        Ajax Link Sample 1
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_3.html">
-                        Ajax Link Sample 2
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_2.html">
-                        Ajax Link Sample 3
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_3.html">
-                        Ajax Link Sample 4
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="last">
-            <a href="javascript:;">
-                <i class="fa fa-cogs"></i>
-					<span class="title">
-						 Ajax Submenu 3
-					</span>
-					<span class="selected">
-					</span>
-					<span class="arrow">
-					</span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_2.html">
-                        Ajax Link Sample 1
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_3.html">
-                        Ajax Link Sample 2
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_2.html">
-                        Ajax Link Sample 3
-                    </a>
-                </li>
-                <li>
-                    <a class="ajaxify" href="layout_ajax_content_3.html">
-                        Ajax Link Sample 4
-                    </a>
-                </li>
-            </ul>
-        </li>
+
     </ul>
     <!-- END SIDEBAR MENU1 -->
 </div>
@@ -347,7 +236,9 @@ License: You must have a valid license purchased only from themeforest(the above
     </div>
     <!-- BEGIN CONTENT -->
 </div>
+</div>
 <!-- END CONTAINER -->
+
 <!-- BEGIN FOOTER -->
 <div class="footer">
     <div class="footer-inner">
@@ -374,13 +265,16 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
 <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="assets/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 <script src="assets/plugins/jquery.cokie.min.js" type="text/javascript"></script>
 <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 <script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
 <script src="assets/scripts/core/app.js"></script>
+<script src="assets/scripts/custom/index.js"></script>
 <script>
     jQuery(document).ready(function() {
+        Index.init();
         App.init();
         $('.page-sidebar .ajaxify.start').click() // load the content for the dashboard page.
     });

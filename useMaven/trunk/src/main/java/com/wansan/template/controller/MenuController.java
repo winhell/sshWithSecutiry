@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by Administrator on 14-4-28.
  */
 @Controller
-@RequestMapping(value = "/jsp")
+@RequestMapping(value = "/mainpage")
 public class MenuController extends BaseController{
 
     @Resource

@@ -40,7 +40,7 @@
             </li>
             <li>
                 <i class="fa fa-home"></i>
-                <a href="index.html">
+                <a href="../index.html">
                     Home
                 </a>
                 <i class="fa fa-angle-right"></i>
@@ -86,6 +86,7 @@
                         <th style="width:20px;">用户角色</th>
                         <th style="width:20px;">创建时间</th>
                         <th style="width:20px;">所在单位</th>
+                        <th style="width: 20px">操作</th>
                     </tr>
                     </thead>
                 </table>
@@ -94,7 +95,7 @@
     </div>
 </div>
 <!-- END PAGE CONTENT-->
-<div id="additemFormDiv" class="modal fade"  data-width="400">
+<div id="additemFormDiv" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="portlet box green">
@@ -109,29 +110,19 @@
                         <div class="form-body">
                             <div class="form-group">
                                 <label class="col-md-3 control-label">用户名</label>
-                                <div class="col-md-4">
-                                    <div class="input-group">
-                                    <div class="input-icon">
-                                        <i class="fa fa-user"></i>
-                                    </div>
-                                    <input type="text" name="name" class="form-control" placeholder="用户名"></div>
-                                </div>
+                                <div class="col-md-8">
+                                    <input id='name' type="text" name="name" class="form-control" placeholder="用户名"></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">用户密码</label>
-                                <div class="col-md-4">
-                                    <div class="input-group">
-                                        <div class="input-icon">
-                                            <i class="fa fa-user"></i>
-                                        </div>
-                                        <input type="password" name="password" class="form-control" placeholder="密码">
-                                    </div>
+                                <div class="col-md-8">
+                                        <input id='password' type="password" name="password" class="form-control" placeholder="密码">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">所在部门</label>
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" name="departId" placeholder="所在部门">
+                                <div class="col-md-8">
+                                    <input id='departId' type="text" class="form-control" name="departId" placeholder="所在部门">
                                 </div>
                             </div>
                         </div>
@@ -139,6 +130,43 @@
                             <div class="col-md-offset-3 col-md-9">
                                 <button type="button" class="btn blue" id="formSubmit">提交</button>
                                 <button type="button" class="btn default" id="formClose">关闭</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="assignRolesDiv" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-reorder"></i>分配用户角色
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form class="form-horizontal" method="post">
+                        <div class="form-body">
+                            <div class="form-group">
+
+
+                                    <input name="userid" type="hidden" id="userID"/>
+
+                                <div class="col-md-9">
+                                    <div class="checkbox-list" id="rolesDiv">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn blue">提交</button>
+                                <button type="button" class="btn default" onclick="javascript:$('#assignRolesDiv').modal('hide');">关闭</button>
                             </div>
                         </div>
                     </form>
@@ -159,7 +187,7 @@
             action: "listuser.action",
             param: {
                 page: 1,
-                rows: 1
+                rows: 10
             },
             aoColumns: [
                 {
@@ -183,6 +211,12 @@
                 },{
                     "mData":"departId",
                     "bSortable":false
+                },{
+                    "mData":"id",
+                    "bSortable":false,
+                    "mRender":function(data){
+                        return '<a href="javascript:assignRoles(\''+data+'\');" class="btn btn-xs purple"> 分配角色</a>';
+                    }
                 }
             ],
             dataProp: "rows",
@@ -192,56 +226,15 @@
             }
         }
         $("#gridtable").tableManager(opts);
-
-        /*修改*/
-        /*$("#edit").click(function () {
-         var tableManager = $("#role-table").data("tableManager");
-         var idList = tableManager.getCheckedList();
-         var tips = [];
-         tips.push("<i class='fa fa-exclamation-circle'></i>");
-         switch (idList.length) {
-         case 0:
-         tips.push("未选中任何记录");
-         break;
-         case 1:
-         var url = "admin/member/edit.jsp?id=" + idList[0]
-         window.location.href = url;
-         break;
-         default:
-         var $tooltip = $("<i class='fa fa-exclamation-circle'></i>");
-         tips.push("同一时间只能编辑一条记录.");
-         break;
-         }
-         $(".form-tips").html(tips.join(""));
-         });
-
-         *//*删除*//*
-         $("#delete").click(function () {
-         var tableManager = $("#role-table").data("tableManager");
-         var idList = tableManager.getCheckedList();
-         var tips = [];
-         tips.push("<i class='fa fa-exclamation-circle'></i>");
-         if (idList.length == 0) {
-         tips.push("未选中任何记录.");
-         $(".form-tips").html(tips.join(""));
-         }
-         else {
-         var option = {
-         title: "删除确定",
-         content: "确定要删除选择的内容吗?"
-         }
-         $.fn.Util.Confirm(option, function () {
-         $.post("rl_deleRole.action", {idList: idList.join(",")}, function (result) {
-         if (result.status == "success") {
-         window.location = "admin/member/list.jsp";
-         }
-         else {
-         tips.push("删除失败:", result.reason);
-         $(".form-tips").html(tips.join(""));
-         }
-         }, "json");
-         });
-         }
-         });*/
     });
+    function assignRoles(id){
+        $('#userID').val(id);
+        $.getJSON('getAllRoles.action',function(data){
+            $('#rolesDiv').empty();
+            $.each(data,function(index,item){
+                $('#rolesDiv').append('<div class="checker"><span> <input type="checkbox" name="roleids" value="'+item.id+'"/></span></div>'+item.comment);
+            });
+            $('#assignRolesDiv').modal('show');
+        });
+    }
 </script>

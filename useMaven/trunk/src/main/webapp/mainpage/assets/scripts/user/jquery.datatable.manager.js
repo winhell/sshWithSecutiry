@@ -6,6 +6,7 @@
 (function ($) {
     var tableManager = function () {
         var _ = this;
+        var rowsData ;
         /*_.opts=opts;
          _.ele=$ele;*/
         /*_.opts={
@@ -34,6 +35,7 @@
                 //alert("执行了回调函数");
                 if (data.status == "success") {
                     if (_.opts.bootpag) {
+                        rowsData = data.rows;
                         _.initPage(data);
                     }
                     _.initTable(data);
@@ -74,9 +76,21 @@
                 if (checker) {
                     idList.push(checker.val());
                 }
-            })
+            });
             return idList;
         }
+
+        _.getCheckedRows = function(){
+            var checkboxes = $(".checkboxes");
+            var result = [];
+            $.each(checkboxes,function(index,item){
+                if($(item).attr("checked")=='checked'){
+                    result.push(rowsData[index]);
+                }
+            });
+            return result;
+        }
+
         _.initPage = function (data) {
             var total = Math.ceil(data[_.opts.pageProp] / _.opts.param.rows);
             if (total == _.opts.pageTotal) return;
