@@ -44,8 +44,8 @@ public class MyAccessDeniedHandlerImpl implements AccessDeniedHandler {
 //如果是ajax请求
         if (isAjax) {
 
-            String jsonObject = "{\"message\":\"You are not privileged to request this resource.\","+
-                          "\"access-denied\":true,\"cause\":\"AUTHORIZATION_FAILURE\"}";
+            String jsonObject = "{\"msg\":\"没有足够的权限执行此功能！\","+
+                          "\"access-denied\":true,\"cause\":\"AUTHORIZATION_FAILURE\",\"status\":\"FAIL\"}";
                     String contentType = "application/json";
             resp.setContentType(contentType);
             PrintWriter out = resp.getWriter();

@@ -33,7 +33,7 @@ public class UserController extends BaseController{
     @ResponseBody
     public Map getUserList(int page,int rows){
         Map<String,Object> result = personService.findByMap(null,page,rows,null,false);
-        result.put("status","success");
+        result.put("status",ResultEnum.SUCCESS);
         return result;
     }
 

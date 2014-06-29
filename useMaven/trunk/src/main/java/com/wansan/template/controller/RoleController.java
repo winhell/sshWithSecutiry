@@ -39,8 +39,13 @@ public class RoleController extends BaseController {
 
     @RequestMapping(value = "/getAllRoles")
     @ResponseBody
-    public List getRoles(){
-        return roleService.listAll();
+    public Map getRoles(){
+        List<Role> roles =  roleService.listAll();
+        Map<String,Object> result = new HashMap<>();
+        result.put("status",ResultEnum.SUCCESS);
+        result.put("total",roles.size());
+        result.put("rows",roles);
+        return result;
     }
 
     @RequestMapping(value = "/addrole")
