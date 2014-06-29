@@ -40,10 +40,9 @@
             </li>
             <li>
                 <i class="fa fa-home"></i>
-                <a href="../index.html">
-                    Home
-                </a>
+                    首页
                 <i class="fa fa-angle-right"></i>
+                用户管理
             </li>
             <li>
                 <a href="#">
@@ -158,14 +157,20 @@
                                     <input name="userid" type="hidden" id="userID"/>
 
                                 <div class="col-md-9">
-                                    <div class="checkbox-list" id="rolesDiv">
+                                    <div class="checkbox-list">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox1" value="option1"> Checkbox 1 </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox2" value="option2"> Checkbox 2 </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox3" value="option3" disabled> Disabled </label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-actions fluid">
                             <div class="col-md-offset-3 col-md-9">
-                                <button type="button" class="btn blue">提交</button>
+                                <button type="button" class="btn blue">分配角色</button>
                                 <button type="button" class="btn default" onclick="javascript:$('#assignRolesDiv').modal('hide');">关闭</button>
                             </div>
                         </div>
@@ -230,10 +235,11 @@
     function assignRoles(id){
         $('#userID').val(id);
         $.getJSON('getAllRoles.action',function(data){
-            $('#rolesDiv').empty();
-            $.each(data,function(index,item){
-                $('#rolesDiv').append('<div class="checker"><span> <input type="checkbox" name="roleids" value="'+item.id+'"/></span></div>'+item.comment);
+            $('.checkbox-list').empty();
+            $.each(data.rows,function(index,item){
+                $('.checkbox-list').append('<label class="checkbox-inline"><input type="checkbox" name="roleIDS" value="'+item.id+'">'+ item.comment + '</label>');
             });
+            App.initUniform();
             $('#assignRolesDiv').modal('show');
         });
     }

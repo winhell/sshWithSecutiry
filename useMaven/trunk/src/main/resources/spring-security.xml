@@ -29,7 +29,7 @@
         <security:custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
 
         <!--session超时处理-->
-        <security:session-management invalid-session-url="/login.html"  session-authentication-error-url="/login.html">
+        <security:session-management invalid-session-url="/timeout.html"  session-authentication-error-url="/timeout.html">
         <!-- 配置一个帐号同时只能有一个会话，这样当有第二个用户登录的时候，第一个用户就会失效 -->
         <!--    <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/> -->
         </security:session-management>
@@ -42,7 +42,7 @@
           class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
     <bean id="accessDeniedHandler"
                 class="com.wansan.template.core.MyAccessDeniedHandlerImpl">
-        <property name="accessDeniedUrl" value="login.jsp" />
+        <property name="accessDeniedUrl" value="/accessdeny.html" />
     </bean>
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">

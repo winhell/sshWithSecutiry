@@ -33,7 +33,7 @@
             _.opts = $.extend({}, _.opts, opts);
             $.post(_.opts.action, _.opts.param, function (data) {
                 //alert("执行了回调函数");
-                if (data.status == "success") {
+                if (data.status == "SUCCESS") {
                     if (_.opts.bootpag) {
                         rowsData = data.rows;
                         _.initPage(data);
