@@ -68,6 +68,12 @@ public class ResourceService extends BaseDao<Resource> implements IResourceServi
         return list;
     }
 
+    public Map getAllMenus(int page, int rows){
+        Map<String,Object> params = new HashMap<>();
+        params.put("isMenu",Byte.valueOf("1"));
+        return findByMap(params,page,rows,"showOrder",true);
+    }
+
     public void txDelMenuItem(String idList) {
         String[] ids = idList.split(",");
         for(String id:ids){

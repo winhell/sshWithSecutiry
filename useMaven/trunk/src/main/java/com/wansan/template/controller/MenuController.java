@@ -58,6 +58,13 @@ public class MenuController extends BaseController{
         return tree;
     }
 
+    @RequestMapping(value = "/listmenus")
+    public @ResponseBody Map<String,Object> getMenus(int page,int rows){
+        Map<String,Object> result = resourceService.getAllMenus(page,rows);
+        result.put("status",ResultEnum.SUCCESS);
+        return result;
+    }
+
     @RequestMapping(value = "/addmenu")
     public @ResponseBody Map add(com.wansan.template.model.Resource menu){
         Map<String,Object> result = new HashMap<>();
