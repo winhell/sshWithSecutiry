@@ -45,12 +45,13 @@ $('#editLink').click(function(){
         bootbox.alert('请选取一条记录进行修改！');
         return;
     }
-    formOptions.url='update'+funcPrefix+'.action';
+
     $('#formTitle').html('项目修改');
     //装入表单数据
     var rowData = rows[0];
     for(var item in rowData)
         $('#'+item).val(rowData[item]);
+    formOptions.url='update'+funcPrefix+'.action?id='+rowData.id;
     $('#additemFormDiv').modal('show');
 });
 

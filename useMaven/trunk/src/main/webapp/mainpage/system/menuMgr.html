@@ -1,0 +1,167 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">
+            菜单管理
+        </h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                首页
+                <i class="fa fa-angle-right"></i>
+                菜单管理
+            </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>菜单列表
+                </div>
+                <div class="actions">
+                    <a href="#" class="btn blue" id="addLink"><i class="fa fa-plus"></i> 增加</a>
+                    <a href="#" class="btn yellow" id="editLink">
+                        <i class="fa fa-pencil"></i>
+                        编辑
+                    </a>
+                    <a href="javascript:;" class="btn red" id="deleteLink">
+                        <i class="fa fa-trash-o"></i>
+                        删除
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+
+                <table class="table table-striped table-bordered table-hover" id="gridtable">
+                    <thead>
+                    <tr>
+                        <th style="width:40px;">
+                            <input type="checkbox" class="group-checkable" data-set="#gridtable .checkboxes">
+                        </th>
+                        <th style="width:20px;">菜单名</th>
+                        <th style="width:20px;">url</th>
+                        <th style="width:20px;">图标</th>
+                        <th style="width:20px;">顺序</th>
+                        <th style="width:20px;">说明</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+<div id="additemFormDiv" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="portlet box green">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-reorder"></i><span id="formTitle">Form Actions On Bottom</span>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <!-- BEGIN FORM-->
+                    <form class="form-horizontal" id="additemForm" data-func="menu" method="post">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">菜单名称</label>
+                                <div class="col-md-8">
+                                    <input id='name' type="text" name="name" class="form-control" placeholder="菜单名称"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">url</label>
+                                <div class="col-md-8">
+                                    <input id='url' type="text" name="url" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">显示图标</label>
+                                <div class="col-md-8">
+                                    <input id='icon' type="text" class="form-control" name="icon">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">显示顺序</label>
+                                <div class="col-md-8">
+                                    <input id='showOrder' type="text" class="form-control" name="comment"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">说明</label>
+                                <div class="col-md-8">
+                                    <input id='comment' type="text" class="form-control" name="comment" placeholder="菜单说明">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="button" class="btn blue" id="formSubmit">提交</button>
+                                <button type="button" class="btn default" id="formClose">关闭</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="assets/plugins/jquery-bootpag/jquery.bootpag.min.js"></script>
+<script type="text/javascript" src="assets/plugins/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.datatable.manager.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.form.js"></script>
+<script type="text/javascript" src="assets/scripts/custom/commonCRUD.js"></script>
+<script>
+    $(function () {
+        var opts = {
+            action: "listmenus.action",
+            param: {
+                page: 1,
+                rows: 10
+            },
+            aoColumns: [
+                {
+                    "mData": "id",
+                    "bSortable": false,
+                    "mRender": function (data, type, full) {
+                        return "<input class='checkboxes' type='checkbox' value='" + data + "'/>";
+                    }
+                },
+                {
+                    "mData": "name",
+                    "bSortable": false
+                },
+                {
+                    "mData":"url",
+                    "bSortable":false
+                },
+                {
+                    "mData": "icon",
+                    "bSortable": false
+                },{
+                    "mData":"showOrder",
+                    "bSortable":false
+                },{
+                    "mData":"comment",
+                    "bSortable":false
+                }
+
+            ],
+            dataProp: "rows",
+            pageProp: "total",
+            bootpag: {
+                maxVisible: 5
+            }
+        }
+        $("#gridtable").tableManager(opts);
+    });
+
+</script>
