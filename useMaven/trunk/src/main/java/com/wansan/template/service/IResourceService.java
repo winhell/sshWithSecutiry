@@ -16,5 +16,6 @@ public interface IResourceService extends IBaseDao<Resource> {
     public void txDelMenuItem(String idList);
     public List<Resource> getMenusByUsername(String username);
     public Map getAllResource(int page,int rows);
+    public Map getAllMenus(int page, int rows);
 
 }
