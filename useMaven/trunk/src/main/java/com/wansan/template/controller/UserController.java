@@ -46,7 +46,7 @@ public class UserController extends BaseController{
             personService.txSave(person,oper);
             result.put("status", ResultEnum.SUCCESS);
             result.put("msg","用户添加成功！");
-        }catch (HibernateException e){
+        }catch (Exception e){
             result.put("status",ResultEnum.FAIL);
             result.put("msg","用户添加失败！");
             logger.error("用户添加失败！");
@@ -62,10 +62,10 @@ public class UserController extends BaseController{
         Person oper = getLoginPerson(personService);
         try{
             personService.txDelete(idList,oper);
-            result.put("result",ResultEnum.SUCCESS);
+            result.put("status",ResultEnum.SUCCESS);
             result.put("msg","用户删除成功！");
         }catch (HibernateException e){
-            result.put("result",ResultEnum.FAIL);
+            result.put("status",ResultEnum.FAIL);
             result.put("msg","用户删除失败！");
             logger.error(e.getMessage());
         }
@@ -79,10 +79,10 @@ public class UserController extends BaseController{
         Person oper = getLoginPerson(personService);
         try {
             personService.txUpdate(person,oper );
-            result.put("result",ResultEnum.SUCCESS);
+            result.put("status",ResultEnum.SUCCESS);
             result.put("msg","用户修改成功！");
         }catch (HibernateException e){
-            result.put("result",ResultEnum.FAIL);
+            result.put("status",ResultEnum.FAIL);
             result.put("msg","修改用户失败！");
             logger.error(e.getMessage());
         }

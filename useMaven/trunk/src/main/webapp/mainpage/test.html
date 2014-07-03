@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="assets/plugins/select2/select2.css" type="text/css"/>
+    <link rel="stylesheet" href="assets/plugins/select2/select2-metronic.css" type="text/css"/>
+    <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
+    <script src="assets/scripts/user/jquery.ajaxselect.js" type="text/javascript"></script>
+</head>
+<body>
+<select class="form-control picker" id="hwhtest" data-options="url:'getMenuTree.action',valueField:'id',textField:'name'">
+
+</select>
+<button id="setSelect">set</button>
+<a id="testoptions" data-options='name:"hwh",sex:1'>hello</a>
+<script>
+$('#hwhtest').ajaxselect();
+</script>
+</body>
+</html>

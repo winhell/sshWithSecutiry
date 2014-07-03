@@ -20,6 +20,9 @@
         <property name="url" value="jdbc:mysql://localhost/securityDB?useUnicode=true&amp;characterEncoding=utf-8" />
         <property name="username" value="hwh" />
         <property name="password" value="hwh123456" />
+        <!--<property name="url" value="jdbc:mysql://218.65.113.51/openfiredb?useUnicode=true&amp;characterEncoding=utf-8" />-->
+        <!--<property name="username" value="root" />-->
+        <!--<property name="password" value="332211" />-->
         <property name="initialSize" value="10" />
         <property name="maxActive" value="100" />
         <property name="validationQuery" value="SELECT 'x'" />
@@ -51,6 +54,7 @@
                 <value>com.wansan.template.model.Resource</value>
                 <value>com.wansan.template.model.RoleResource</value>
                 <value>com.wansan.template.model.Syslog</value>
+                <value>com.wansan.template.model.Ofuser</value>
             </list>
         </property>
     </bean>
