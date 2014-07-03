@@ -1,12 +1,15 @@
 package com.wansan.template.service;
 
+import com.wansan.template.core.Blowfish;
 import com.wansan.template.core.Utils;
+import com.wansan.template.model.Ofuser;
 import com.wansan.template.model.Person;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,7 +31,17 @@ public class PersonService extends BaseDao<Person> implements IPersonService {
     //Todo: 添加日志信息
     @Override
     public Serializable txSave(Person person,Person oper){
-        person.setPassword(Utils.encodePassword(person.getPassword(),person.getName()));
+
+        String orgiPasswd = person.getPassword();
+        person.setPassword(Utils.encodePassword(orgiPasswd,person.getName()));
+        Ofuser openfireUser = new Ofuser();
+        openfireUser.setUsername(person.getName());
+        Blowfish encrpytor = new Blowfish();
+        String ofPasswd = encrpytor.encryptString(orgiPasswd);
+        openfireUser.setEncryptedPassword(ofPasswd);
+        openfireUser.setCreationDate(String.valueOf(new Date().getTime()));
+        openfireUser.setModificationDate("0");
+        getSession().save(openfireUser);
         log.info(person.getPassword());
         return save(person);
     }
