@@ -8,7 +8,7 @@
             return;
         var ele = $(this);
         ele.empty();
-        var options="<option value='-1'>---请选择---</option> ";
+        var options="<option value='0'>---请选择---</option> ";
         var opts = eval("({"+$(this).data('options')+"})");
         $.getJSON(opts.url,function(jsondata){
             $.each(jsondata,function(index,item){

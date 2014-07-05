@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +48,8 @@ public class MenuController extends BaseController{
         return null;
     }
 
-    @RequestMapping(value = "/getMenuTree")
-    public @ResponseBody List<com.wansan.template.model.Resource> getTree(HttpServletRequest request){
+    @RequestMapping(value = "/getMenus")
+    public @ResponseBody List<com.wansan.template.model.Resource> getMenus(HttpServletRequest request){
         String id = request.getParameter("id");
         List<com.wansan.template.model.Resource> tree;
         if(id==null||"".equals(id))
@@ -56,6 +57,43 @@ public class MenuController extends BaseController{
         else
             tree = resourceService.getChildren(id);
         return tree;
+    }
+
+    //todo:finish the jstree data here
+    @RequestMapping(value = "/getMenuTree")
+    public @ResponseBody List<Map<String,String>> getMenuTree(String id)
+    {
+//        String id = request.getParameter("id");
+//        List<com.wansan.template.model.Resource> tree;
+//        if(id==null||"".equals(id)||"#".equals(id))
+//            tree = resourceService.getParent();
+//        else
+//            tree = resourceService.getChildren(id);
+//        List<Map<String,String>> result = new ArrayList<>();
+//        for(com.wansan.template.model.Resource item:tree){
+//            Map<String,String> menuitem = new HashMap<>();
+//            menuitem.put("id",item.getId());
+//            if(item.getParentId().equals("0")){
+//                menuitem.put("children","true");
+//                menuitem.put("type","root");
+//                menuitem.put("parent","#");
+//            }else{
+//                menuitem.put("parent",item.getParentId());
+//                menuitem.put("children","false");
+//            }
+//            menuitem.put("text",item.getName());
+//            result.add(menuitem);
+//        }
+        List<com.wansan.template.model.Resource> menuList = (List<com.wansan.template.model.Resource>) resourceService.getAllMenus(-1,0).get("rows");
+        List<Map<String,String>> result = new ArrayList<>();
+        for(com.wansan.template.model.Resource menuItem:menuList){
+            Map<String,String> newItem = new HashMap<>();
+            newItem.put("id",menuItem.getId());
+            newItem.put("parent",menuItem.getParentId().equals("0")?"#":menuItem.getParentId());
+            newItem.put("text",menuItem.getName());
+            result.add(newItem);
+        }
+        return result;
     }
 
     @RequestMapping(value = "/listmenus")
@@ -78,10 +116,10 @@ public class MenuController extends BaseController{
             }
             else menu.setState("open");
             resourceService.txSave(menu,oper);
-            result.put("result", ResultEnum.SUCCESS);
+            result.put("status", ResultEnum.SUCCESS);
             result.put("msg","菜单添加完成！");
         }catch (HibernateException e){
-            result.put("result",ResultEnum.FAIL);
+            result.put("status",ResultEnum.FAIL);
             result.put("msg","菜单添加失败！");
         }
         return result;
@@ -92,7 +130,7 @@ public class MenuController extends BaseController{
         Person oper = getLoginPerson(personService);
         resourceService.txDelete(idList,oper);
         Map<String,Object> result = new HashMap<>();
-        result.put("result",ResultEnum.SUCCESS);
+        result.put("status",ResultEnum.SUCCESS);
         result.put("msg","菜单项已删除！");
         return result;
     }
@@ -101,7 +139,7 @@ public class MenuController extends BaseController{
     public @ResponseBody Map setMenu(String idList,String roleId){
         resourceService.txSetRoleResource(roleId,idList,true);
         Map<String,Object> result = new HashMap<>();
-        result.put("result",ResultEnum.SUCCESS);
+        result.put("status",ResultEnum.SUCCESS);
         result.put("msg","菜单设置完成！");
         return result;
     }
