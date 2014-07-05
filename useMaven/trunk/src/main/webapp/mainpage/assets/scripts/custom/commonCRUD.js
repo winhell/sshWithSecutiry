@@ -25,16 +25,6 @@ var commonCRUD = function(){
 
             $('#additemForm').ajaxForm(formOptions);
 
-//关闭对话框
-            $('#formClose').click(function(){
-                $('#additemFormDiv').modal('hide');
-            });
-
-//提交表单
-//            $('#formSubmit').click(function(){
-//                $('#additemForm').ajaxSubmit(formOptions);
-//            });
-
 //添加记录
             $('#addLink').click(function(){
                 var funcPrefix = $('#additemForm').data('func');
@@ -56,7 +46,7 @@ var commonCRUD = function(){
                 //装入表单数据
                 var rowData = rows[0];
                 for(var item in rowData)
-                    $('#'+item).val(rowData[item]);
+                    $('#'+item).val(rowData[item]).trigger('change');
                 formOptions.url='update'+funcPrefix+'.action?id='+rowData.id;
                 $('#additemFormDiv').modal('show');
             });

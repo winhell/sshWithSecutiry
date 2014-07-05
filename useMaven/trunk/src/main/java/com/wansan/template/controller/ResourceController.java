@@ -44,10 +44,10 @@ public class ResourceController extends BaseController {
         try{
             resource.setName("resource");
             resourceService.txSave(resource,oper);
-            result.put("result", ResultEnum.SUCCESS);
+            result.put("status", ResultEnum.SUCCESS);
             result.put("msg","成功添加资源!");
         }catch (HibernateException e){
-            result.put("result",ResultEnum.FAIL);
+            result.put("status",ResultEnum.FAIL);
             result.put("msg","添加资源失败！");
             log.error(e.getMessage());
         }
@@ -60,10 +60,10 @@ public class ResourceController extends BaseController {
         Person oper = getLoginPerson(personService);
         try{
             resourceService.txDelete(idList, oper);
-            result.put("result", ResultEnum.SUCCESS);
+            result.put("status", ResultEnum.SUCCESS);
             result.put("msg","删除添加资源!");
         }catch (HibernateException e){
-            result.put("result",ResultEnum.FAIL);
+            result.put("status",ResultEnum.FAIL);
             result.put("msg","删除资源失败！");
             log.error(e.getMessage());
         }
@@ -76,10 +76,10 @@ public class ResourceController extends BaseController {
         Person oper = getLoginPerson(personService);
         try{
             resourceService.txUpdate(resource,oper);
-            result.put("result", ResultEnum.SUCCESS);
+            result.put("status", ResultEnum.SUCCESS);
             result.put("msg","成功修改资源!");
         }catch (HibernateException e){
-            result.put("result",ResultEnum.FAIL);
+            result.put("status",ResultEnum.FAIL);
             result.put("msg","修改资源失败！");
             log.error(e.getMessage());
         }

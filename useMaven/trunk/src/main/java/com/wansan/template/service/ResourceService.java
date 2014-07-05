@@ -26,7 +26,8 @@ public class ResourceService extends BaseDao<Resource> implements IResourceServi
     }
 
     public List<Resource> getMenusByRole(String roleId){
-        List menus = publicFind("from Resource where id in (select resourceId from RoleResource where roleId ='"+roleId+"') and isMenu='1'");
+        List menus = publicFind("from Resource where id in (select resourceId from RoleResource where roleId ='"
+                +roleId+"') and isMenu='1' and parentId<>'0'");
         Collections.sort(menus, new Comparator<Resource>() {
             @Override
             public int compare(Resource o1, Resource o2) {

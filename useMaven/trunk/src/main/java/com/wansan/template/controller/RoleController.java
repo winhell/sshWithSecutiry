@@ -55,10 +55,10 @@ public class RoleController extends BaseController {
         Person oper = getLoginPerson(personService);
         try{
             roleService.txSave(role,oper);
-            result.put("result", ResultEnum.SUCCESS);
+            result.put("status", ResultEnum.SUCCESS);
             result.put("msg","成功添加角色！");
         }catch (HibernateException e){
-            result.put("result",ResultEnum.FAIL);
+            result.put("status",ResultEnum.FAIL);
             result.put("msg","添加角色失败！");
             logger.error(e.getMessage());
         }
@@ -72,10 +72,10 @@ public class RoleController extends BaseController {
         Person oper = getLoginPerson(personService);
         try{
             roleService.txDelete(idList,oper);
-            result.put("result",ResultEnum.SUCCESS);
+            result.put("status",ResultEnum.SUCCESS);
             result.put("msg","角色删除成功！");
         }catch (HibernateException e){
-            result.put("result",ResultEnum.FAIL);
+            result.put("status",ResultEnum.FAIL);
             result.put("msg","角色删除失败！");
             logger.error(e.getMessage());
         }
@@ -89,10 +89,10 @@ public class RoleController extends BaseController {
         Person oper = getLoginPerson(personService);
         try {
             roleService.txUpdate(role,oper );
-            result.put("result",ResultEnum.SUCCESS);
+            result.put("status",ResultEnum.SUCCESS);
             result.put("msg","角色修改成功！");
         }catch (HibernateException e){
-            result.put("result",ResultEnum.FAIL);
+            result.put("status",ResultEnum.FAIL);
             result.put("msg","修改角色失败！");
             logger.error(e.getMessage());
         }
@@ -103,7 +103,7 @@ public class RoleController extends BaseController {
     public @ResponseBody Map mapResource(String idList,String roleId){
         resourceService.txSetRoleResource(roleId,idList,false);
         Map<String,Object> result = new HashMap<>();
-        result.put("result",ResultEnum.SUCCESS);
+        result.put("status",ResultEnum.SUCCESS);
         result.put("msg","菜单设置完成！");
         return result;
     }
