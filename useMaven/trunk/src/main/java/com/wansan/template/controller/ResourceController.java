@@ -18,7 +18,8 @@ import java.util.Map;
  * Created by Administrator on 14-4-30.
  */
 @Controller
-@RequestMapping(value = "/jsp")
+@ResponseBody
+@RequestMapping(value = "/mainpage")
 public class ResourceController extends BaseController {
     @Resource
     private IResourceService resourceService;
@@ -27,22 +28,22 @@ public class ResourceController extends BaseController {
     private IPersonService personService;
 
     private Logger log = Logger.getLogger(this.getClass());
-    @RequestMapping(value = "/resourceMgr")
-    public String gotoMgr(){
-        return "resourceMgr";
-    }
 
     @RequestMapping(value = "/getAllResources")
-    public @ResponseBody Map getAllResources(int page,int rows){
-        return resourceService.getAllResource(page,rows);
+    public  Map getAllResources(int page,int rows){
+        Map result =  resourceService.getAllResource(page,rows);
+        result.put("status",ResultEnum.SUCCESS);
+        return result;
     }
 
     @RequestMapping(value = "/addresource")
-    public @ResponseBody Map add(com.wansan.template.model.Resource resource){
+    public Map add(com.wansan.template.model.Resource resource){
         Map<String,Object> result =new HashMap<>();
         Person oper = getLoginPerson(personService);
         try{
             resource.setName("resource");
+            byte isMenu = 0;
+            resource.setIsMenu(isMenu);
             resourceService.txSave(resource,oper);
             result.put("status", ResultEnum.SUCCESS);
             result.put("msg","成功添加资源!");
@@ -55,7 +56,7 @@ public class ResourceController extends BaseController {
     }
 
     @RequestMapping(value = "/deleteresource")
-    public @ResponseBody Map delete(String idList){
+    public Map delete(String idList){
         Map<String,Object> result =new HashMap<>();
         Person oper = getLoginPerson(personService);
         try{
@@ -71,10 +72,12 @@ public class ResourceController extends BaseController {
     }
 
     @RequestMapping(value = "/updateresource")
-    public @ResponseBody Map update(com.wansan.template.model.Resource resource){
+    public Map update(com.wansan.template.model.Resource resource){
         Map<String,Object> result =new HashMap<>();
         Person oper = getLoginPerson(personService);
         try{
+            byte isMenu = 0;
+            resource.setIsMenu(isMenu);
             resourceService.txUpdate(resource,oper);
             result.put("status", ResultEnum.SUCCESS);
             result.put("msg","成功修改资源!");
@@ -85,5 +88,25 @@ public class ResourceController extends BaseController {
         }
         return result;
 
+    }
+
+    @RequestMapping(value = "/assignRoles")
+    public Map<String,Object> assign(String resourceId,String idList){
+        Map<String,Object> result = new HashMap<>();
+        try {
+            resourceService.txSetRoleResource(resourceId,idList,false);
+            result.put("status",ResultEnum.SUCCESS);
+            result.put("msg","角色资源分配成功！");
+        } catch (Exception e){
+            result.put("status",ResultEnum.FAIL);
+            result.put("msg","角色资源分配失败，数据库读写错误！");
+            log.error(e.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/getResourceRoles")
+    public String getRoles(String resourceId){
+        return resourceService.getRolesByResource(resourceId);
     }
 }

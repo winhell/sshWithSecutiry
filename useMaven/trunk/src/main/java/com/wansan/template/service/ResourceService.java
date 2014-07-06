@@ -46,13 +46,18 @@ public class ResourceService extends BaseDao<Resource> implements IResourceServi
 
     public void txSetRoleResource(String roleId,String idList,boolean isMenu){
         String[] ids = idList.split(",");
-        if(isMenu)
+        String resourceType;
+        if(isMenu){
+            resourceType = "menu";
             executeQuery("delete from RoleResource where roleId='"+roleId+"' and name = 'menu'");
-        else
-            executeQuery("delete from RoleResource where roleId='"+roleId+"' and name = 'resource'");
-
+        }
+        else{
+            resourceType = "resource";
+            executeQuery("delete from RoleResource where resourceId='"+roleId+"'");
+        }
         for(String item:ids){
             RoleResource rolemenu = new RoleResource();
+            rolemenu.setName(resourceType);
             rolemenu.setId(Utils.getNewUUID());
             rolemenu.setCreatetime(Utils.getNow());
             rolemenu.setResourceId(item);
@@ -81,5 +86,13 @@ public class ResourceService extends BaseDao<Resource> implements IResourceServi
             executeQuery("delete from RoleResource where resourceId='"+id+"'");
         }
         delete(idList);
+    }
+
+    public String getRolesByResource(String resourceId){
+        List rolesList = publicFind("from RoleResource where resourceId='"+resourceId+"'");
+        StringBuilder builder = new StringBuilder();
+        for(Object item:rolesList)
+            builder.append(((RoleResource)item).getRoleId()).append(",");
+        return builder.toString();
     }
 }

@@ -1,5 +1,6 @@
 package com.wansan.template.service;
 
+import com.wansan.template.core.Utils;
 import com.wansan.template.model.Person;
 import com.wansan.template.model.Role;
 import com.wansan.template.model.UserRole;
@@ -27,6 +28,25 @@ public class RoleService extends BaseDao<Role> implements IRoleService {
         return result;
     }
 
+    public String getRolesByUserID(String userID){
+        List<UserRole> userRoles = publicFind("from UserRole where userid = '" + userID + "'");
+        StringBuilder builder = new StringBuilder();
+        for(UserRole userRole:userRoles)
+            builder.append(userRole.getId()).append(",");
+        return builder.toString();
+    }
+
+    public void setRolesByUserID(String userID,String idList){
+        String[] ids = idList.split(",");
+        for(String id:ids){
+            UserRole userRole = new UserRole();
+            userRole.setUserid(userID);
+            userRole.setRoleid(id);
+            userRole.setId(Utils.getNewUUID());
+            userRole.setCreatetime(Utils.getNow());
+            getSession().save(userRole);
+        }
+    }
     @Override
     public void txDelete(String idList,Person oper){
         String[] ids = idList.split(",");

@@ -3,6 +3,7 @@ package com.wansan.template.controller;
 import com.wansan.template.model.Person;
 import com.wansan.template.model.ResultEnum;
 import com.wansan.template.service.IPersonService;
+import com.wansan.template.service.IRoleService;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,15 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/mainpage")
+@ResponseBody
 public class UserController extends BaseController{
 
-    Logger logger = Logger.getLogger(this.getClass());
+    private Logger logger = Logger.getLogger(this.getClass());
     @Resource
     private IPersonService personService;
+
+    @Resource
+    private IRoleService roleService;
 
     @RequestMapping(value = "/userMgr")
     public String gotoMgr(){
@@ -30,7 +35,6 @@ public class UserController extends BaseController{
     }
 
     @RequestMapping(value = "/listuser")
-    @ResponseBody
     public Map getUserList(int page,int rows){
         Map<String,Object> result = personService.findByMap(null,page,rows,null,false);
         result.put("status",ResultEnum.SUCCESS);
@@ -38,7 +42,6 @@ public class UserController extends BaseController{
     }
 
     @RequestMapping(value = "/adduser")
-    @ResponseBody
     public Map add(Person person){
         Map<String,Object> result = new HashMap<>();
         Person oper = getLoginPerson(personService);
@@ -56,7 +59,6 @@ public class UserController extends BaseController{
     }
 
     @RequestMapping(value = "/deleteuser")
-    @ResponseBody
     public Map delete(String idList){
         Map<String,Object> result = new HashMap<>();
         Person oper = getLoginPerson(personService);
@@ -73,7 +75,6 @@ public class UserController extends BaseController{
     }
 
     @RequestMapping(value = "/updateuser")
-    @ResponseBody
     public Map update(Person person){
         Map<String,Object> result = new HashMap<>();
         Person oper = getLoginPerson(personService);
@@ -84,6 +85,26 @@ public class UserController extends BaseController{
         }catch (HibernateException e){
             result.put("status",ResultEnum.FAIL);
             result.put("msg","修改用户失败！");
+            logger.error(e.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/getUserRoles")
+    public String getRoles(String userID){
+        return roleService.getRolesByUserID(userID);
+    }
+
+    @RequestMapping(value = "/setUserRoles")
+    public Map<String,Object> setRoles(String userID,String idList){
+        Map<String,Object> result = new HashMap<>();
+        try {
+            roleService.setRolesByUserID(userID,idList);
+            result.put("status",ResultEnum.SUCCESS);
+            result.put("msg","分配角色成功！");
+        }catch (Exception e){
+            result.put("status",ResultEnum.FAIL);
+            result.put("msg","分配角色失败！");
             logger.error(e.getMessage());
         }
         return result;
