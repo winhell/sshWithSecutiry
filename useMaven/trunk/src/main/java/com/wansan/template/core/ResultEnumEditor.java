@@ -14,29 +14,19 @@ public class ResultEnumEditor extends PropertyEditorSupport {
     public void setAsText(String text) throws IllegalArgumentException {
 
         int val = Integer.parseInt(text);
-
         boolean found = false;
 
         for (ResultEnum d : ResultEnum.values()) {
-
             if (val == d.ordinal()) {
-
                 this.setValue(d);
-
                 found = true;
-
                 break;
-
             }
 
         }
 
-        if (found == false) {
-
-            //错误的取值，我们默认为oracle类型，当然你也可以throws exception
-
-            this.setValue(ResultEnum.SUCCESS);         }
-
+        if (!found)
+            this.setValue(ResultEnum.SUCCESS);
     }
 
 }

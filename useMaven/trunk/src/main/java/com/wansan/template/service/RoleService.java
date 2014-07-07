@@ -32,12 +32,13 @@ public class RoleService extends BaseDao<Role> implements IRoleService {
         List<UserRole> userRoles = publicFind("from UserRole where userid = '" + userID + "'");
         StringBuilder builder = new StringBuilder();
         for(UserRole userRole:userRoles)
-            builder.append(userRole.getId()).append(",");
+            builder.append(userRole.getRoleid()).append(",");
         return builder.toString();
     }
 
-    public void setRolesByUserID(String userID,String idList){
+    public void txSetRolesByUserID(String userID,String idList){
         String[] ids = idList.split(",");
+        executeQuery("delete from UserRole where userid = '"+userID+"'");
         for(String id:ids){
             UserRole userRole = new UserRole();
             userRole.setUserid(userID);
@@ -47,6 +48,7 @@ public class RoleService extends BaseDao<Role> implements IRoleService {
             getSession().save(userRole);
         }
     }
+
     @Override
     public void txDelete(String idList,Person oper){
         String[] ids = idList.split(",");

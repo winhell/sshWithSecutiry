@@ -64,9 +64,10 @@ var userMgr = function () {
                         roleids.push($(this).val());
                 });
                 var idList = roleids.join(",");
-                $.getJSON("setUserRoles.action",{resourceId:userID,idList:idList},function(jsonData){
+                $.getJSON("setUserRoles.action",{userID:userID,idList:idList},function(jsonData){
                     bootbox.alert(jsonData.msg);
                     $('#assignRolesDiv').modal('hide');
+                    $("#gridtable").data("tableManager").initData();
                 })
             });
             $.getJSON('getAllRoles.action',function(data){
@@ -78,8 +79,12 @@ var userMgr = function () {
 
             });
             commonCRUD.init();
-        },assignRoles:function(id){
+        },
+        assignRoles:function(id){
             userID = id;
+            $('.roleList').each(function(){
+                $(this).attr('checked',false).parent().removeClass('checked');
+            });
             $.post('getUserRoles.action',{userID:id},function(resText){
                 var ids = resText.split(",");
                 $.each(ids,function(i,v){
