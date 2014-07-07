@@ -1,0 +1,58 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">
+            日志管理
+        </h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li class="btn-group">
+                <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+				<span>
+					Actions
+				</span>
+                    <i class="fa fa-angle-down"></i>
+                </button>
+            </li>
+            <li>
+                <i class="fa fa-home"></i>
+                首页
+                <i class="fa fa-angle-right"></i>
+                日志管理
+            </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>日志列表
+                </div>
+            </div>
+            <div class="portlet-body">
+
+                <table class="datatable table table-striped table-bordered table-hover" data-url="system/getLogs.action" id="gridtable">
+                    <thead>
+                    <tr>
+                        <th data-options="mData:'name'" style="width:100px;">日志类型</th>
+                        <th data-options="mData:'createtime'" style="width:180px;">创建时间</th>
+                        <th data-options="mData:'comment'">日志说明</th>
+                        <th data-options="mData:'userid'">操作者</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+<script type="text/javascript" src="assets/plugins/jquery-bootpag/jquery.bootpag.min.js"></script>
+<script type="text/javascript" src="assets/plugins/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.datatable.manager.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.form.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.database.js"></script>

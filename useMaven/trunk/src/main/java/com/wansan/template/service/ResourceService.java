@@ -40,30 +40,40 @@ public class ResourceService extends BaseDao<Resource> implements IResourceServi
     public List<Resource> getMenusByUsername(String username){
         Person person = personService.findPersonByName(username);
         List roles = publicFind("select roleid from UserRole where userid = '"+person.getId()+"'");
-        List<Resource> resources = findInCollectionByPage("from Resource where id in (select resourceId from RoleResource where roleId in :paraList)",roles,-1,0);
+        List<Resource> resources = findInCollectionByPage("from Resource where id in (select resourceId from RoleResource where roleId in (:paraList))",roles,-1,0);
         return resources;
     }
 
-    public void txSetRoleResource(String roleId,String idList,boolean isMenu){
+    public void txSetRoleResource(String id,String idList,boolean isMenu){
         String[] ids = idList.split(",");
         String resourceType;
         if(isMenu){
             resourceType = "menu";
-            executeQuery("delete from RoleResource where roleId='"+roleId+"' and name = 'menu'");
+            executeQuery("delete from RoleResource where roleId='"+id+"' and name = 'menu'");
+            for(String item:ids){
+                RoleResource rolemenu = new RoleResource();
+                rolemenu.setName(resourceType);
+                rolemenu.setId(Utils.getNewUUID());
+                rolemenu.setCreatetime(Utils.getNow());
+                rolemenu.setResourceId(item);
+                rolemenu.setRoleId(id);
+                getSession().save(rolemenu);
+            }
         }
         else{
             resourceType = "resource";
-            executeQuery("delete from RoleResource where resourceId='"+roleId+"'");
+            executeQuery("delete from RoleResource where resourceId='"+id+"'");
+            for(String item:ids){
+                RoleResource rolemenu = new RoleResource();
+                rolemenu.setName(resourceType);
+                rolemenu.setId(Utils.getNewUUID());
+                rolemenu.setCreatetime(Utils.getNow());
+                rolemenu.setRoleId(item);
+                rolemenu.setResourceId(id);
+                getSession().save(rolemenu);
+            }
         }
-        for(String item:ids){
-            RoleResource rolemenu = new RoleResource();
-            rolemenu.setName(resourceType);
-            rolemenu.setId(Utils.getNewUUID());
-            rolemenu.setCreatetime(Utils.getNow());
-            rolemenu.setResourceId(item);
-            rolemenu.setRoleId(roleId);
-            getSession().save(rolemenu);
-        }
+
     }
 
     public Map getAllResource(int page,int rows){

@@ -99,7 +99,7 @@ public class UserController extends BaseController{
     public Map<String,Object> setRoles(String userID,String idList){
         Map<String,Object> result = new HashMap<>();
         try {
-            roleService.setRolesByUserID(userID,idList);
+            roleService.txSetRolesByUserID(userID,idList);
             result.put("status",ResultEnum.SUCCESS);
             result.put("msg","分配角色成功！");
         }catch (Exception e){

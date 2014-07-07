@@ -323,7 +323,7 @@ public abstract class BaseDao<T extends BasePojo> implements IBaseDao<T>
     public Serializable txSave(T entity,Person person){
         String id = (String) save(entity);
         Syslog syslog = new Syslog();
-        syslog.setUserid(person.getId());
+        syslog.setUserid(person.getName());
         syslog.setName(OperEnum.CREATE.toString());
         syslog.setComment("用户"+person.getName()+"添加"+className+"-->"+entity.getName());
         syslog.setCreatetime(Utils.getNow());
@@ -335,7 +335,7 @@ public abstract class BaseDao<T extends BasePojo> implements IBaseDao<T>
     public void txUpdate(T entity,Person oper){
         saveOrUpdate(entity);
         Syslog syslog = new Syslog();
-        syslog.setUserid(oper.getId());
+        syslog.setUserid(oper.getName());
         syslog.setName(OperEnum.UPDATE.toString());
         syslog.setComment("用户"+oper.getName()+"修改"+className+"-->"+entity.getName());
         syslog.setCreatetime(Utils.getNow());
@@ -346,7 +346,7 @@ public abstract class BaseDao<T extends BasePojo> implements IBaseDao<T>
     public void txDelete(String idList,Person oper){
         delete(idList);
         Syslog syslog = new Syslog();
-        syslog.setUserid(oper.getId());
+        syslog.setUserid(oper.getName());
         syslog.setName(OperEnum.DELETE.toString());
         syslog.setComment("用户"+oper.getName()+"批量删除"+className+":"+idList);
         syslog.setCreatetime(Utils.getNow());

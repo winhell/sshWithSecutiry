@@ -77,7 +77,6 @@ var resourceMgr = function(){
                         }).attr('checked',true).parent().addClass('checked');
                     });
             });
-
             $('#assignRolesDiv').modal('show');
         }
 
