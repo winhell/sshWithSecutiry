@@ -54,7 +54,7 @@ public class RoleService extends BaseDao<Role> implements IRoleService {
         String[] ids = idList.split(",");
         for(String id:ids){
             executeQuery("delete from UserRole where roleId = '"+id+"'");
-            executeQuery("delete from RoleResource where roldid '="+id+"'");
+            executeQuery("delete from RoleResource where roleId ='"+id+"'");
         }
         delete(idList);
 

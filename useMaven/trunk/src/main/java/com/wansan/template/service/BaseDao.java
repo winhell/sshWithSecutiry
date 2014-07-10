@@ -16,10 +16,7 @@ import javax.annotation.Resource;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 14-4-15.
@@ -277,12 +274,15 @@ public abstract class BaseDao<T extends BasePojo> implements IBaseDao<T>
         StringBuilder hql = new StringBuilder( "from "+className );
         Query query,countQuery;
         Long total;
-        if(null!=params){
+        Map<String,Object> alterParams = new HashMap<>();
+        if(null!=params&&!params.isEmpty()){
             hql.append(" where ");
             for(String field:params.keySet()){
                 int i = field.indexOf(" ");
                 Assert.isTrue(i != -1, "Wrong condition, must have space inside!");
-                hql.append(field).append(" :").append(field.substring(0,i)).append(" and ");
+                String ramdonName = "_" + Utils.getRandomString(8);
+                hql.append(field).append(" :").append(ramdonName).append(" and ");
+                alterParams.put(ramdonName,params.get(field));
             }
             hql.append("1=1");
             countQuery = getSession().createQuery("SELECT count(*) "+hql.toString());
@@ -294,9 +294,10 @@ public abstract class BaseDao<T extends BasePojo> implements IBaseDao<T>
                     hql.append(" desc");
             }
             query = getSession().createQuery(hql.toString());
-            for(String field:params.keySet()){
-                query.setParameter(field.substring(0, field.indexOf(" ")),params.get(field));
-                countQuery.setParameter(field.substring(0, field.indexOf(" ")),params.get(field));
+
+            for(String field:alterParams.keySet()){
+                query.setParameter(field,alterParams.get(field));
+                countQuery.setParameter(field,alterParams.get(field));
             }
         } else {
             countQuery = getSession().createQuery("SELECT count(*) "+hql.toString());

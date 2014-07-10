@@ -22,7 +22,8 @@ import java.util.Map;
  * Created by Administrator on 14-4-28.
  */
 @Controller
-@RequestMapping(value = "/mainpage")
+@ResponseBody
+@RequestMapping(value = "/mainpage/system")
 public class MenuController extends BaseController{
 
     @Resource
@@ -31,13 +32,8 @@ public class MenuController extends BaseController{
     @Resource
     private IPersonService personService;
 
-    @RequestMapping(value = "/menuMgr")
-    public String gotoMenu(){
-        return "menuMgr";
-    }
-
     @RequestMapping(value = "/getUserMenus")
-    @ResponseBody
+
     public List<com.wansan.template.model.Resource> getMenus(){
         Object principal =  SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
@@ -49,7 +45,7 @@ public class MenuController extends BaseController{
     }
 
     @RequestMapping(value = "/getMenus")
-    public @ResponseBody List<com.wansan.template.model.Resource> getMenus(HttpServletRequest request){
+    public List<com.wansan.template.model.Resource> getMenus(HttpServletRequest request){
         String id = request.getParameter("id");
         List<com.wansan.template.model.Resource> tree;
         if(id==null||"".equals(id))
@@ -61,7 +57,7 @@ public class MenuController extends BaseController{
 
     //todo:finish the jstree data here
     @RequestMapping(value = "/getMenuTree")
-    public @ResponseBody List<Map<String,String>> getMenuTree(String id)
+    public List<Map<String,String>> getMenuTree(String id)
     {
 //        String id = request.getParameter("id");
 //        List<com.wansan.template.model.Resource> tree;
@@ -91,20 +87,21 @@ public class MenuController extends BaseController{
             newItem.put("id",menuItem.getId());
             newItem.put("parent",menuItem.getParentId().equals("0")?"#":menuItem.getParentId());
             newItem.put("text",menuItem.getName());
+            newItem.put("icon","fa fa-"+menuItem.getIcon());
             result.add(newItem);
         }
         return result;
     }
 
     @RequestMapping(value = "/listmenus")
-    public @ResponseBody Map<String,Object> getMenus(int page,int rows){
+    public Map<String,Object> getMenus(int page,int rows){
         Map<String,Object> result = resourceService.getAllMenus(page,rows);
         result.put("status",ResultEnum.SUCCESS);
         return result;
     }
 
     @RequestMapping(value = "/addmenu")
-    public @ResponseBody Map add(com.wansan.template.model.Resource menu){
+    public Map add(com.wansan.template.model.Resource menu){
         Map<String,Object> result = new HashMap<>();
         byte isMenu = 1;
         menu.setIsMenu(isMenu);
@@ -126,7 +123,7 @@ public class MenuController extends BaseController{
     }
 
     @RequestMapping(value = "/deletemenu")
-    public @ResponseBody Map delete(String idList){
+    public Map delete(String idList){
         Person oper = getLoginPerson(personService);
         resourceService.txDelete(idList,oper);
         Map<String,Object> result = new HashMap<>();
@@ -136,7 +133,7 @@ public class MenuController extends BaseController{
     }
 
     @RequestMapping(value = "/setRoleMenu")
-    public @ResponseBody Map setMenu(String idList,String roleId){
+    public Map setMenu(String idList,String roleId){
         resourceService.txSetRoleResource(roleId,idList,true);
         Map<String,Object> result = new HashMap<>();
         result.put("status",ResultEnum.SUCCESS);
@@ -145,7 +142,7 @@ public class MenuController extends BaseController{
     }
 
     @RequestMapping(value = "/getMenusByRole")
-    public @ResponseBody String getMenusByRole(String roleId){
+    public String getMenusByRole(String roleId){
         List<com.wansan.template.model.Resource> resources = resourceService.getMenusByRole(roleId);
         StringBuilder sb = new StringBuilder();
         for(com.wansan.template.model.Resource item:resources){

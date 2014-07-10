@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @Controller
 @ResponseBody
-@RequestMapping(value = "/mainpage")
+@RequestMapping(value = "/mainpage/system")
 public class ResourceController extends BaseController {
     @Resource
     private IResourceService resourceService;
