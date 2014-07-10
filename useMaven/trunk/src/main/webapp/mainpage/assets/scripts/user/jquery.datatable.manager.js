@@ -31,6 +31,9 @@
         _.initData = function (opts, flag) {
             //alert("发送请求");
             _.opts = $.extend({}, _.opts, opts);
+            if(flag===false){
+                _.initializedPager = false;
+            }
             $.post(_.opts.action, _.opts.param, function (data) {
                 //alert("执行了回调函数");
                 if (data.status == "SUCCESS") {
@@ -67,7 +70,7 @@
                 }
 
             })
-        }
+        };
         _.getCheckedList = function () {
             var checked = _.ele.find("tbody span.checked");
             var idList = [];
@@ -78,7 +81,7 @@
                 }
             });
             return idList;
-        }
+        };
 
         _.getCheckedRows = function(){
             var checkboxes = $(".checkboxes");
@@ -89,7 +92,7 @@
                 }
             });
             return result;
-        }
+        };
 
         _.initPage = function (data) {
             var total = Math.ceil(data[_.opts.pageProp] / _.opts.param.rows);

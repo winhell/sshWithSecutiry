@@ -2,14 +2,18 @@ var Index = function () {
 
     var initMenu = function(){
         $.ajax({
-            url : "getUserMenus.action",
+            url : "system/getUserMenus.action",
             type : "POST",
             dataType : "json",
             success : function(_menus) {
                 var menulist = "";
                 $.each(_menus,function(i, n) {
-                    if(n.parentId=="0"){
-                        menulist += '<li>' + '<a href="javascript:;"><i class="fa fa-cogs"></i> '
+                    if(n.parentId=='0'){
+                        var iconHtml = "";
+                        if(n.icon!=""){
+                           iconHtml = "<i class='fa fa-"+ n.icon+"'></i>";
+                        }
+                        menulist += '<li>' + '<a href="javascript:;">'+iconHtml
                             +'<span class="title">'+ n.name + '</span> '
                             +'<span class="selected"></span> '
                             +'<span class="arrow"></span> '
@@ -17,7 +21,11 @@ var Index = function () {
                         menulist += '<ul class="sub-menu">';
                         $.each(_menus,function(index,item){
                             if(item.parentId==n.id){
-                                menulist += '<li><a class="ajaxify" href="'+ item.url + '">'
+                                var subIconHtml = "";
+                                if(item.icon!=""){
+                                    subIconHtml = "<i class='fa fa-"+ item.icon+"'></i>";
+                                }
+                                menulist += '<li><a class="ajaxify" href="'+ item.url + '">'+subIconHtml
                                     + item.name + '</a> </li>'
                             }
                         });

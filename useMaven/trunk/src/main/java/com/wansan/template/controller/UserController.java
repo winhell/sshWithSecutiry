@@ -18,7 +18,7 @@ import java.util.Map;
  * Created by Administrator on 14-4-29.
  */
 @Controller
-@RequestMapping(value = "/mainpage")
+@RequestMapping(value = "/mainpage/system")
 @ResponseBody
 public class UserController extends BaseController{
 

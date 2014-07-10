@@ -34,7 +34,9 @@ var databaseUtil = function(){
             maxVisible: 5
         }
     };
-    var funcPrefix = $('#additemForm').data('func');
+    var theForm = $('#additemForm');
+    var funcPrefix = theForm.data('func');
+    var path = theForm.data("path");
 
     var initTable = function(){
         var datatables = $('.datatable');
@@ -46,7 +48,6 @@ var databaseUtil = function(){
             fields.each(function(){
                 var fieldOpt =  eval("({"+$(this).data('options')+"})");
                 aoColumns.push(fieldOpt);
-//            console.log($(this).data('options'));
             });
             opts.aoColumns = aoColumns;
             datatable.tableManager(opts);
@@ -55,7 +56,7 @@ var databaseUtil = function(){
 
     var bindButtons = function(){
         $('#addLink').on('click',function(){                 //添加记录
-            formOptions.url='add'+funcPrefix+'.action';
+            formOptions.url=path+'/add'+funcPrefix+'.action';
             $('#formTitle').html('增加项目');
             $('#additemFormDiv').modal('show');
         });
@@ -72,12 +73,12 @@ var databaseUtil = function(){
             var rowData = rows[0];
             for(var item in rowData)
                 $('#'+item).val(rowData[item]).trigger('change');
-            formOptions.url='update'+funcPrefix+'.action?id='+rowData.id;
+            formOptions.url=path+'/update'+funcPrefix+'.action?id='+rowData.id;
             $('#additemFormDiv').modal('show');
         });
 
         $('#deleteLink').on('click',function(){            //删除记录
-            var delUrl = 'delete'+funcPrefix+'.action';
+            var delUrl = path+'/delete'+funcPrefix+'.action';
             var rows = $('#gridtable').data('tableManager').getCheckedRows();
             if(rows.length<1){
                 bootbox.alert('请选取所要删除的记录！');
@@ -103,7 +104,7 @@ var databaseUtil = function(){
             initTable();
             bindButtons();
         },
-        checkboxid:function (data, type, full) {
+        checkboxRender:function (data, type, full) {
             return "<input class='checkboxes' type='checkbox' value='" + data + "'/>";
         }
     };
