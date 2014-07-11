@@ -29,11 +29,6 @@ public class UserController extends BaseController{
     @Resource
     private IRoleService roleService;
 
-    @RequestMapping(value = "/userMgr")
-    public String gotoMgr(){
-        return "system/userMgr";
-    }
-
     @RequestMapping(value = "/listuser")
     public Map getUserList(int page,int rows){
         Map<String,Object> result = personService.findByMap(null,page,rows,null,false);
@@ -44,7 +39,7 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/adduser")
     public Map add(Person person){
         Map<String,Object> result = new HashMap<>();
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         try{
             personService.txSave(person,oper);
             result.put("status", ResultEnum.SUCCESS);
@@ -61,7 +56,7 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/deleteuser")
     public Map delete(String idList){
         Map<String,Object> result = new HashMap<>();
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         try{
             personService.txDelete(idList,oper);
             result.put("status",ResultEnum.SUCCESS);
@@ -77,7 +72,7 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/updateuser")
     public Map update(Person person){
         Map<String,Object> result = new HashMap<>();
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         try {
             personService.txUpdate(person,oper );
             result.put("status",ResultEnum.SUCCESS);

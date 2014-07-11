@@ -20,13 +20,12 @@ import java.util.Date;
  */
 public class BaseController {
 
-    protected Person getLoginPerson(IPersonService service){
+    protected Person getLoginPerson(){
         Person oper=null;
         Object principal =  SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
         if(principal instanceof UserDetails){
-            String username = ((UserDetails)principal).getUsername();
-            oper = service.findPersonByName(username);
+            oper = (Person)principal;
         }
         return oper;
     }

@@ -24,9 +24,6 @@ public class ResourceController extends BaseController {
     @Resource
     private IResourceService resourceService;
 
-    @Resource
-    private IPersonService personService;
-
     private Logger log = Logger.getLogger(this.getClass());
 
     @RequestMapping(value = "/getAllResources")
@@ -39,7 +36,7 @@ public class ResourceController extends BaseController {
     @RequestMapping(value = "/addresource")
     public Map add(com.wansan.template.model.Resource resource){
         Map<String,Object> result =new HashMap<>();
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         try{
             resource.setName("resource");
             byte isMenu = 0;
@@ -58,7 +55,7 @@ public class ResourceController extends BaseController {
     @RequestMapping(value = "/deleteresource")
     public Map delete(String idList){
         Map<String,Object> result =new HashMap<>();
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         try{
             resourceService.txDelete(idList, oper);
             result.put("status", ResultEnum.SUCCESS);
@@ -74,7 +71,7 @@ public class ResourceController extends BaseController {
     @RequestMapping(value = "/updateresource")
     public Map update(com.wansan.template.model.Resource resource){
         Map<String,Object> result =new HashMap<>();
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         try{
             byte isMenu = 0;
             resource.setIsMenu(isMenu);
