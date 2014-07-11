@@ -1,11 +1,17 @@
 package com.wansan.template.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.wansan.template.core.SpringFactory;
 import com.wansan.template.service.IPersonService;
 import com.wansan.template.service.IRoleService;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,16 +19,60 @@ import java.util.List;
  */
 @Entity
 @Table(name = "person")
-public class Person extends BasePojo{
+public class Person extends BasePojo implements UserDetails{
 
     private String password;
     private String departId;
     private Timestamp lastlogin;
 
+
+    private Collection<? extends GrantedAuthority> authorities;
+
+    @Transient
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Transient
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities){
+        this.authorities = authorities;
+    }
+
     @Basic
     @Column(name = "password")
     public String getPassword() {
         return password;
+    }
+
+    @Transient
+    @JsonIgnore
+    public String getUsername() {
+        return this.getName();
+    }
+
+    @Transient
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Transient
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Transient
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Transient
+    @JsonIgnore
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {
@@ -41,6 +91,7 @@ public class Person extends BasePojo{
 
     @Basic
     @Column(name = "lastlogin")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Timestamp getLastlogin() {
         return lastlogin;
     }

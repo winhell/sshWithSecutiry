@@ -28,8 +28,6 @@ public class RoleController extends BaseController {
     private IRoleService roleService;
 
     @Resource
-    private IPersonService personService;
-    @Resource
     private IResourceService resourceService;
 
     @RequestMapping(value = "/roleMgr")
@@ -52,7 +50,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     public Map add(Role role){
         Map<String,Object> result = new HashMap<>();
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         try{
             roleService.txSave(role,oper);
             result.put("status", ResultEnum.SUCCESS);
@@ -69,7 +67,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     public Map delete(String idList){
         Map<String,Object> result = new HashMap<>();
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         try{
             roleService.txDelete(idList,oper);
             result.put("status",ResultEnum.SUCCESS);
@@ -86,7 +84,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     public Map update(Role role){
         Map<String,Object> result = new HashMap<>();
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         try {
             roleService.txUpdate(role,oper );
             result.put("status",ResultEnum.SUCCESS);

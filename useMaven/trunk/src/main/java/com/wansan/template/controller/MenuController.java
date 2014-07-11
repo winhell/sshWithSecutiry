@@ -29,9 +29,6 @@ public class MenuController extends BaseController{
     @Resource
     private IResourceService resourceService;
 
-    @Resource
-    private IPersonService personService;
-
     @RequestMapping(value = "/getUserMenus")
 
     public List<com.wansan.template.model.Resource> getMenus(){
@@ -105,7 +102,7 @@ public class MenuController extends BaseController{
         Map<String,Object> result = new HashMap<>();
         byte isMenu = 1;
         menu.setIsMenu(isMenu);
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         try{
             if(null==menu.getParentId()||"".equals(menu.getParentId())){
                 menu.setParentId("0");
@@ -124,7 +121,7 @@ public class MenuController extends BaseController{
 
     @RequestMapping(value = "/deletemenu")
     public Map delete(String idList){
-        Person oper = getLoginPerson(personService);
+        Person oper = getLoginPerson();
         resourceService.txDelete(idList,oper);
         Map<String,Object> result = new HashMap<>();
         result.put("status",ResultEnum.SUCCESS);

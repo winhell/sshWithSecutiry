@@ -3,7 +3,9 @@ package com.wansan.template.service;
 import com.wansan.template.core.Blowfish;
 import com.wansan.template.core.Utils;
 import com.wansan.template.model.Ofuser;
+import com.wansan.template.model.OperEnum;
 import com.wansan.template.model.Person;
+import com.wansan.template.model.Syslog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,6 @@ public class PersonService extends BaseDao<Person> implements IPersonService {
         return persons.get(0);
     }
 
-    //Todo: 添加日志信息
     @Override
     public Serializable txSave(Person person,Person oper){
 
@@ -43,6 +44,13 @@ public class PersonService extends BaseDao<Person> implements IPersonService {
         openfireUser.setModificationDate("0");
         getSession().save(openfireUser);
         log.info(person.getPassword());
+        Syslog syslog = new Syslog();
+        syslog.setUserid(oper.getName());
+        syslog.setName(OperEnum.CREATE.toString());
+        syslog.setId(Utils.getNewUUID());
+        syslog.setCreatetime(Utils.getNow());
+        syslog.setComment("user "+oper.getName()+" 创建用户--> "+person.getName());
+        getSession().save(syslog);
         return save(person);
     }
 

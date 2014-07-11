@@ -41,7 +41,8 @@ public class MyUserDetailService implements UserDetailsService {
                 SimpleGrantedAuthority auth = new SimpleGrantedAuthority(role.getName());
                 auths.add(auth);
                 }
-            return new User(person.getName(),person.getPassword(),true,true,true,true,auths);
+            person.setAuthorities(auths);
+            return person;
         } else
             throw new UsernameNotFoundException("User " + s + "not found!");
 
