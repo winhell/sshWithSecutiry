@@ -40,7 +40,7 @@ public class ResourceService extends BaseDao<Resource> implements IResourceServi
     public List<Resource> getMenusByUsername(String username){
         Person person = personService.findPersonByName(username);
         List roles = publicFind("select roleid from UserRole where userid = '"+person.getId()+"'");
-        List<Resource> resources = findInCollectionByPage("from Resource where id in (select resourceId from RoleResource where roleId in (:paraList))",roles,-1,0);
+        List<Resource> resources = findInCollectionByPage("from Resource where id in (select resourceId from RoleResource where roleId in (:paraList) order by showOrder asc)",roles,-1,0);
         return resources;
     }
 

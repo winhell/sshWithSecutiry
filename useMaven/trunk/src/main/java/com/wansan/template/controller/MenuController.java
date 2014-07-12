@@ -119,6 +119,21 @@ public class MenuController extends BaseController{
         return result;
     }
 
+    @RequestMapping(value = "/updatemenu")
+    public Map update(com.wansan.template.model.Resource menu){
+        Person oper = getLoginPerson();
+        Map<String,Object> result = new HashMap<>();
+        try{
+            resourceService.txUpdate(menu,oper);
+            result.put("status",ResultEnum.SUCCESS);
+            result.put("msg","菜单项更新成功！");
+        }catch (Exception e){
+            result.put("status",ResultEnum.FAIL);
+            result.put("msg","菜单项更新失败："+e.getMessage());
+        }
+        return result;
+    }
+
     @RequestMapping(value = "/deletemenu")
     public Map delete(String idList){
         Person oper = getLoginPerson();
