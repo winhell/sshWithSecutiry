@@ -12,6 +12,7 @@ import java.util.Map;
  * Created by Administrator on 14-4-15.
  */
 public interface IBaseDao<T> {
+    public void saveOrUpdate(T entity,boolean ct);
     public List<T> findByName(String name) ;
     public List publicFind(String queryString) ;
     public Serializable save(T entity) ;

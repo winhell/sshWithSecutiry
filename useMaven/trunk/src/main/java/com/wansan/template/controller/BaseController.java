@@ -3,7 +3,6 @@ package com.wansan.template.controller;
 import com.wansan.template.core.ResultEnumEditor;
 import com.wansan.template.model.Person;
 import com.wansan.template.model.ResultEnum;
-import com.wansan.template.service.IPersonService;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,8 +33,11 @@ public class BaseController {
     @InitBinder
     protected void initBinder(HttpServletRequest request,ServletRequestDataBinder binder) throws Exception {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dfLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         CustomDateEditor dateEditor = new CustomDateEditor(df, true);
+        CustomDateEditor datetimeEditor = new CustomDateEditor(dfLong, true);
         binder.registerCustomEditor(Date.class, dateEditor);
+        binder.registerCustomEditor(Timestamp.class, datetimeEditor);
         binder.registerCustomEditor(ResultEnum.class, new ResultEnumEditor());
     }
 }

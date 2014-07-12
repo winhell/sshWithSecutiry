@@ -8,8 +8,14 @@ import com.wansan.template.service.IPersonService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +28,7 @@ public class AndroidController extends BaseController {
     @Resource
     private IPersonService personService;
 
+    private final static String UploadPath = "/upload";
     @RequestMapping(value = "/android/login")
     public Map<String,Object> login(String username,String password){
         Map<String,Object> result = new HashMap<>();
@@ -40,5 +47,25 @@ public class AndroidController extends BaseController {
             }
         }
         return result;
+    }
+
+    @RequestMapping(value = "/android/upload")
+    public Map<String,Object> upload(HttpServletRequest request) throws IOException {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        Map<String,Object> result = new HashMap<>();
+        if(resolver.isMultipart(request)){
+            MultipartRequest multipartRequest = (MultipartRequest)request;
+            MultipartFile file = multipartRequest.getFile("filename");
+            String name = request.getParameter("username");
+            String path = request.getServletContext().getRealPath(UploadPath);
+            file.transferTo(new File(path,name));
+            result.put("status",ResultEnum.SUCCESS);
+            result.put("msg",name);
+        }else {
+            result.put("status",ResultEnum.FAIL);
+            result.put("msg","Form type is incorrect!");
+        }
+        return result;
+
     }
 }
