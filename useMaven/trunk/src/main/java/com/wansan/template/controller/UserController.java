@@ -74,7 +74,7 @@ public class UserController extends BaseController{
         Map<String,Object> result = new HashMap<>();
         Person oper = getLoginPerson();
         try {
-            personService.txUpdate(person,oper );
+            personService.txUpdate(person,oper,true );
             result.put("status",ResultEnum.SUCCESS);
             result.put("msg","用户修改成功！");
         }catch (HibernateException e){

@@ -9,4 +9,5 @@ import java.io.Serializable;
  */
 public interface IPersonService extends IBaseDao<Person> {
     public Person findPersonByName(String username);
+    public void txUpdate(Person person,Person oper,boolean cp);
 }

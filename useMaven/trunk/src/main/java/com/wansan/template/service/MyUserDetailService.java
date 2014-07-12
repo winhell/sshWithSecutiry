@@ -44,7 +44,7 @@ public class MyUserDetailService implements UserDetailsService {
             person.setAuthorities(auths);
             return person;
         } else
-            throw new UsernameNotFoundException("User " + s + "not found!");
+            throw new UsernameNotFoundException("用户名" + s + "不存在！");
 
     }
 

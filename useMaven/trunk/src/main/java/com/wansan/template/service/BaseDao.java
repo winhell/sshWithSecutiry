@@ -62,17 +62,23 @@ public abstract class BaseDao<T extends BasePojo> implements IBaseDao<T>
     }
 
     @Override
-    public void saveOrUpdate(T entity)
+    public void saveOrUpdate(T entity,boolean ct)
     {
+        if(ct){
         if(entity.getId() == null)
             save(entity);
         else {
             entity.setCreatetime(Utils.getNow());
             getSession().saveOrUpdate(entity);
-        }
+        }}
+        else
+            getSession().saveOrUpdate(entity);
 
     }
 
+    public void saveOrUpdate(T entity){
+        saveOrUpdate(entity,true);
+    }
     @Override
     public void saveOrUpdate(Collection<T> entities)
     {

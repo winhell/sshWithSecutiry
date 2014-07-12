@@ -91,7 +91,7 @@ public class Person extends BasePojo implements UserDetails{
 
     @Basic
     @Column(name = "lastlogin")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     public Timestamp getLastlogin() {
         return lastlogin;
     }

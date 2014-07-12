@@ -59,7 +59,7 @@ public class ResourceController extends BaseController {
         try{
             resourceService.txDelete(idList, oper);
             result.put("status", ResultEnum.SUCCESS);
-            result.put("msg","删除添加资源!");
+            result.put("msg","删除资源成功!");
         }catch (HibernateException e){
             result.put("status",ResultEnum.FAIL);
             result.put("msg","删除资源失败！");

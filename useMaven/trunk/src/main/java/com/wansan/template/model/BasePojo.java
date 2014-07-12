@@ -40,7 +40,7 @@ public abstract class BasePojo implements Serializable {
 
     @Basic
     @Column(name = "createtime")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone="GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
     public Timestamp getCreatetime() {
         return createtime;
     }
