@@ -41,6 +41,9 @@ var Index = function () {
         //main function
         init: function () {
             initMenu();
+            $.get('getLoginUser.action',function(resText){
+                $('.username').html(resText);
+            })
         }
     }
 }();

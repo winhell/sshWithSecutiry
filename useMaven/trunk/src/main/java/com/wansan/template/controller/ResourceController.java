@@ -25,6 +25,7 @@ public class ResourceController extends BaseController {
     private IResourceService resourceService;
 
     private Logger log = Logger.getLogger(this.getClass());
+    private final static String RebootRequire = "必须重启服务器以使更新生效！";
 
     @RequestMapping(value = "/getAllResources")
     public  Map getAllResources(int page,int rows){
@@ -43,7 +44,7 @@ public class ResourceController extends BaseController {
             resource.setIsMenu(isMenu);
             resourceService.txSave(resource,oper);
             result.put("status", ResultEnum.SUCCESS);
-            result.put("msg","成功添加资源!");
+            result.put("msg","成功添加资源!"+RebootRequire);
         }catch (HibernateException e){
             result.put("status",ResultEnum.FAIL);
             result.put("msg","添加资源失败！");
@@ -59,7 +60,7 @@ public class ResourceController extends BaseController {
         try{
             resourceService.txDelete(idList, oper);
             result.put("status", ResultEnum.SUCCESS);
-            result.put("msg","删除资源成功!");
+            result.put("msg","删除资源成功!"+RebootRequire);
         }catch (HibernateException e){
             result.put("status",ResultEnum.FAIL);
             result.put("msg","删除资源失败！");
@@ -77,7 +78,7 @@ public class ResourceController extends BaseController {
             resource.setIsMenu(isMenu);
             resourceService.txUpdate(resource,oper);
             result.put("status", ResultEnum.SUCCESS);
-            result.put("msg","成功修改资源!");
+            result.put("msg","成功修改资源!"+RebootRequire);
         }catch (HibernateException e){
             result.put("status",ResultEnum.FAIL);
             result.put("msg","修改资源失败！");
@@ -93,7 +94,7 @@ public class ResourceController extends BaseController {
         try {
             resourceService.txSetRoleResource(resourceId,idList,false);
             result.put("status",ResultEnum.SUCCESS);
-            result.put("msg","角色资源分配成功！");
+            result.put("msg","角色资源分配成功！"+RebootRequire);
         } catch (Exception e){
             result.put("status",ResultEnum.FAIL);
             result.put("msg","角色资源分配失败，数据库读写错误！");

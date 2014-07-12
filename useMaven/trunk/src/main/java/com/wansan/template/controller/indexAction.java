@@ -13,7 +13,7 @@ import java.util.Map;
  */
 
 @Controller
-public class indexAction {
+public class indexAction extends BaseController{
     @RequestMapping(value = "/index")
     public String index(){
         return "redirect:/mainpage/index.html";
@@ -26,5 +26,10 @@ public class indexAction {
         Exception e = (Exception)session.getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
         result.put("msg",e.getMessage());
         return result;
+    }
+
+    @RequestMapping(value = "/mainpage/getLoginUser")
+    public @ResponseBody String getUsername(){
+        return getLoginPerson().getName();
     }
 }
