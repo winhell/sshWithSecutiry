@@ -1,6 +1,8 @@
 package com.wansan.template.controller;
 
+import com.wansan.template.core.CodeEnumEditor;
 import com.wansan.template.core.ResultEnumEditor;
+import com.wansan.template.model.CodeEnum;
 import com.wansan.template.model.Person;
 import com.wansan.template.model.ResultEnum;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -14,6 +16,8 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 14-4-30.
@@ -30,6 +34,30 @@ public class BaseController {
         return oper;
     }
 
+    protected Map<String,Object> returnMap(boolean success,String message){
+        Map<String,Object> result = new HashMap<>();
+        if(success){
+            result.put("status",ResultEnum.SUCCESS);
+            result.put("msg",message);
+        }else {
+            result.put("status",ResultEnum.FAIL);
+            result.put("msg",message);
+        }
+        return result;
+    }
+
+    protected Map<String,Object> result(boolean success){
+        Map<String,Object> result = new HashMap<>();
+        if(success){
+            result.put("status",ResultEnum.SUCCESS);
+            result.put("msg","操作成功！");
+        }else {
+            result.put("status",ResultEnum.FAIL);
+            result.put("msg","操作失败");
+        }
+        return result;
+    }
+
     @InitBinder
     protected void initBinder(HttpServletRequest request,ServletRequestDataBinder binder) throws Exception {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -38,6 +66,7 @@ public class BaseController {
         CustomDateEditor datetimeEditor = new CustomDateEditor(dfLong, true);
         binder.registerCustomEditor(Date.class, dateEditor);
         binder.registerCustomEditor(Timestamp.class, datetimeEditor);
+        binder.registerCustomEditor(CodeEnum.class,new CodeEnumEditor());
         binder.registerCustomEditor(ResultEnum.class, new ResultEnumEditor());
     }
 }
