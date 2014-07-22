@@ -25,7 +25,7 @@ public class ResourceController extends BaseController {
     private IResourceService resourceService;
 
     private Logger log = Logger.getLogger(this.getClass());
-    private final static String RebootRequire = "必须重启服务器以使更新生效！";
+    private final static String RebootRequire = "必须重启服务器以使变更生效！";
 
     @RequestMapping(value = "/getAllResources")
     public  Map getAllResources(int page,int rows){

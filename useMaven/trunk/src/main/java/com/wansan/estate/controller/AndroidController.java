@@ -5,6 +5,11 @@ import com.wansan.template.core.Utils;
 import com.wansan.template.model.Person;
 import com.wansan.template.model.ResultEnum;
 import com.wansan.template.service.IPersonService;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,9 +19,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,17 +56,20 @@ public class AndroidController extends BaseController {
     }
 
     @RequestMapping(value = "/android/upload")
-    public Map<String,Object> upload(HttpServletRequest request) throws IOException {
-        CommonsMultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+    public Map<String,Object> upload(MultipartFile file1,HttpServletRequest request){
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver(request.getServletContext());
         Map<String,Object> result = new HashMap<>();
         if(resolver.isMultipart(request)){
-            MultipartRequest multipartRequest = (MultipartRequest)request;
-            MultipartFile file = multipartRequest.getFile("filename");
-            String name = request.getParameter("username");
+            String name = file1.getOriginalFilename();
             String path = request.getServletContext().getRealPath(UploadPath);
-            file.transferTo(new File(path,name));
-            result.put("status",ResultEnum.SUCCESS);
-            result.put("msg",name);
+            try {
+                file1.transferTo(new File(path,name));
+                result.put("status",ResultEnum.SUCCESS);
+                result.put("msg",name);
+            } catch (IOException e) {
+                result.put("status",ResultEnum.FAIL);
+                result.put("msg",e.getMessage());
+            }
         }else {
             result.put("status",ResultEnum.FAIL);
             result.put("msg","Form type is incorrect!");

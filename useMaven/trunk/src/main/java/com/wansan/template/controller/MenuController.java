@@ -124,6 +124,8 @@ public class MenuController extends BaseController{
         Person oper = getLoginPerson();
         Map<String,Object> result = new HashMap<>();
         try{
+            byte isMenu =1;
+            menu.setIsMenu(isMenu);
             resourceService.txUpdate(menu,oper);
             result.put("status",ResultEnum.SUCCESS);
             result.put("msg","菜单项更新成功！");

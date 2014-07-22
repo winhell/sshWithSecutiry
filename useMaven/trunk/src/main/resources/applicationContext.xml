@@ -61,6 +61,10 @@
                     true
                 </prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306</prop>
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+                <prop key="hibernate.connection.username">root</prop>
+                <prop key="hibernate.connection.password">config01</prop>
             </props>
         </property>
         <property name="annotatedClasses">
@@ -72,6 +76,10 @@
                 <value>com.wansan.template.model.RoleResource</value>
                 <value>com.wansan.template.model.Syslog</value>
                 <value>com.wansan.template.model.Ofuser</value>
+                <value>com.wansan.template.model.Systemcode</value>
+                <value>com.wansan.estate.model.City</value>
+                <value>com.wansan.estate.model.Community</value>
+                <value>com.wansan.estate.model.EnterLog</value>
             </list>
         </property>
     </bean>
