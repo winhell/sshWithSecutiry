@@ -3,6 +3,9 @@
  */
 var menuMgr = function(){
 
+    var test = function(){
+        console.log('I changed!');
+    };
 
     return {
         init: function(){

@@ -1,5 +1,6 @@
 package com.wansan.estate.service;
 
+import com.wansan.estate.model.Building;
 import com.wansan.estate.model.City;
 import com.wansan.estate.model.Community;
 import com.wansan.template.core.Blowfish;
@@ -37,7 +38,18 @@ public class CommunityService extends BaseDao<Community> implements ICommunitySe
         openfireUser.setModificationDate("0");
         getSession().save(openfireUser);
 
-        //增加后台系统用户
+        //增加地址
+        Integer maxRight = (Integer)uniqueResult("select max(rgt) from Building");
+        if(null==maxRight)
+            maxRight = 0;
+        Building building = new Building();
+        building.setId(Utils.getNewUUID());
+        building.setCreatetime(Utils.getNow());
+        building.setParent("#");
+        building.setText(community.getName());
+        building.setLft(maxRight+1);
+        building.setRgt(maxRight+2);
+        getSession().save(building);
 
         //增加日志
         Syslog syslog = new Syslog();
@@ -45,7 +57,7 @@ public class CommunityService extends BaseDao<Community> implements ICommunitySe
         syslog.setId(Utils.getNewUUID());
         syslog.setCreatetime(Utils.getNow());
         syslog.setName(OperEnum.CREATE.toString());
-        syslog.setComment(person.getName()+"添加小区"+community.getName());
+        syslog.setComment(person.getName()+"添加小区信息:"+community.getName());
         getSession().save(syslog);
 
         return save(community);
