@@ -10,12 +10,16 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.jdbc.Work;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -258,7 +262,7 @@ public abstract class BaseDao<T extends BasePojo> implements IBaseDao<T>
     public final Map<String,Object> findByMap(final Map<String,Object> params,int page,int rows,String order,boolean asc) throws HibernateException{
         Criteria criteria = getSession().createCriteria(clazz);
         Long total;
-        if(null!=params)
+            if(null!=params)
             criteria.add(Restrictions.allEq(params));
         total = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
         criteria.setProjection(null).setResultTransformer(Criteria.ROOT_ENTITY);
@@ -360,4 +364,5 @@ public abstract class BaseDao<T extends BasePojo> implements IBaseDao<T>
         syslog.setId(Utils.getNewUUID());
         getSession().save(syslog);
     }
+
 }

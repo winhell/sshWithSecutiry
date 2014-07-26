@@ -80,6 +80,7 @@
                 <value>com.wansan.estate.model.City</value>
                 <value>com.wansan.estate.model.Community</value>
                 <value>com.wansan.estate.model.EnterLog</value>
+                <value>com.wansan.estate.model.Building</value>
             </list>
         </property>
     </bean>
@@ -100,7 +101,7 @@
 
     <aop:config>
         <aop:pointcut id="smMethod"
-                      expression="(execution(* com.wansan.template.service.*.*(..)))or(execution(* com.wansan.estate.service.*.*(..)))" />
+                      expression="execution(* com.wansan.template.service.*.*(..))|| execution(* com.wansan.estate.service.*.*(..))" />
         <aop:advisor pointcut-ref="smMethod" advice-ref="smAdvice" />
     </aop:config>
     <!-- 启用注解方式 -->

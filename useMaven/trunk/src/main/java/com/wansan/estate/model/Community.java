@@ -1,11 +1,10 @@
 package com.wansan.estate.model;
 
+import com.wansan.estate.service.ICommunityService;
+import com.wansan.template.core.SpringFactory;
 import com.wansan.template.model.BasePojo;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -20,6 +19,16 @@ public class Community extends BasePojo{
     private String phone;
     private Timestamp updatetime;
     private String estateuser;
+    private String cityName;
+
+    @Basic
+    @Column(name = "cityName")
+    public String getCityName(){
+        return cityName;
+    }
+    public void setCityName(String cityName){
+        this.cityName = cityName;
+    }
 
     @Basic
     @Column(name = "cityId")
@@ -116,4 +125,5 @@ public class Community extends BasePojo{
         result = 31 * result + (estateuser != null ? estateuser.hashCode() : 0);
         return result;
     }
+
 }

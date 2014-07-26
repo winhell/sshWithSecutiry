@@ -67,6 +67,7 @@ public class CommunityController extends BaseController {
 
     @RequestMapping(value = "/listCity")
     public List<City> getCities(Short city){
+
         return communityService.getCity(city);
     }
 }

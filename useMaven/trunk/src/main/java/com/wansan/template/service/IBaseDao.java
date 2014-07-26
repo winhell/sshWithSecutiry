@@ -41,4 +41,5 @@ public interface IBaseDao<T> {
     public Serializable txSave(T entity,Person person);
     public void txUpdate(T entity,Person oper);
     public void txDelete(String idList,Person oper);
+
 }
