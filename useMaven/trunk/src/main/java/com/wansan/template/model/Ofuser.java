@@ -15,6 +15,17 @@ public class Ofuser {
     private String email;
     private String creationDate;
     private String modificationDate;
+    private String buildingID;
+
+    @Basic
+    @Column(name = "buildingID")
+    public String getBuildingID() {
+        return buildingID;
+    }
+
+    public void setBuildingID(String buildingID) {
+        this.buildingID = buildingID;
+    }
 
     @Id
     @Column(name = "username")
