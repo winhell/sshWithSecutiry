@@ -28,6 +28,7 @@ public class CommunityService extends BaseDao<Community> implements ICommunitySe
     public Serializable txSave(Community community,Person person){
 
         //增加openfire用户
+        String newID = Utils.getNewUUID();
         String username = community.getEstateuser();
         Ofuser openfireUser = new Ofuser();
         openfireUser.setUsername(username);
@@ -43,7 +44,7 @@ public class CommunityService extends BaseDao<Community> implements ICommunitySe
         if(null==maxRight)
             maxRight = 0;
         Building building = new Building();
-        building.setId(Utils.getNewUUID());
+        building.setId(newID);
         building.setCreatetime(Utils.getNow());
         building.setParent("#");
         building.setText(community.getName());
@@ -60,6 +61,7 @@ public class CommunityService extends BaseDao<Community> implements ICommunitySe
         syslog.setComment(person.getName()+"添加小区信息:"+community.getName());
         getSession().save(syslog);
 
+        community.setId(newID);
         return save(community);
     }
 

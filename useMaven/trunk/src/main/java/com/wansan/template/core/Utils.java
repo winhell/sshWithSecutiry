@@ -126,4 +126,16 @@ public class Utils {
         }
         return sf.toString();
     }
+    public static String getRandomNumString(int length)
+    {
+        String str="0123456789";
+        Random random=new Random();
+        StringBuffer sf=new StringBuffer();
+        for(int i=0;i<length;i++)
+        {
+            int number=random.nextInt(10);//0~61
+            sf.append(str.charAt(number));
+        }
+        return sf.toString();
+    }
 }

@@ -35,15 +35,7 @@ public class PersonService extends BaseDao<Person> implements IPersonService {
 
         String orgiPasswd = person.getPassword();
         person.setPassword(Utils.encodePassword(orgiPasswd,person.getName()));
-        Ofuser openfireUser = new Ofuser();
-        openfireUser.setUsername(person.getName());
-        Blowfish encrpytor = new Blowfish();
-        String ofPasswd = encrpytor.encryptString(orgiPasswd);
-        openfireUser.setEncryptedPassword(ofPasswd);
-        openfireUser.setCreationDate(String.valueOf(new Date().getTime()));
-        openfireUser.setModificationDate("0");
-        getSession().save(openfireUser);
-        log.info(person.getPassword());
+
         Syslog syslog = new Syslog();
         syslog.setUserid(oper.getName());
         syslog.setName(OperEnum.CREATE.toString());
