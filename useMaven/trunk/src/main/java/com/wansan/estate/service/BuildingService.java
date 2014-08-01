@@ -85,9 +85,9 @@ public class BuildingService extends BaseDao<Building> implements IBuildingServi
     }
 
     public String getBuildingName(String id){
-        Ofuser user = (Ofuser) getSession().get(Ofuser.class,id);
+//        Ofuser user = (Ofuser) getSession().get(Ofuser.class,id);
         String hql = "select p from Building s,Building p where p.lft<=s.lft and p.rgt>=s.rgt and s.id = :id order by p.lft";
-        Query query = getSession().createQuery(hql).setParameter("id",user.getBuildingID());
+        Query query = getSession().createQuery(hql).setParameter("id",id);
         List<Building> buildings = query.list();
         StringBuilder sb = new StringBuilder();
         for(Building building:buildings){

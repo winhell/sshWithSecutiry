@@ -79,15 +79,13 @@ var databaseUtil = function(){
 
         $('#deleteLink').on('click',function(){            //删除记录
             var delUrl = path+'/delete'+funcPrefix+'.action';
-            var rows = $('#gridtable').data('tableManager').getCheckedRows();
-            if(rows.length<1){
+            var ids = $('#gridtable').data('tableManager').getCheckedList();
+            if(ids.length<1){
                 bootbox.alert('请选取所要删除的记录！');
                 return;
             }
-            var idList = "";
-            $.each(rows,function(index,row){
-                idList += row.id + ",";
-            })
+            var idList = ids.join(",");
+
             bootbox.confirm("你确定要删除所选记录吗？",function(result){
                 if(result){
                     $.getJSON(delUrl,{idList:idList},reloadForm);

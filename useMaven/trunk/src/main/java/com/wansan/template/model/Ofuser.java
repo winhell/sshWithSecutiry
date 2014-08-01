@@ -1,5 +1,8 @@
 package com.wansan.template.model;
 
+import com.wansan.estate.service.IBuildingService;
+import com.wansan.template.core.SpringFactory;
+
 import javax.persistence.*;
 
 /**
@@ -16,6 +19,17 @@ public class Ofuser {
     private String creationDate;
     private String modificationDate;
     private String buildingID;
+    private String userType;
+
+    @Basic
+    @Column(name = "userType")
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 
     @Basic
     @Column(name = "buildingID")
@@ -129,5 +143,11 @@ public class Ofuser {
         result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
         result = 31 * result + (modificationDate != null ? modificationDate.hashCode() : 0);
         return result;
+    }
+
+    @Transient
+    public String getAddress(){
+        IBuildingService service = (IBuildingService) SpringFactory.getBean("buildingService");
+        return service.getBuildingName(this.buildingID);
     }
 }

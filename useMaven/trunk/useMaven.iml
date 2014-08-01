@@ -18,6 +18,16 @@
     <facet type="Spring" name="Spring">
       <configuration />
     </facet>
+    <facet type="hibernate" name="Hibernate">
+      <configuration>
+        <datasource-map>
+          <unit-entry name="sessionFactory" value="e62bde4f-3de5-42ae-b499-67f46676eb66" />
+        </datasource-map>
+        <naming-strategy-map>
+          <unit-entry name="sessionFactory" />
+        </naming-strategy-map>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -75,7 +85,9 @@
     <orderEntry type="library" name="Maven: jstl:jstl:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-taglibs:3.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-acl:3.2.4.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.0.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-jdk14:1.7.7" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
+    <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:1.4.0" level="project" />
   </component>
 </module>
 
