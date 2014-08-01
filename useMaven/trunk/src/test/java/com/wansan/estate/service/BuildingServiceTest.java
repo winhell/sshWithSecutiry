@@ -17,16 +17,9 @@ public class BuildingServiceTest extends BaseTest {
     private IBuildingService buildingService;
 
     @Test
-    public void testTxSave() throws Exception {
-        Building building = new Building();
-        building.setName("test");
-        building.setParent("582c6dff-14c0-11e4-adb4-7815febebb70");
-        buildingService.txSave(building,null);
+    public void test() throws Exception {
+        String wholename = buildingService.getBuildingName("user7");
+        Assert.assertNotNull(wholename);
     }
 
-    @Test
-    public void testQuery(){
-        List result = buildingService.getBuildingTree("c849a291-48d7-4199-a5bf-d32b5878abaf");
-        Assert.assertEquals(3,result.size());
-    }
 }

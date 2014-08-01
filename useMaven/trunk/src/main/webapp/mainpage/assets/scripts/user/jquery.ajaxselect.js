@@ -18,9 +18,10 @@
                 var thisOptions;
                 if($this.data('options')===undefined)
                     setting =  $.extend({},defaultSetting,options);
-                else
-                    var htmlsetting = eval("({"+$this.data('options')+"})");
-                    setting = $.extend(defaultSetting,htmlsetting,options);
+                else {
+                    var htmlsetting = eval("({" + $this.data('options') + "})");
+                    setting = $.extend(defaultSetting, htmlsetting, options);
+                }
                 if(setting.url===undefined){
                     console.error('ajaxselect must has url option!');
                     return;

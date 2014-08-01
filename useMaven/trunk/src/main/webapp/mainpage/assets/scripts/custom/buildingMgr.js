@@ -3,13 +3,7 @@
  */
 var buildingMgr = function(){
 
-    var buildingTree = $('#buildingTree').jstree({
-        'core' : {
-            'data' : {
-                'url' : 'estate/getBuildingTree.action?id=-1'
-            }
-        }
-    });
+    var buildingTree = $('#buildingTree');
 
     var idSelect;
     var formAction;
@@ -25,6 +19,7 @@ var buildingMgr = function(){
     };
 
     var handlerButton=function(){
+
         $('#addLink').on('click',function(){
             if(getSelectNode()){
                 formAction = 'estate/addbuilding.action';
@@ -74,6 +69,13 @@ var buildingMgr = function(){
     };
     return {
         init:function(){
+            buildingTree.jstree({
+                'core' : {
+                    'data' : {
+                        'url' : 'estate/getBuildingTree.action?id=-1'
+                    }
+                }
+            });
             handlerButton();
         }
     }
