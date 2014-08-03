@@ -1,6 +1,7 @@
 package com.wansan.estate.service;
 
 import com.wansan.estate.model.Building;
+import com.wansan.estate.model.UsertypeEnum;
 import com.wansan.estate.utils.EstateConst;
 import com.wansan.template.core.Blowfish;
 import com.wansan.template.model.Ofuser;
@@ -59,13 +60,13 @@ public class OfuserService implements IOfuserService {
 
     public String save(Ofuser ofuser){
         Blowfish encrpytor = new Blowfish();
-        String newPasswd = encrpytor.encrypt(ofuser.getEncryptedPassword());
+        String newPasswd = encrpytor.encrypt(ofuser.getPlainPassword());
         ofuser.setEncryptedPassword(newPasswd);
         return (String) getSession().save(ofuser);
     }
 
     @Override
-    public Ofuser findGateUserByBuilding(String buildingID) {
+    public Ofuser findUserByBuilding(String buildingID) {
         String hql = "from Ofuser where buildingID = :buildingID";
         Query query = getSession().createQuery(hql);
         query.setParameter("buildingID",buildingID);
@@ -74,10 +75,13 @@ public class OfuserService implements IOfuserService {
 
     public void txAddUser(Ofuser ofuser,Person person) throws IOException {
         save(ofuser);
-        Building building = buildingService.getCommunity(ofuser.getUsername());
-        Ofuser communityUser = findGateUserByBuilding(building.getId());
+        Building commnuity = buildingService.getCommunity(ofuser.getUsername());
+        Ofuser communityUser = findUserByBuilding(commnuity.getId());
         setFriend(ofuser,communityUser);
-        Ofuser gateUser = findGateUserByBuilding(ofuser.getBuildingID());
+
+        Building room = buildingService.findById(ofuser.getBuildingID());
+        Building gate = buildingService.findById(room.getParent());
+        Ofuser gateUser = findUserByBuilding(gate.getId());
         setFriend(ofuser,gateUser);
     }
 
@@ -95,8 +99,8 @@ public class OfuserService implements IOfuserService {
         getSession().saveOrUpdate(ofuser);
     }
 
-    public Map<String,Object> getAllUsers(int page,int rows){
-        Criteria criteria = getSession().createCriteria(Ofuser.class).add(Restrictions.eq("userType","user"));
+    public Map<String,Object> getAllUsers(String typeName,int page,int rows){
+        Criteria criteria = getSession().createCriteria(Ofuser.class).add(Restrictions.eq("userType",typeName));
         Long total = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
         criteria.setProjection(null).setResultTransformer(Criteria.ROOT_ENTITY);
         List<Ofuser> list =  criteria.setMaxResults(rows).setFirstResult((page-1)*rows).list();

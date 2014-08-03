@@ -10,7 +10,7 @@ var communityMgr = function(){
             if(val!='-1'){
                 $('#city').ajaxselect({url:'estate/listCity.action?city='+val,defaultText:'城市'});
                 provinceName = $("option:selected",this).text();
-                $('#district').empty();
+                $('#district').empty().select2('destroy');
             }
         });
 
@@ -28,8 +28,11 @@ var communityMgr = function(){
             if(val!='-1'){
                 wholeName = provinceName+cityName+$("option:selected",this).text();
                 $('#cityName').val(wholeName);
-                console.log(wholeName);
             }
+        });
+
+        $('#editLink').on('click',function(){
+            $('#estateuser').attr('readonly','true');
         });
     };
 
