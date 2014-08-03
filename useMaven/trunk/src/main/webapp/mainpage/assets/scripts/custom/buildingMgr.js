@@ -20,6 +20,9 @@ var buildingMgr = function(){
 
     var handlerButton=function(){
 
+        $('#hideForm').on('click',function(){
+            $('#addFormDiv').slideUp();
+        });
         $('#addLink').on('click',function(){
             if(getSelectNode()){
                 formAction = 'estate/addbuilding.action';
@@ -53,7 +56,7 @@ var buildingMgr = function(){
                 url:formAction,
                 dataType:'json',
                 type:'POST',
-                data:{name:$('#name').val(),parent:idSelect.id},
+                data:{name:$('#name').val(),parent:idSelect.id,isGate:$('#isGate').attr("checked")?$('#isGate').val():""},
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 success:function(jsonData){
                     if(jsonData.status=="SUCCESS"){

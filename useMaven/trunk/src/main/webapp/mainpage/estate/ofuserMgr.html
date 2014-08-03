@@ -5,6 +5,18 @@
             小区用户管理
         </h3>
         <ul class="page-breadcrumb breadcrumb">
+            <li class="btn-group">
+                <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+				<span>
+					用户类型
+				</span>
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu" id="filterList">
+                    <li><a href='javascript:ofuserMgr.filter("user");'>普通用户</a> </li>
+                    <li><a href='javascript:ofuserMgr.filter("gateUser");'>门口机用户</a> </li>
+                </ul>
+            </li>
             <li>
                 <i class="fa fa-home"></i>
                 首页
@@ -36,7 +48,7 @@
             </div>
             <div class="portlet-body">
 
-                <table class="datatable table table-striped table-bordered table-hover" id="gridtable" data-url="estate/userlist.action" >
+                <table class="datatable table table-striped table-bordered table-hover" id="gridtable" data-url="estate/userlist.action?typeName=user" >
                     <thead>
                     <tr>
                         <th data-options="mData:'username',mRender:databaseUtil.checkboxRender" style="width:20px;">

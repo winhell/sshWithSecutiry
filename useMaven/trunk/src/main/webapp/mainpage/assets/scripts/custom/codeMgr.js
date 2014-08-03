@@ -10,7 +10,7 @@ var codeMgr = function(){
             }
             $('#filterList').append(list);
         })
-    }
+    };
     return{
         init:function(){
             $('#type').ajaxselect();

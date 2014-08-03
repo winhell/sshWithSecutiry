@@ -3,16 +3,18 @@ package com.wansan.estate.service;
 import com.wansan.estate.model.Building;
 import com.wansan.estate.model.City;
 import com.wansan.estate.model.Community;
+import com.wansan.estate.model.UsertypeEnum;
 import com.wansan.template.core.Blowfish;
 import com.wansan.template.core.Utils;
-import com.wansan.template.model.Ofuser;
-import com.wansan.template.model.OperEnum;
-import com.wansan.template.model.Person;
-import com.wansan.template.model.Syslog;
+import com.wansan.template.model.*;
 import com.wansan.template.service.BaseDao;
+import com.wansan.template.service.IPersonService;
+import com.wansan.template.service.IRoleService;
 import org.hibernate.Query;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.*;
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +26,11 @@ import java.util.List;
 public class CommunityService extends BaseDao<Community> implements ICommunityService {
 
     private static final String OriginPass = "8888888";
+    @Resource
+    private IRoleService roleService;
+    @Resource
+    private IBuildingService buildingService;
+
     @Override
     public Serializable txSave(Community community,Person person){
 
@@ -37,7 +44,29 @@ public class CommunityService extends BaseDao<Community> implements ICommunitySe
         openfireUser.setEncryptedPassword(ofPasswd);
         openfireUser.setCreationDate(String.valueOf(new Date().getTime()));
         openfireUser.setModificationDate("0");
+        openfireUser.setUserType(UsertypeEnum.community.toString());
+        openfireUser.setBuildingID(newID);
         getSession().save(openfireUser);
+
+        //增加系统用户
+        Person adminUser = new Person();
+        adminUser.setName(username);
+        adminUser.setPassword(Utils.encodePassword(OriginPass, username));
+        adminUser.setEnabled(true);
+        adminUser.setExpired(false);
+        adminUser.setLocked(false);
+        adminUser.setId(newID);
+        adminUser.setCreatetime(Utils.getNow());
+        getSession().save(adminUser);
+
+        //分配用户组
+        Role mgrRole = roleService.findByName("ROLE_MGR").get(0);
+        UserRole userRole = new UserRole();
+        userRole.setId(newID);
+        userRole.setCreatetime(Utils.getNow());
+        userRole.setRoleid(mgrRole.getId());
+        userRole.setUserid(newID);
+        getSession().save(userRole);
 
         //增加地址
         Integer maxRight = (Integer)uniqueResult("select max(rgt) from Building");
@@ -71,8 +100,11 @@ public class CommunityService extends BaseDao<Community> implements ICommunitySe
         for(String id:ids){
             Community community = findById(id);
             Query query = getSession().createQuery("delete from Ofuser where username=:username");
-            query.setParameter("username",community.getEstateuser());
-            query.executeUpdate();
+            query.setParameter("username",community.getEstateuser()).executeUpdate();
+            Query query1 = getSession().createQuery("delete from Person where name=:username");
+            query1.setParameter("username",community.getEstateuser()).executeUpdate();
+
+            buildingService.txDelete(id,person);
             delete(community);
         }
 

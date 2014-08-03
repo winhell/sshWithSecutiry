@@ -5,13 +5,16 @@
 (function($){
     var defaultSetting = {
         showText:'name',
-        defaultText:''
+        defaultText:'',
+        width:180
     };
     var setting;
     var methods={
         init:function(options){
+
             return this.each(function(){
                 var $this = $(this);
+                console.log($this);
                 if($this.data('options')===undefined)
                     setting =  $.extend({},defaultSetting,options);
                 else {
@@ -22,8 +25,10 @@
                     console.error('ajaxselect2 must has url option!');
                     return;
                 }
+                console.log(setting);
                 $this.select2({
                     placeholder: "请选择"+setting.defaultText,
+                    width:setting.width,
                     ajax: {
                         url:setting.url,
                         dataType: 'json',
@@ -31,6 +36,7 @@
                         quietMillis: 100,
                         data: function (term, page) { // page is the one-based page number tracked by Select2
                             return {
+                                q:term,
                                 name: term
                             };
                         },

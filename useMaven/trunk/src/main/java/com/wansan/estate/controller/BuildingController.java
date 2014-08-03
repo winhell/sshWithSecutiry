@@ -28,9 +28,11 @@ public class BuildingController extends BaseController {
     }
 
     @RequestMapping("/addbuilding")
-    public Map<String,Object> add(Building  building){
+    public Map<String,Object> add(Building  building,String isGate){
         try {
-            buildingService.txSave(building,getLoginPerson());
+            String buildingID = (String) buildingService.txSave(building,getLoginPerson());
+            if(null!=isGate&&!"".equals(isGate))
+                buildingService.txSetGateUser(buildingID,getLoginPerson());
             return result(true);
         }catch (Exception e){
             logger.error(e.getMessage());

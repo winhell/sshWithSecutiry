@@ -26,7 +26,7 @@
                     console.error('ajaxselect must has url option!');
                     return;
                 }
-                thisOptions = "<option value='-1'>-请选择"+setting.defaultText+"-</option>";
+                thisOptions = "<option></option>";
                 $.getJSON(setting.url,function(jsondata){
                     if(setting.isMap){       //以Map方式传输数据
                         for(var p in jsondata){
@@ -39,6 +39,9 @@
                         });
                     }
                     $this.append(thisOptions);
+                    $this.select2({
+                        placeholder:"请选择"+setting.defaultText
+                    });
                 });
             })
         }

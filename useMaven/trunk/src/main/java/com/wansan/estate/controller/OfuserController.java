@@ -1,5 +1,6 @@
 package com.wansan.estate.controller;
 
+import com.wansan.estate.model.UsertypeEnum;
 import com.wansan.estate.service.IBuildingService;
 import com.wansan.estate.service.IOfuserService;
 import com.wansan.template.controller.BaseController;
@@ -31,6 +32,7 @@ public class OfuserController extends BaseController {
     @RequestMapping(value = "/addofuser")
     public Map<String,Object> add(Ofuser ofuser){
         try {
+            ofuser.setUserType(UsertypeEnum.user.toString());
             ofuserService.txAddUser(ofuser,getLoginPerson());
             return result(true);
         }catch (Exception e){
@@ -62,8 +64,8 @@ public class OfuserController extends BaseController {
     }
 
     @RequestMapping(value = "/userlist")
-    public Map<String,Object> list(int page,int rows){
-        Map<String,Object> result = ofuserService.getAllUsers(page,rows);
+    public Map<String,Object> list(String typeName,int page,int rows){
+        Map<String,Object> result = ofuserService.getAllUsers(typeName,page,rows);
         result.put("status", ResultEnum.SUCCESS);
         return result;
     }
