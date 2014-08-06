@@ -5,6 +5,7 @@ import com.wansan.template.model.Ofuser;
 import com.wansan.template.model.Person;
 import com.wansan.template.service.IBaseDao;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -16,5 +17,5 @@ public interface IBuildingService extends IBaseDao<Building> {
     public List<Ofuser> findUsersByBuilding(String id,int page,int rows);
     public String getBuildingName(String id);
     public Building getCommunity(String userID);
-    public void txSetGateUser(String buildingID,Person person);
+    public void txSetGateUser(String buildingID,Person person) throws IOException;
 }

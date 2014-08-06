@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -118,14 +119,14 @@ public class BuildingService extends BaseDao<Building> implements IBuildingServi
         return sb.toString();
     }
 
-    public Building getCommunity(String userID){
-        Ofuser user = (Ofuser) getSession().get(Ofuser.class,userID);
+    public Building getCommunity(String buildingID){
+
         String hql = "select p from Building s,Building p where p.lft<=s.lft and p.rgt>=s.rgt and p.parent='#' and s.id = :id order by p.lft";
-        Query query = getSession().createQuery(hql).setParameter("id",user.getBuildingID());
+        Query query = getSession().createQuery(hql).setParameter("id",buildingID);
         return (Building) query.list().get(0);
     }
 
-    public void txSetGateUser(String buildingID,Person person){
+    public void txSetGateUser(String buildingID,Person person) throws IOException {
         String username = "gate"+ Utils.getRandomNumString(8);
         Ofuser user = new Ofuser();
         user.setUsername(username);
@@ -135,5 +136,9 @@ public class BuildingService extends BaseDao<Building> implements IBuildingServi
         user.setCreationDate(String.valueOf(new Date().getTime()));
         user.setModificationDate("0");
         ofuserService.save(user);
+
+        Building community = getCommunity(buildingID);
+        Ofuser communityUser = (Ofuser) publicFind("from Ofuser where buildingID = '"+community.getId()+"'").get(0);
+        ofuserService.setFriend(username,communityUser.getUsername());
     }
 }

@@ -20,6 +20,17 @@ public class Ofuser {
     private String modificationDate;
     private String buildingID;
     private String userType;
+    private Integer priority;
+
+    @Basic
+    @Column(name = "priority")
+    public Integer getPriority() {
+        return priority;
+    }
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
+
 
     @Basic
     @Column(name = "userType")
