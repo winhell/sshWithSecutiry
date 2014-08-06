@@ -109,7 +109,8 @@ public class MenuController extends BaseController{
                 menu.setState("closed");
             }
             else menu.setState("open");
-            resourceService.txSave(menu,oper);
+            String newMenuID = (String) resourceService.txSave(menu,oper);
+            resourceService.txSetRoleResource("super",newMenuID,true);   //新加菜单直接对超级用户授权
             result.put("status", ResultEnum.SUCCESS);
             result.put("msg","菜单添加完成！");
         }catch (HibernateException e){

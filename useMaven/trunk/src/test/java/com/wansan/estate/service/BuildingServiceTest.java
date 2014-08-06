@@ -18,7 +18,7 @@ public class BuildingServiceTest extends BaseTest {
 
     @Test
     public void test() throws Exception {
-        String wholename = buildingService.getBuildingName("user7");
+        String wholename = buildingService.getBuildingName("727b6431-de6d-4727-ba88-1de6110e3d9f");
         Assert.assertNotNull(wholename);
     }
 

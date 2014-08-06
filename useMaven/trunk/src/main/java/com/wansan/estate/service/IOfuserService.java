@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by Administrator on 2014/7/29.
  */
 public interface IOfuserService {
-    public void setFriend(Ofuser user1,Ofuser user2) throws IOException;
+    public void setFriend(String user1,String user2) throws IOException;
     public String save(Ofuser ofuser);
     public Ofuser findUserByBuilding(String buildingID);
     public void txAddUser(Ofuser ofuser,Person person) throws IOException;

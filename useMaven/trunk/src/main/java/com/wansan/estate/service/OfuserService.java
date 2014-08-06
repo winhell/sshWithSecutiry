@@ -42,12 +42,12 @@ public class OfuserService implements IOfuserService {
     }
 
     @Override
-    public void setFriend(Ofuser ofuser,Ofuser user2) throws IOException,RuntimeException {
+    public void setFriend(String user1,String user2) throws IOException,RuntimeException {
         URL url = new URL(EstateConst.OPENFIREURL +
                 "/plugins/updateRosterService/rosterservice/" +
                 "certificate=huangxuejian&password=123" +
-                "&userlist=" + ofuser.getUsername() +
-                "," + user2.getUsername() + "&groups=gate,users");
+                "&userlist=" + user1 +
+                "," + user2 + "&groups=gate,users");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setConnectTimeout(10000);
@@ -77,12 +77,12 @@ public class OfuserService implements IOfuserService {
         save(ofuser);
         Building commnuity = buildingService.getCommunity(ofuser.getUsername());
         Ofuser communityUser = findUserByBuilding(commnuity.getId());
-        setFriend(ofuser,communityUser);
+        setFriend(ofuser.getUsername(),communityUser.getUsername());
 
         Building room = buildingService.findById(ofuser.getBuildingID());
         Building gate = buildingService.findById(room.getParent());
         Ofuser gateUser = findUserByBuilding(gate.getId());
-        setFriend(ofuser,gateUser);
+        setFriend(ofuser.getUsername(),gateUser.getUsername());
     }
 
     @Override
