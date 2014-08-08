@@ -91,6 +91,7 @@
 
     <bean id="springFactory" class="com.wansan.template.core.SpringFactory"/>
 
+
     <tx:advice id="smAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="tx*" propagation="REQUIRED" />  <!-- 对tx开头的方法进行事务管理  propagation="REQUIRED"如果存在一个事务，则支持当前事务。如果没有事务则开启。 -->
