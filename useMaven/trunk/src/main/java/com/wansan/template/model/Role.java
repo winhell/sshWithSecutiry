@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * Created by Administrator on 14-4-15.
  */
 @Entity
-@Table(name = "Role")
+@Table(name = "role")
 public class Role extends BasePojo{
 
     @Override

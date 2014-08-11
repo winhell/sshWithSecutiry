@@ -8,12 +8,10 @@ import com.wansan.template.core.Blowfish;
 import com.wansan.template.core.Utils;
 import com.wansan.template.model.*;
 import com.wansan.template.service.BaseDao;
-import com.wansan.template.service.IPersonService;
 import com.wansan.template.service.IRoleService;
 import org.hibernate.Query;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.*;
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.Date;

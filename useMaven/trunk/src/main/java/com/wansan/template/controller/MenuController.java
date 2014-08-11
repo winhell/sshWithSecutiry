@@ -52,7 +52,7 @@ public class MenuController extends BaseController{
         return tree;
     }
 
-    //todo:finish the jstree data here
+
     @RequestMapping(value = "/getMenuTree")
     public List<Map<String,String>> getMenuTree(String id)
     {

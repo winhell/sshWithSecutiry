@@ -1,5 +1,7 @@
 package com.wansan.template.controller;
 
+import com.wansan.estate.model.NoticetypeEnum;
+import com.wansan.estate.utils.NoticetypeEditor;
 import com.wansan.template.core.CodeEnumEditor;
 import com.wansan.template.core.ResultEnumEditor;
 import com.wansan.template.model.CodeEnum;
@@ -66,7 +68,8 @@ public class BaseController {
         CustomDateEditor datetimeEditor = new CustomDateEditor(dfLong, true);
         binder.registerCustomEditor(Date.class, dateEditor);
         binder.registerCustomEditor(Timestamp.class, datetimeEditor);
-        binder.registerCustomEditor(CodeEnum.class,new CodeEnumEditor());
-        binder.registerCustomEditor(ResultEnum.class, new ResultEnumEditor());
+//        binder.registerCustomEditor(CodeEnum.class,new CodeEnumEditor());
+//        binder.registerCustomEditor(ResultEnum.class, new ResultEnumEditor());
+//        binder.registerCustomEditor(NoticetypeEnum.class,new NoticetypeEditor());
     }
 }

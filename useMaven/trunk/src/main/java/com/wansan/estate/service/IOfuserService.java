@@ -14,9 +14,10 @@ import java.util.Map;
 public interface IOfuserService {
     public void setFriend(String user1,String user2) throws IOException;
     public String save(Ofuser ofuser);
-    public Ofuser findUserByBuilding(String buildingID);
+    public List<Ofuser> findUserByBuilding(String buildingID);
     public void txAddUser(Ofuser ofuser,Person person) throws IOException;
     public void txDelete(String idList,Person person);
     public void txUpdate(Ofuser ofuser,Person person);
     public Map<String,Object> getAllUsers(String typeName,int page,int rows);
+    public Ofuser findByUsername(String username);
 }

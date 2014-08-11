@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public interface ISystemcodeService extends IBaseDao<Systemcode> {
 
-    public Map<Integer,String> getCodetypeList();
+    public Map<String,String> getCodetypeList();
     public String getCodeString(CodeEnum type,int code);
     public int getCode(CodeEnum type,String codeName);
     public Map<String,String> getCodeMap(CodeEnum type);

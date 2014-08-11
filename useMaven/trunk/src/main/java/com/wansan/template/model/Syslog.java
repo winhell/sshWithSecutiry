@@ -1,15 +1,13 @@
 package com.wansan.template.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
  * Created by Administrator on 14-5-7.
  */
 @Entity
+@Table(name = "syslog")
 public class Syslog extends BasePojo{
 
     private String userid;
