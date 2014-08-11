@@ -6,11 +6,13 @@ import com.wansan.template.model.BasePojo;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by Administrator on 2014/7/23.
  */
 @Entity
+@Table(name = "building")
 public class Building extends BasePojo {
     private String text;
     private String parent;

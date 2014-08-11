@@ -11,6 +11,7 @@ import java.sql.Timestamp;
  * Created by Administrator on 14-7-21.
  */
 @Entity
+@Table(name = "community")
 public class Community extends BasePojo{
 
     private Short cityId;

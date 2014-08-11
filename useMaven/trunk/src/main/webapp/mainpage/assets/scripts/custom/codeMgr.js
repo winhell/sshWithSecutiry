@@ -4,9 +4,9 @@
 var codeMgr = function(){
     var filterHandler = function(){
         $.getJSON("system/getCodeTypeList.action",function(jsonData){
-            var list = "<li><a href='javascript:codeMgr.filter(-1);'>全部</a> </li>";
+            var list = "<li><a href='javascript:codeMgr.filter(\"all\");'>全部</a> </li>";
             for(var p in jsonData){
-                list += "<li><a href='javascript:codeMgr.filter("+p+");'>"+jsonData[p]+"</a></li>";
+                list += "<li><a href='javascript:codeMgr.filter(\""+p+"\");'>"+jsonData[p]+"</a></li>";
             }
             $('#filterList').append(list);
         })

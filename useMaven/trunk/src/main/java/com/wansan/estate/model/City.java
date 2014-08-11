@@ -1,14 +1,12 @@
 package com.wansan.estate.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Administrator on 2014/7/22.
  */
 @Entity
+@Table(name = "city")
 public class City {
     private short id;
     private short parentId;

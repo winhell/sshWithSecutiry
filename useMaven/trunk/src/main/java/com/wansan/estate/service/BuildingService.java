@@ -28,17 +28,6 @@ public class BuildingService extends BaseDao<Building> implements IBuildingServi
     @Override
     public Serializable txSave(final Building building,Person person){
 
-//        getSession().doWork(
-//                new Work() {
-//                    @Override
-//                    public void execute(Connection connection) throws SQLException {
-//                        CallableStatement cs = connection.prepareCall("{call InsertBuilding(?,?)}");
-//                        cs.setString(1,building.getName());
-//                        cs.setString(2,building.getParent());
-//                        cs.executeUpdate();
-//                    }
-//                }
-//        );
         Building parent = findById(building.getParent());
         Query query = getSession().createQuery("update Building set rgt=rgt+2 where rgt>:pleft");
         query.setParameter("pleft",parent.getLft());
@@ -56,16 +45,6 @@ public class BuildingService extends BaseDao<Building> implements IBuildingServi
 
     @Override
     public void txDelete(final String idList,Person person){
-//        getSession().doWork(
-//                new Work() {
-//                    @Override
-//                    public void execute(Connection connection) throws SQLException {
-//                        CallableStatement cs = connection.prepareCall("{call DeleteBuilding(?)}");
-//                        cs.setString(1,idList);
-//                        cs.executeUpdate();
-//                    }
-//                }
-//        );
 
         Building building = findById(idList);
         Integer width = building.getRgt()-building.getLft()+1;

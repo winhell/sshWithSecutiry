@@ -16,6 +16,7 @@ import java.util.List;
  * Created by Administrator on 14-7-18.
  */
 @Entity
+@Table(name = "person")
 public class Person extends BasePojo implements UserDetails{
 
     private String password;

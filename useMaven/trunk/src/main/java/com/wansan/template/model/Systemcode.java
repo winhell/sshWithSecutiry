@@ -7,6 +7,7 @@ import java.sql.Timestamp;
  * Created by Administrator on 14-7-13.
  */
 @Entity
+@Table(name = "systemcode")
 public class Systemcode extends BasePojo{
 
     private CodeEnum type;

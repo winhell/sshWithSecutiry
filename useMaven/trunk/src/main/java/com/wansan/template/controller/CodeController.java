@@ -24,7 +24,7 @@ public class CodeController extends BaseController{
     private ISystemcodeService systemcodeService;
 
     @RequestMapping(value = "/getCodeTypeList")
-    public Map<Integer,String> getTypeList(){
+    public Map<String,String> getTypeList(){
         return systemcodeService.getCodetypeList();
     }
 
@@ -34,12 +34,12 @@ public class CodeController extends BaseController{
     }
 
     @RequestMapping(value = "/getAllCode")
-    public Map<String,Object> getAll(int codeIndex,int page,int rows){
+    public Map<String,Object> getAll(String codeIndex,int page,int rows){
         Map<String,Object> result;
-        if(codeIndex==-1)
+        if(codeIndex.equals("all"))
             result = systemcodeService.findByMapWithCond(null,page,rows,"type,code",true);
         else {
-            CodeEnum codeEnum = CodeEnum.values()[codeIndex];
+            CodeEnum codeEnum = CodeEnum.valueOf(codeIndex);
             Map<String,Object> params = new HashMap<>();
             params.put("type =",codeEnum);
             result = systemcodeService.findByMapWithCond(params,page,rows,"type,code",true);

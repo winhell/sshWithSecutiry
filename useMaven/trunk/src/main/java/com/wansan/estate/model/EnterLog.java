@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  * Created by Administrator on 14-7-21.
  */
 @Entity
-@Table(name = "enter_log", schema = "", catalog = "openfiredb")
+@Table(name = "enter_log")
 public class EnterLog {
     private String id;
     private String name;

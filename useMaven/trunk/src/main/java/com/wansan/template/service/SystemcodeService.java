@@ -15,10 +15,10 @@ import java.util.Map;
 public class SystemcodeService extends BaseDao<Systemcode> implements ISystemcodeService {
 
     @Override
-    public Map<Integer, String> getCodetypeList() {
-        Map<Integer,String> result = new HashMap<>();
+    public Map<String, String> getCodetypeList() {
+        Map<String,String> result = new HashMap<>();
         for(CodeEnum c:CodeEnum.values()){
-            result.put(c.ordinal(),c.toString());
+            result.put(c.name(),c.toString());
         }
         return result;
     }

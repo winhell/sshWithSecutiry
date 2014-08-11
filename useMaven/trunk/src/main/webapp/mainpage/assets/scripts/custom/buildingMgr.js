@@ -77,7 +77,12 @@ var buildingMgr = function(){
                     'data' : {
                         'url' : 'estate/getBuildingTree.action?id=-1'
                     }
-                }
+                },'types':{
+                    'default':{
+                        "icon" : "glyphicon glyphicon-home"
+                    }
+                },
+                "plugins" : [ "types" ]
             });
             handlerButton();
         }
