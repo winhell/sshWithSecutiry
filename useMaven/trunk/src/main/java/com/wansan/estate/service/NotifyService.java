@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -29,13 +30,14 @@ public class NotifyService extends BaseDao<Notice> implements INotifyService {
         String newID = (String)save(notice);
         switch (notice.getType()){
             case broadcast:
-                String msg = notice.getName()+notice.getContent();
+                String msg = notice.getName()+":"+notice.getContent();
                 try {
-                    String returnStr = EstateUtils.callOfService("/messageservice","type=0&message="+msg);
+                    msg = URLEncoder.encode(msg,"UTF-8");
+                    String returnStr = EstateUtils.callOfService("/messageservice","type=0&msg="+msg);
                     logger.info(person.getName()+" send message "+returnStr);
                     logger.info("Message:"+msg);
                 } catch (IOException e) {
-                    throw new RuntimeException();
+                    throw new RuntimeException("通知发送失败！"+e.getMessage());
                 }
                 break;
             case specical:
@@ -58,6 +60,7 @@ public class NotifyService extends BaseDao<Notice> implements INotifyService {
         syslog.setUserid(person.getName());
         syslog.setName(OperEnum.CREATE.toString());
         syslog.setComment("发通知"+notice.getName());
+        getSession().save(syslog);
         return newID;
     }
 }

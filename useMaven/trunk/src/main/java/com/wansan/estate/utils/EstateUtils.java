@@ -23,6 +23,7 @@ public class EstateUtils {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setConnectTimeout(10000);
+
         if(connection.getResponseCode()==200)
             return IOUtils.toString(connection.getInputStream(), "UTF-8");
         return ResultEnum.FAIL.toString();
