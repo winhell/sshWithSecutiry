@@ -28,7 +28,7 @@ public class Notice extends BasePojo {
     }
 
     @Basic
-    @Column(name = "to")
+    @Column(name = "receiverRoom")
     public String getTo(){
         return to;
     }
