@@ -18,4 +18,6 @@ public interface IBuildingService extends IBaseDao<Building> {
     public String getBuildingName(String id);
     public Building getCommunity(String userID);
     public void txSetGateUser(String buildingID,Person person) throws IOException;
+    public String getRoomIDByName(String gateID,String roomName);
+    public void txAutoCreate(String buildingID,int unitNum,int floorNum,int roomNum) throws IOException;
 }

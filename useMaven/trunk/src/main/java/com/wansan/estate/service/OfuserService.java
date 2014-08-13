@@ -3,6 +3,7 @@ package com.wansan.estate.service;
 import com.wansan.estate.model.Building;
 import com.wansan.estate.utils.EstateUtils;
 import com.wansan.template.core.Blowfish;
+import com.wansan.template.core.Utils;
 import com.wansan.template.model.Ofuser;
 import com.wansan.template.model.Person;
 import com.wansan.template.model.ResultEnum;
@@ -19,6 +20,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,9 +62,17 @@ public class OfuserService implements IOfuserService {
     }
 
     public String save(Ofuser ofuser){
+        List<Ofuser> ofusers = findUserByBuilding(ofuser.getBuildingID());
+        if(ofusers.size()==0)
+            ofuser.setPriority(0);
+        else
+            ofuser.setPriority(ofusers.size());
+
         Blowfish encrpytor = new Blowfish();
         String newPasswd = encrpytor.encrypt(ofuser.getPlainPassword());
         ofuser.setEncryptedPassword(newPasswd);
+        ofuser.setCreationDate(String.valueOf(Utils.getNow().getTime()));
+        ofuser.setModificationDate("0");
         return (String) getSession().save(ofuser);
     }
 
@@ -78,7 +88,7 @@ public class OfuserService implements IOfuserService {
     public void txAddUser(Ofuser ofuser,Person person) throws IOException {
 
         save(ofuser);
-        Building commnuity = buildingService.getCommunity(ofuser.getUsername());
+        Building commnuity = buildingService.getCommunity(ofuser.getBuildingID());
         Ofuser communityUser = findUserByBuilding(commnuity.getId()).get(0);
         setFriend(ofuser.getUsername(),communityUser.getUsername());
 
@@ -118,5 +128,11 @@ public class OfuserService implements IOfuserService {
 
     public Ofuser findByUsername(String username){
         return (Ofuser) getSession().load(Ofuser.class,username);
+    }
+
+    public List<Ofuser> findByGate(String gateUsername,String roomName){
+        Ofuser gateUser = findByUsername(gateUsername);
+        String roomID = buildingService.getRoomIDByName(gateUser.getBuildingID(),roomName);
+        return findUserByBuilding(roomID);
     }
 }

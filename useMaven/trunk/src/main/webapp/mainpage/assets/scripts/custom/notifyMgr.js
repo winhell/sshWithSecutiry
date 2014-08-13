@@ -1,8 +1,9 @@
 /**
- * Created by Administrator on 2014/7/31.
+ * Created by Administrator on 2014/8/12.
  */
-var ofuserMgr = function(){
+var notifyMgr = function(){
 
+    var buildingID;
     var buildingTree = $('#buildingTree').jstree({
         'core' : {
             'data' : {
@@ -16,13 +17,24 @@ var ofuserMgr = function(){
         "plugins" : [ "types" ]
     });
 
-    var buildingID;
+    var handleButton = function(){
+        $('#type').on('change',function(){          //更改按钮状态
+            var n_type = $(this).val();
+            if(n_type=="broadcast"){
+                $('#buildingName').val("");
+                $('#buildingSelection').addClass("disabled");
+            }
+            if(n_type=="specical"){
+                $('#buildingSelection').removeClass("disabled");
+            }
+        });
 
-    var handleButtons = function(){
+        //显示地址对话框
         $('#buildingSelection').on('click',function(){
             $('#address').modal('show');
         });
 
+        //显示房间全名
         $('#selectAddress').on('click',function(){
             var buildingSelect = buildingTree.jstree('get_selected',true);
             if(buildingSelect.length<1||!buildingTree.jstree('is_leaf',buildingSelect[0])){
@@ -31,7 +43,7 @@ var ofuserMgr = function(){
                 buildingID = buildingSelect[0].id;
                 $.get('estate/getUserAddress.action',{id:buildingID},function(resText){
                     $('#buildingName').val(resText);
-                    $('#buildingID').val(buildingID);
+                    $('#to').val(buildingID);
                     $('#address').modal('hide');
                 });
 
@@ -41,14 +53,11 @@ var ofuserMgr = function(){
     };
     return{
         init:function(){
-            handleButtons();
-        },
-        filter:function(typeName){
-            var opts = {};
-            opts.action = 'estate/userlist.action?typeName='+typeName;
-            $('#gridtable').data('tableManager').initData(opts,false);
+            handleButton();
+            $('#type').select2({
+                placeholder:"请选择通告对象"
+            });
         }
     }
-
 }();
-ofuserMgr.init();
+notifyMgr.init();

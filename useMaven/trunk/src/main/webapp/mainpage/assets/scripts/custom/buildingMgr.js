@@ -18,6 +18,15 @@ var buildingMgr = function(){
         return true;
     };
 
+    var formOptions = {
+        url:'estate/autoCreate.action',
+        target:'#createForm',
+        dataType:'json',
+        success:function(jsonData){
+            buildingTree.jstree('refresh');
+        }
+    };
+
     var handlerButton=function(){
 
         $('#hideForm').on('click',function(){
@@ -65,13 +74,22 @@ var buildingMgr = function(){
                     }
                     bootbox.alert(jsonData.msg);
                     $('#name').val("");
+                    $('#isGate').removeAttr("checked");
                 }
             });
 
         });
+
+        $('#createButton').on('click',function(){
+            if(getSelectNode()) {
+                $('#parentID').val(idSelect.id);
+                $('#createRoomDiv').modal('show');
+            }
+        });
     };
     return {
         init:function(){
+            $('#createForm').ajaxForm(formOptions);
             buildingTree.jstree({
                 'core' : {
                     'data' : {
@@ -85,6 +103,7 @@ var buildingMgr = function(){
                 "plugins" : [ "types" ]
             });
             handlerButton();
+
         }
     }
 }();

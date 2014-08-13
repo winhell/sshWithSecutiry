@@ -79,6 +79,15 @@ public class BuildingService extends BaseDao<Building> implements IBuildingServi
         return query.list().toArray();
     }
 
+    public String getRoomIDByName(String gateID,String roomName){
+        String hql =
+                "select s.id from Building s,Building p where s.lft between p.lft and p.rgt and s.rgt=s.lft+1 and p.id = :id and s.name = :roomName";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("id",gateID);
+        query.setParameter("roomName",roomName);
+        return (String) query.list().get(0);
+    }
+
     public List<Ofuser> findUsersByBuilding(String id,int page,int rows){
         String hql = "from Ofuser where buildingID in ("+
                 "select s.id from Building s,Building p where s.lft between p.lft and p.rgt and s.rgt=s.lft+1 and p.id = :id)";
@@ -119,5 +128,30 @@ public class BuildingService extends BaseDao<Building> implements IBuildingServi
         Building community = getCommunity(buildingID);
         Ofuser communityUser = (Ofuser) publicFind("from Ofuser where buildingID = '"+community.getId()+"'").get(0);
         ofuserService.setFriend(username,communityUser.getUsername());
+    }
+
+    public void txAutoCreate(String buildingID,int unitNum,int floorNum,int roomNum) throws IOException {
+        String[] unitIDs = new String[unitNum];
+        for(int i=0;i<unitNum;i++){
+            String unitName = String.valueOf(i+1)+"单元";
+            Building building = new Building();
+            building.setParent(buildingID);
+            building.setText(unitName);
+            building.setName(unitName);
+            unitIDs[i] = (String) txSave(building, null);
+        }
+        for(String unitID:unitIDs){
+            txSetGateUser(unitID,null);
+            for(int f=0;f<floorNum;f++)
+                for(int r=0;r<roomNum;r++){
+                    String unitName = String.valueOf(f+1)+"0"+String.valueOf(r+1);
+                    Building room = new Building();
+                    room.setParent(unitID);
+                    room.setText(unitName);
+                    room.setName(unitName);
+                    txSave(room,null);
+                }
+        }
+
     }
 }

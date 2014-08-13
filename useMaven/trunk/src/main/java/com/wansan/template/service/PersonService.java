@@ -43,6 +43,9 @@ public class PersonService extends BaseDao<Person> implements IPersonService {
         syslog.setCreatetime(Utils.getNow());
         syslog.setComment("user "+oper.getName()+" 创建用户--> "+person.getName());
         getSession().save(syslog);
+        person.setLocked(false);
+        person.setExpired(false);
+        person.setEnabled(true);
         return save(person);
     }
 
