@@ -20,4 +20,5 @@ public interface IOfuserService {
     public void txUpdate(Ofuser ofuser,Person person);
     public Map<String,Object> getAllUsers(String typeName,int page,int rows);
     public Ofuser findByUsername(String username);
+    public List<Ofuser> findByGate(String gateUsername,String roomName);
 }

@@ -50,4 +50,16 @@ public class BuildingController extends BaseController {
             return result(false);
         }
     }
+
+    @RequestMapping(value = "/autoCreate")
+    public Map<String,Object> create(String parentID,int floorNum,int unitNum,int roomNum){
+        try {
+            buildingService.txAutoCreate(parentID,unitNum,floorNum,roomNum);
+            return result(true);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return result(false);
+        }
+
+    }
 }

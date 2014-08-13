@@ -33,6 +33,7 @@ public class OfuserController extends BaseController {
     public Map<String,Object> add(Ofuser ofuser){
         try {
             ofuser.setUserType(UsertypeEnum.user.toString());
+            ofuser.setPlainPassword("123");
             ofuserService.txAddUser(ofuser,getLoginPerson());
             return result(true);
         }catch (Exception e){
