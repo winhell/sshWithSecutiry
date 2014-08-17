@@ -42,12 +42,13 @@
                 <table class="datatable table table-striped table-bordered table-hover" data-url="system/getAllResources.action" id="gridtable">
                     <thead>
                     <tr>
-                        <th data-options="mData:'id',mRender:databaseUtil.checkboxRender" style="width:40px;">
+                        <th data-options="mData:'id',mRender:databaseUtil.checkboxRender" style="width:20px;">
                             <input type="checkbox" class="group-checkable" data-set="#gridtable .checkboxes">
                         </th>
-                        <th data-options="mData:'url'" style="width:20px;">url</th>
-                        <th data-options="mData:'comment'" style="width:20px;">资源说明</th>
-                        <th data-options="mData:'id',mRender:resourceMgr.assignRender" style="width:20px;">指派角色</th>
+                        <th data-options="mData:'url'">url</th>
+                        <th data-options="mData:'comment'">资源说明</th>
+                        <th data-options="mData:'showOrder'">执行顺序</th>
+                        <th data-options="mData:'id',mRender:resourceMgr.assignRender">指派角色</th>
                     </tr>
                     </thead>
                 </table>

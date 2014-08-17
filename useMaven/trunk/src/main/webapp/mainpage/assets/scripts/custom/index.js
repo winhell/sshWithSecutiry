@@ -35,7 +35,7 @@ var Index = function () {
                 $(".page-sidebar-menu").append(menulist);
             }
         });
-    }
+    };
     return {
 
         //main function
@@ -43,7 +43,7 @@ var Index = function () {
             initMenu();
             $.get('getLoginUser.action',function(resText){
                 $('.username').html(resText);
-            })
+            });
         }
     }
 }();

@@ -55,6 +55,7 @@ public class CommunityService extends BaseDao<Community> implements ICommunitySe
         adminUser.setLocked(false);
         adminUser.setId(newID);
         adminUser.setCreatetime(Utils.getNow());
+        adminUser.setComment(newID);
         getSession().save(adminUser);
 
         //分配用户组
