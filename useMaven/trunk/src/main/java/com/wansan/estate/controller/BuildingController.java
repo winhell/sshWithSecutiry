@@ -3,6 +3,7 @@ package com.wansan.estate.controller;
 import com.wansan.estate.model.Building;
 import com.wansan.estate.service.IBuildingService;
 import com.wansan.template.controller.BaseController;
+import com.wansan.template.model.Person;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,11 @@ public class BuildingController extends BaseController {
 
     @RequestMapping("/getBuildingTree")
     public List<Building> getBuildingTree(String id){
-        return buildingService.getBuildingTree(id);
+        Person person = getLoginPerson();
+        if(null==person.getComment()||"".equals(person.getComment()))
+            return buildingService.getBuildingTree(id);
+        else
+            return buildingService.getBuildingTree(person.getComment());
     }
 
     @RequestMapping("/addbuilding")

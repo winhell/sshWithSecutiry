@@ -27,7 +27,7 @@
             _.ele = ele;
             _.initData();
             return _;
-        }
+        };
         _.initData = function (opts, flag) {
             //alert("发送请求");
             _.opts = $.extend({}, _.opts, opts);
@@ -48,7 +48,7 @@
                 }
             }, "json")
 
-        }
+        };
         _.initTable = function (data) {
             //_.ele
             $("#" + _.ele.attr("id")).dataTable({
@@ -67,6 +67,7 @@
                 "aoColumns": _.opts.aoColumns,
                 "fnInitComplete": function () {
                     App && App.initUniform();
+                    $('.dataTables_wrapper').addClass("table-responsive");
                 }
 
             })
@@ -112,7 +113,7 @@
                 })
             }
         }
-    }
+    };
     $.fn.tableManager = function (opts) {
         //var opts=$.extend({},$.fn.tableManager.defaluts,opts);
         return this.each(function () {
@@ -121,7 +122,7 @@
             that.data("tableManager", manager);
         })
 
-    }
+    };
     $.fn.tableManager.defaults = {
         action: "",//取表格数据Action
         param: {//两个基本参数
@@ -132,7 +133,7 @@
         pageProp: "total",//返回的集合总页数的属性名
         bootpag: false,//值要么为false(不显示分页),要不为bootpag选项
         pageTotal: null
-    }
+    };
     $(document).on("change", ".group-checkable", function () {
         var set = jQuery(this).attr("data-set");
         var checked = jQuery(this).is(":checked");
@@ -151,4 +152,4 @@
     }).on("change", "tbody tr .checkboxes", function () {
         $(this).parents('tr').toggleClass("active");
     });
-})(jQuery)
+})(jQuery);

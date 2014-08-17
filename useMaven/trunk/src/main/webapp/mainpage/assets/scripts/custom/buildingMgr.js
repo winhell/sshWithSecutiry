@@ -35,6 +35,7 @@ var buildingMgr = function(){
         $('#addLink').on('click',function(){
             if(getSelectNode()){
                 formAction = 'estate/addbuilding.action';
+                $('#name').val("");
                 $('#addFormDiv').slideDown();
             }
         });
@@ -90,6 +91,7 @@ var buildingMgr = function(){
     return {
         init:function(){
             $('#createForm').ajaxForm(formOptions);
+            $('#isGate').bootstrapSwitch();
             buildingTree.jstree({
                 'core' : {
                     'data' : {
@@ -100,7 +102,7 @@ var buildingMgr = function(){
                         "icon" : "glyphicon glyphicon-home"
                     }
                 },
-                "plugins" : [ "types" ]
+                "plugins" : [ "types" ,"sort"]
             });
             handlerButton();
 
