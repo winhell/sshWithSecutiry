@@ -18,4 +18,5 @@ public interface IResourceService extends IBaseDao<Resource> {
     public Map getAllResource(int page,int rows);
     public Map getAllMenus(int page, int rows);
     public String getRolesByResource(String resourceId);
+    public void txAddRoleResource(String roleId,String resourceId,String resourceType);
 }

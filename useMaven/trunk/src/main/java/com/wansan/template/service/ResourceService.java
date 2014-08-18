@@ -44,6 +44,7 @@ public class ResourceService extends BaseDao<Resource> implements IResourceServi
         return resources;
     }
 
+    //通过idList更新角色资源关系
     public void txSetRoleResource(String id,String idList,boolean isMenu){
         String[] ids = idList.split(",");
         String resourceType;
@@ -104,5 +105,16 @@ public class ResourceService extends BaseDao<Resource> implements IResourceServi
         for(Object item:rolesList)
             builder.append(((RoleResource)item).getRoleId()).append(",");
         return builder.toString();
+    }
+
+    //直接添加一条角色资源关系
+    public void txAddRoleResource(String roleId,String resourceId,String resourceType){
+        RoleResource roleResource = new RoleResource();
+        roleResource.setResourceId(resourceId);
+        roleResource.setRoleId(roleId);
+        roleResource.setId(Utils.getNewUUID());
+        roleResource.setCreatetime(Utils.getNow());
+        roleResource.setName(resourceType);
+        getSession().save(roleResource);
     }
 }
