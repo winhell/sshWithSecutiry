@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +42,12 @@ public class OfuserController extends BaseController {
             logger.error(e.getMessage());
             return result(false);
         }
+    }
+
+    @RequestMapping(value = "/searchofuser")
+    public Map<String,Object> search(String field,String text) throws UnsupportedEncodingException {
+        String deText = URLDecoder.decode(text,"UTF-8");
+        return ofuserService.findByName(field,deText);
     }
 
     @RequestMapping(value = "/deleteofuser")

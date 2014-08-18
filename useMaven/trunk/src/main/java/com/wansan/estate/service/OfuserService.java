@@ -135,4 +135,15 @@ public class OfuserService implements IOfuserService {
         String roomID = buildingService.getRoomIDByName(gateUser.getBuildingID(),roomName);
         return findUserByBuilding(roomID);
     }
+
+    public Map<String,Object> findByName(String field,String text){
+        String hql = "from Ofuser where "+field+ " like '%"+text+"%'";
+        Query query = getSession().createQuery(hql);
+        List<Ofuser> list = query.list();
+        Map<String,Object> result = new HashMap<>();
+        result.put("rows",list);
+        result.put("total",list.size());
+        result.put("status",ResultEnum.SUCCESS);
+        return result;
+    }
 }

@@ -56,27 +56,7 @@ public class MenuController extends BaseController{
     @RequestMapping(value = "/getMenuTree")
     public List<Map<String,String>> getMenuTree(String id)
     {
-//        String id = request.getParameter("id");
-//        List<com.wansan.template.model.Resource> tree;
-//        if(id==null||"".equals(id)||"#".equals(id))
-//            tree = resourceService.getParent();
-//        else
-//            tree = resourceService.getChildren(id);
-//        List<Map<String,String>> result = new ArrayList<>();
-//        for(com.wansan.template.model.Resource item:tree){
-//            Map<String,String> menuitem = new HashMap<>();
-//            menuitem.put("id",item.getId());
-//            if(item.getParentId().equals("0")){
-//                menuitem.put("children","true");
-//                menuitem.put("type","root");
-//                menuitem.put("parent","#");
-//            }else{
-//                menuitem.put("parent",item.getParentId());
-//                menuitem.put("children","false");
-//            }
-//            menuitem.put("text",item.getName());
-//            result.add(menuitem);
-//        }
+
         List<com.wansan.template.model.Resource> menuList = (List<com.wansan.template.model.Resource>) resourceService.getAllMenus(-1,0).get("rows");
         List<Map<String,String>> result = new ArrayList<>();
         for(com.wansan.template.model.Resource menuItem:menuList){
@@ -110,7 +90,7 @@ public class MenuController extends BaseController{
             }
             else menu.setState("open");
             String newMenuID = (String) resourceService.txSave(menu,oper);
-            resourceService.txSetRoleResource("super",newMenuID,true);   //新加菜单直接对超级用户授权
+            resourceService.txAddRoleResource("super",newMenuID,"menu");   //新加菜单直接对超级用户授权
             result.put("status", ResultEnum.SUCCESS);
             result.put("msg","菜单添加完成！");
         }catch (HibernateException e){
