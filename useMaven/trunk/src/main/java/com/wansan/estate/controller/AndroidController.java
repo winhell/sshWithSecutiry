@@ -1,5 +1,10 @@
 package com.wansan.estate.controller;
 
+import com.wansan.estate.model.AdCol;
+import com.wansan.estate.model.AdContent;
+import com.wansan.estate.model.NoticetypeEnum;
+import com.wansan.estate.service.IAdcolService;
+import com.wansan.estate.service.IAdcontentService;
 import com.wansan.estate.service.IOfuserService;
 import com.wansan.template.controller.BaseController;
 import com.wansan.template.model.Ofuser;
@@ -14,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +35,10 @@ public class AndroidController extends BaseController {
 
     @Resource
     private IOfuserService ofuserService;
+    @Resource
+    private IAdcontentService adcontentService;
+    @Resource
+    private IAdcolService adcolService;
 
     @RequestMapping(value = "/getOfuser")
     public List<Ofuser> getOfuser(String username,String roomName){
@@ -55,6 +65,41 @@ public class AndroidController extends BaseController {
             result.put("msg","Form type is incorrect!");
         }
         return result;
+    }
 
+    @RequestMapping(value = "/getAdList")
+    public List<Map<String,Object>> getAdList(NoticetypeEnum noticetypeEnum){
+        List<Map<String,Object>> result = new ArrayList<>();
+        switch (noticetypeEnum){
+            case adContent:
+                List<AdContent> contentList = adcontentService.listAll();
+                for(AdContent item:contentList){
+                    Map<String,Object> itemMap = new HashMap<>();
+                    itemMap.put("id",item.getId());
+                    itemMap.put("createtime",item.getCreatetime());
+                    result.add(itemMap);
+                }
+                break;
+            case adcol:
+                List<AdCol> colList = adcolService.listAll();
+                for(AdCol item:colList){
+                    Map<String,Object> itemMap = new HashMap<>();
+                    itemMap.put("id",item.getId());
+                    itemMap.put("createtime",item.getCreatetime());
+                    result.add(itemMap);
+                }
+                break;
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/getAdItem")
+    public AdContent getAdItem(String id){
+        return adcontentService.findById(id);
+    }
+
+    @RequestMapping(value = "/getAdcol")
+    public AdCol getAdcol(String id){
+        return adcolService.findById(id);
     }
 }

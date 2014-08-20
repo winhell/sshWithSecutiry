@@ -1,11 +1,12 @@
 package com.wansan.estate.utils;
 
+import com.wansan.estate.model.NoticetypeEnum;
+import com.wansan.template.model.OperEnum;
 import com.wansan.template.model.ResultEnum;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -27,5 +28,9 @@ public class EstateUtils {
         if(connection.getResponseCode()==200)
             return IOUtils.toString(connection.getInputStream(), "UTF-8");
         return ResultEnum.FAIL.toString();
+    }
+
+    public static void sendAdNotify(NoticetypeEnum type,String id,OperEnum operEnum){
+
     }
 }

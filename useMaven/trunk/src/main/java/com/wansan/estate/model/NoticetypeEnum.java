@@ -5,5 +5,7 @@ package com.wansan.estate.model;
  */
 public enum NoticetypeEnum {
     broadcast,
-    specical
+    specical,
+    adcol,
+    adContent
 }
