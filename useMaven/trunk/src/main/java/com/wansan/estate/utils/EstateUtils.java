@@ -30,7 +30,7 @@ public class EstateUtils {
         return ResultEnum.FAIL.toString();
     }
 
-    public static void sendAdNotify(NoticetypeEnum type,String id,OperEnum operEnum){
-
+    public static void sendAdNotify(NoticetypeEnum type,String id,OperEnum operEnum) throws IOException {
+        callOfService("/adservice","adtype="+type.ordinal()+"&uuid="+id+"&handleType="+operEnum.ordinal());
     }
 }
