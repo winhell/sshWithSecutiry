@@ -46,6 +46,7 @@ var ofuserMgr = function(){
         filter:function(typeName){
             var opts = {};
             opts.action = 'estate/userlist.action?typeName='+typeName;
+            $('#userType').val(typeName);
             $('#gridtable').data('tableManager').initData(opts,false);
         }
     }

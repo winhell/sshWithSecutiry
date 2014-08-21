@@ -5,7 +5,6 @@ import com.wansan.estate.model.NoticetypeEnum;
 import com.wansan.estate.service.IAdcontentService;
 import com.wansan.estate.utils.EstateUtils;
 import com.wansan.template.controller.BaseController;
-import com.wansan.template.core.Utils;
 import com.wansan.template.model.OperEnum;
 import com.wansan.template.model.ResultEnum;
 import org.apache.log4j.Logger;

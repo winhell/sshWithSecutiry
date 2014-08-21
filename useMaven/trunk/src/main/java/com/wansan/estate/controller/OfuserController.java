@@ -4,6 +4,7 @@ import com.wansan.estate.model.UsertypeEnum;
 import com.wansan.estate.service.IBuildingService;
 import com.wansan.estate.service.IOfuserService;
 import com.wansan.template.controller.BaseController;
+import com.wansan.template.core.Utils;
 import com.wansan.template.model.Ofuser;
 import com.wansan.template.model.ResultEnum;
 import org.apache.log4j.Logger;
@@ -64,6 +65,8 @@ public class OfuserController extends BaseController {
     @RequestMapping(value = "/updateofuser")
     public Map<String,Object> update(Ofuser ofuser){
         try {
+            String newTime = String.valueOf(Utils.getNow().getTime());
+            ofuser.setModificationDate(newTime);
             ofuserService.txUpdate(ofuser,getLoginPerson());
             return result(true);
         }catch (Exception e){
