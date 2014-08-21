@@ -1,11 +1,10 @@
 package com.wansan.estate.model;
 
+import com.wansan.estate.service.IAdcolService;
+import com.wansan.template.core.SpringFactory;
 import com.wansan.template.model.BasePojo;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Administrator on 2014/8/18.
@@ -106,5 +105,11 @@ public class AdContent extends BasePojo {
         result = 31 * result + (video != null ? video.hashCode() : 0);
         result = 31 * result + (priority != null ? priority.hashCode() : 0);
         return result;
+    }
+
+    @Transient
+    public String getTypeName(){
+        IAdcolService service = (IAdcolService) SpringFactory.getBean("adcolService");
+        return service.findById(colID).getName();
     }
 }

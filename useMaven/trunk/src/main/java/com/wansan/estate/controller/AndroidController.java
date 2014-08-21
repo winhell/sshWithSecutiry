@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,13 +71,14 @@ public class AndroidController extends BaseController {
     @RequestMapping(value = "/getAdList")
     public List<Map<String,Object>> getAdList(NoticetypeEnum noticetypeEnum){
         List<Map<String,Object>> result = new ArrayList<>();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         switch (noticetypeEnum){
             case adContent:
                 List<AdContent> contentList = adcontentService.listAll();
                 for(AdContent item:contentList){
                     Map<String,Object> itemMap = new HashMap<>();
                     itemMap.put("id",item.getId());
-                    itemMap.put("createtime",item.getCreatetime());
+                    itemMap.put("createtime",df.format(item.getCreatetime()));
                     result.add(itemMap);
                 }
                 break;
@@ -85,7 +87,7 @@ public class AndroidController extends BaseController {
                 for(AdCol item:colList){
                     Map<String,Object> itemMap = new HashMap<>();
                     itemMap.put("id",item.getId());
-                    itemMap.put("createtime",item.getCreatetime());
+                    itemMap.put("createtime",df.format(item.getCreatetime()));
                     result.add(itemMap);
                 }
                 break;

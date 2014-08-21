@@ -1252,7 +1252,7 @@ var App = function () {
 
             var html = '<div id="'+id+'" class="app-alerts alert alert-'+options.type+' fade in">' + (options.close ? '<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>' : '' ) + (options.icon != "" ? '<i class="fa-lg fa fa-'+options.icon + '"></i>  ' : '') + options.message+'</div>'
 
-            if (options.reset) {0
+            if (options.reset) {
                 $('.app-alerts').remove();
             }
 

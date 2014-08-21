@@ -7,7 +7,6 @@ import com.wansan.template.core.Utils;
 import com.wansan.template.model.Ofuser;
 import com.wansan.template.model.Person;
 import com.wansan.template.model.ResultEnum;
-import org.apache.commons.io.IOUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -18,9 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +52,7 @@ public class OfuserService implements IOfuserService {
 //            if(!result.equals("success"))
 //
 //        }
-        if(EstateUtils.callOfService("/rosterservice/service","userlist="+user1+","+user2+"&groups=gate,users").equals(ResultEnum.FAIL.toString())){
+        if(EstateUtils.callOfService("/friendservice","userlist="+user1+","+user2+"&groups=gate,users").equals(ResultEnum.FAIL.toString())){
             throw new RuntimeException();
         }
     }

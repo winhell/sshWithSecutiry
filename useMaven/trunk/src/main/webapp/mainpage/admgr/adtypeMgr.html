@@ -1,39 +1,30 @@
 <!-- BEGIN PAGE HEADER-->
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 al">
         <!-- BEGIN PAGE TITLE & BREADCRUMB-->
         <h3 class="page-title">
-            系统字典管理
+            广告分类管理
         </h3>
         <ul class="page-breadcrumb breadcrumb">
-            <li class="btn-group">
-                <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-				<span>
-					类型过滤
-				</span>
-                    <i class="fa fa-angle-down"></i>
-                </button>
-                <ul class="dropdown-menu pull-right" role="menu" id="filterList">
-                </ul>
-            </li>
             <li>
                 <i class="fa fa-home"></i>
                 首页
                 <i class="fa fa-angle-right"></i>
-                系统字典管理
+                广告管理
+                <i class="fa fa-angle-right"></i>
+                广告分类管理
             </li>
         </ul>
         <!-- END PAGE TITLE & BREADCRUMB-->
     </div>
 </div>
 <!-- END PAGE HEADER-->
-<!-- BEGIN PAGE CONTENT-->
 <div class="row">
     <div class="col-md-12">
         <div class="portlet box green">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-cogs"></i>字典列表
+                    <i class="fa fa-cogs"></i>广告分类列表
                 </div>
                 <div class="actions">
                     <a href="javascript:;" class="btn blue" id="addLink"><i class="fa fa-plus"></i> 增加</a>
@@ -48,15 +39,15 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <table class="datatable table table-striped table-bordered table-hover" data-url="system/getAllCode.action?codeIndex=all" id="gridtable">
+                <table class="datatable table table-striped table-bordered table-hover table-condensedt" data-url="admgr/listadcol.action" id="gridtable">
                     <thead>
                     <tr>
                         <th data-options="mData:'id',mRender:databaseUtil.checkboxRender" style="width:20px;">
-                            <input type="checkbox" class="group-checkable" data-set="#gridtable .checkboxes"/>
+                            <input type="checkbox" class="group-checkable" data-set="#gridtable .checkboxes">
                         </th>
-                        <th data-options="mData:'typename'">字典类型</th>
-                        <th data-options="mData:'code'">条目代码</th>
-                        <th data-options="mData:'name'">条目名称</th>
+                        <th data-options="mData:'name'">分类名</th>
+                        <th data-options="mData:'createtime'">创建时间</th>
+                        <th data-options="mData:'adOrder'">显示顺序</th>
                     </tr>
                     </thead>
                 </table>
@@ -75,25 +66,17 @@
                 </div>
                 <div class="portlet-body form">
                     <!-- BEGIN FORM-->
-                    <form class="form-horizontal" id="additemForm" data-path="system" data-func="code" method="post">
+                    <form class="form-horizontal" id="additemForm" data-path="admgr" data-func="adcol" method="post">
                         <div class="form-body">
                             <div class="form-group">
-                                <label class="col-md-3 control-label">字典类型</label>
+                                <label class="col-md-3 control-label">分类名</label>
                                 <div class="col-md-8">
-                                    <select id='type' name="type" class="form-control" data-options="url:'system/getCodeTypeList.action',isMap:true">
-                                    </select>
-                                </div>
+                                    <input id='name' type="text" name="name" class="form-control" placeholder="分类名"></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">字典代码</label>
+                                <label class="col-md-3 control-label">显示顺序</label>
                                 <div class="col-md-8">
-                                    <input id='code' type="text" name="code" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">条目名称</label>
-                                <div class="col-md-8">
-                                    <input id='name' type="text" class="form-control" name="name">
+                                    <input id='adOrder' type="text" class="form-control" name="adOrder" placeholder="角色说明">
                                 </div>
                             </div>
                         </div>
@@ -110,14 +93,8 @@
         </div>
     </div>
 </div>
-<!-- END PAGE CONTENT-->
-<link rel="stylesheet" href="assets/plugins/select2/select2.css" type="text/css"/>
-<link rel="stylesheet" href="assets/plugins/select2/select2-metronic.css" type="text/css"/>
-<script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
 <script type="text/javascript" src="assets/plugins/jquery-bootpag/jquery.bootpag.min.js"></script>
 <script type="text/javascript" src="assets/plugins/data-tables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="assets/scripts/user/jquery.datatable.manager.js"></script>
 <script type="text/javascript" src="assets/scripts/user/jquery.form.js"></script>
 <script type="text/javascript" src="assets/scripts/user/jquery.database.js"></script>
-<script type="text/javascript" src="assets/scripts/user/jquery.ajaxselect.js"></script>
-<script type="text/javascript" src="assets/scripts/custom/codeMgr.js"></script>

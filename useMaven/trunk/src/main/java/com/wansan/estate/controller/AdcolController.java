@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,9 +66,13 @@ public class AdcolController extends BaseController {
 
     @RequestMapping(value = "/listadcol")
     public Map<String,Object> list(int page,int rows){
-        Map<String,Object> result = adcolService.findByMap(null,page,rows,"createtime",false);
+        Map<String,Object> result = adcolService.findByMap(null,page,rows,"adOrder",true);
         result.put("status", ResultEnum.SUCCESS);
         return result;
     }
 
+    @RequestMapping(value = "/getcolList")
+    public List<AdCol> list(){
+        return adcolService.listAll();
+    }
 }

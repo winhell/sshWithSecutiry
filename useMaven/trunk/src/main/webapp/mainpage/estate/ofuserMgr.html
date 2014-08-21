@@ -35,6 +35,19 @@
                     <i class="fa fa-cogs"></i>小区用户列表
                 </div>
                 <div class="actions">
+                    <a class="menu-search">
+                        <i class="fa fa-search search-btn"></i>
+                        <div class="search-box">
+
+                                <div class="input-group">
+                                    <input id="searchText" type="text" placeholder="输入要查找的用户名" class="form-control">
+                    <span class="input-group-btn">
+                      <button class="btn btn-primary" id="searchButton" data-options="searchField:'name'">查找</button>
+                    </span>
+                                </div>
+
+                        </div>
+                    </a>
                     <a href="#" class="btn blue" id="addLink"><i class="fa fa-plus"></i> 增加</a>
                     <a href="#" class="btn yellow" id="editLink">
                         <i class="fa fa-pencil"></i>
@@ -44,6 +57,7 @@
                         <i class="fa fa-trash-o"></i>
                         删除
                     </a>
+
                 </div>
             </div>
             <div class="portlet-body">

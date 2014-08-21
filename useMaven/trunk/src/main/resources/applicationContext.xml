@@ -78,6 +78,8 @@
                 <value>com.wansan.estate.model.EnterLog</value>
                 <value>com.wansan.estate.model.Building</value>
                 <value>com.wansan.estate.model.Notice</value>
+                <value>com.wansan.estate.model.AdCol</value>
+                <value>com.wansan.estate.model.AdContent</value>
             </list>
         </property>
     </bean>
