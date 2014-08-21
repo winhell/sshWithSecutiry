@@ -73,11 +73,7 @@ var databaseUtil = function(){
             var rowData = rows[0];
             for(var item in rowData)
                 $('#'+item).val(rowData[item]).trigger('change');
-            //ofuser没有id字段
-            if(rowData.id===undefined){
-                formOptions.url=path+'/update'+funcPrefix+'.action?username='+rowData.username;
-            }else
-                formOptions.url=path+'/update'+funcPrefix+'.action?id='+rowData.id;
+            formOptions.url=path+'/update'+funcPrefix+'.action?id='+rowData.id;
             $('#additemFormDiv').modal('show');
         });
 
@@ -100,18 +96,22 @@ var databaseUtil = function(){
     };
 
     var handleSearch = function() {
-        if($('#searchButton')===undefined){
+
+        var searchButton = $('#findButton');
+        var searchIcon = $('.search-btn');
+        if(searchButton===undefined){
             return;
         }
-        $('#searchButton').on('click',function(){
+        searchButton.on('click',function(){
             var searchOpts = eval("({"+$(this).data('options')+"})");
+            console.log(searchOpts);
             var searchUrl = path + '/search' + funcPrefix + '.action?field='+searchOpts.searchField+"&text="+encodeURI(encodeURI($('#searchText').val()));
             $('#gridtable').data('tableManager').initData({action:searchUrl},false);
             $('.search-box').slideUp();
         });
 
-        $('.search-btn').click(function () {
-            if($('.search-btn').hasClass('show-search-icon')){
+        searchIcon.click(function () {
+            if($(this).hasClass('show-search-icon')){
                 if ($(window).width()>767) {
                     $('.search-box').fadeOut(300);
                 } else {
@@ -129,14 +129,14 @@ var databaseUtil = function(){
         });
 
         // close search box on body click
-        if($('.search-btn').size() != 0) {
+        if(searchIcon.size() != 0) {
             $('.search-box, .search-btn').on('click', function(e){
                 e.stopPropagation();
             });
 
             $('body').on('click', function() {
-                if ($('.search-btn').hasClass('show-search-icon')) {
-                    $('.search-btn').removeClass("show-search-icon");
+                if (searchIcon.hasClass('show-search-icon')) {
+                    searchIcon.removeClass("show-search-icon");
                     $('.search-box').fadeOut(300);
                 }
             });
