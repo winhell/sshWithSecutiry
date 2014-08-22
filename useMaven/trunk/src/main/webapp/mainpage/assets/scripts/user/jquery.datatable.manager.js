@@ -60,7 +60,7 @@
                 "bLengthChange": false,
                 "bDestroy": true,
                 "bFilter": false,
-                "bSort": true,
+                "bSort": false,
                 "bInfo": false,
                 "bAutoWidth": false,
                 "aaData": data[_.opts.dataProp],

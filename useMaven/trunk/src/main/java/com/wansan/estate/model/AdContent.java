@@ -109,6 +109,8 @@ public class AdContent extends BasePojo {
 
     @Transient
     public String getTypeName(){
+        if(null==colID||"".equals(colID))
+            return "滚动广告";
         IAdcolService service = (IAdcolService) SpringFactory.getBean("adcolService");
         return service.findById(colID).getName();
     }

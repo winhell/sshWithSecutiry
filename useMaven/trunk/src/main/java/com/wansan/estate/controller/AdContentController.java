@@ -7,6 +7,8 @@ import com.wansan.estate.utils.EstateUtils;
 import com.wansan.template.controller.BaseController;
 import com.wansan.template.model.OperEnum;
 import com.wansan.template.model.ResultEnum;
+import net.coobird.thumbnailator.Thumbnailator;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,9 +41,14 @@ public class AdContentController extends BaseController {
         Map<String,Object> result = new HashMap<>();
         if(resolver.isMultipart(request)){
             String name = adpicture.getOriginalFilename();
+            String nameWithoutExt = name.substring(0,name.indexOf("."));
+            String ext = name.substring(name.indexOf("."));
+            String smallFilename = nameWithoutExt+"_small"+ext;
             String path = request.getServletContext().getRealPath(UploadPath);
             try {
-                adpicture.transferTo(new File(path,name));
+                File orgFile = new File(path,name);
+                adpicture.transferTo(orgFile);
+                Thumbnails.of(orgFile).size(120,100).toFile(new File(path,smallFilename));
             } catch (IOException e) {
                 result.put("status",ResultEnum.FAIL);
                 result.put("msg",e.getMessage());
@@ -50,7 +57,7 @@ public class AdContentController extends BaseController {
             AdContent adContent = new AdContent();
             adContent.setName(request.getParameter("name"));
             adContent.setContent(request.getParameter("content"));
-            adContent.setPicture(name);
+            adContent.setPicture(nameWithoutExt);
             adContent.setColID(request.getParameter("colId"));
             try {
                 String newID = (String) adcontentService.txSave(adContent,getLoginPerson());

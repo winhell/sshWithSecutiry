@@ -4,7 +4,7 @@
 var adunitMgr = function(){
     return{
         init:function(){
-            $('#colId').ajaxselect();
+            $('#colID').ajaxselect();
         }
     }
 }();
