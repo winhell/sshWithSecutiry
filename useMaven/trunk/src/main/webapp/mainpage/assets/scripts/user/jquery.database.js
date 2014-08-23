@@ -13,8 +13,11 @@ var databaseUtil = function(){
             $('#additemForm').resetForm();
             $("#gridtable").data("tableManager").initData();
             $('#additemFormDiv').modal('hide');
-        }else
+        }else{
             App.alert({message:data.msg,type:'danger'});
+            $('#additemFormDiv').modal('hide');
+        }
+
     };
 
     var formOptions = {
