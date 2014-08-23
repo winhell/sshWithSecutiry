@@ -5,9 +5,9 @@ import com.wansan.estate.model.NoticetypeEnum;
 import com.wansan.estate.service.IAdcontentService;
 import com.wansan.estate.utils.EstateUtils;
 import com.wansan.template.controller.BaseController;
+import com.wansan.template.core.Utils;
 import com.wansan.template.model.OperEnum;
 import com.wansan.template.model.ResultEnum;
-import net.coobird.thumbnailator.Thumbnailator;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -38,17 +38,21 @@ public class AdContentController extends BaseController {
     @RequestMapping(value = "/addadcontent")
     public Map<String,Object> add(MultipartFile adpicture,HttpServletRequest request){
         CommonsMultipartResolver resolver = new CommonsMultipartResolver(request.getServletContext());
+        String adType = request.getParameter("colID");
         Map<String,Object> result = new HashMap<>();
-        if(resolver.isMultipart(request)){
-            String name = adpicture.getOriginalFilename();
-            String nameWithoutExt = name.substring(0,name.indexOf("."));
-            String ext = name.substring(name.indexOf("."));
-            String smallFilename = nameWithoutExt+"_small"+ext;
+        if(resolver.isMultipart(request)&&null!=adpicture){
+
+            String nameWithoutExt = Utils.getNewFilename();
+            String ext = ".jpg";
+
             String path = request.getServletContext().getRealPath(UploadPath);
             try {
-                File orgFile = new File(path,name);
+                File orgFile = new File(path,nameWithoutExt+ext);
                 adpicture.transferTo(orgFile);
-                Thumbnails.of(orgFile).size(120,100).toFile(new File(path,smallFilename));
+                if(null!=adType&&!"".equals(adType)) {
+                    String smallFilename = nameWithoutExt + "_small" + ext;
+                    Thumbnails.of(orgFile).size(120, 100).toFile(new File(path, smallFilename));
+                }
             } catch (IOException e) {
                 result.put("status",ResultEnum.FAIL);
                 result.put("msg",e.getMessage());
@@ -58,7 +62,7 @@ public class AdContentController extends BaseController {
             adContent.setName(request.getParameter("name"));
             adContent.setContent(request.getParameter("content"));
             adContent.setPicture(nameWithoutExt);
-            adContent.setColID(request.getParameter("colId"));
+            adContent.setColID(adType);
             try {
                 String newID = (String) adcontentService.txSave(adContent,getLoginPerson());
                 EstateUtils.sendAdNotify(NoticetypeEnum.adContent,newID,OperEnum.CREATE);
@@ -72,7 +76,7 @@ public class AdContentController extends BaseController {
 
         }else {
             result.put("status",ResultEnum.FAIL);
-            result.put("msg","提交格式错误！");
+            result.put("msg","提交格式错误，或图片不存在！");
         }
 //        try {
 //            String newID = (String) adcontentService.txSave(adContent,getLoginPerson());
