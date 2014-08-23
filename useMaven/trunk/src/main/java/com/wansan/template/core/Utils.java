@@ -5,8 +5,10 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -116,7 +118,7 @@ public class Utils {
     {
         String str="abcdefghigklmnopkrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ0123456789";
         Random random=new Random();
-        StringBuffer sf=new StringBuffer();
+        StringBuilder sf= new StringBuilder();
         for(int i=0;i<length;i++)
         {
             int number=random.nextInt(62);//0~61
@@ -130,12 +132,20 @@ public class Utils {
     {
         String str="0123456789";
         Random random=new Random();
-        StringBuffer sf=new StringBuffer();
+        StringBuilder sf= new StringBuilder();
         for(int i=0;i<length;i++)
         {
             int number=random.nextInt(10);//0~61
             sf.append(str.charAt(number));
         }
         return sf.toString();
+    }
+
+    public static String getNewFilename(){
+
+        DateFormat format = new SimpleDateFormat("yyMMddHHmmss");
+        String newName = format.format(new Date())+getRandomNumString(3);
+        return newName;
+
     }
 }

@@ -95,7 +95,7 @@ var buildingMgr = function(){
             buildingTree.jstree({
                 'core' : {
                     'data' : {
-                        'url' : 'estate/getBuildingTree.action?id=-1'
+                        'url' : 'estate/getBuildingTree.action?id=-1&='+Math.floor(Math.random() * (new Date()).getTime())
                     }
                 },'types':{
                     'default':{

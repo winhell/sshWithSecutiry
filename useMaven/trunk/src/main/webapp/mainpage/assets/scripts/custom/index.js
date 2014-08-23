@@ -2,7 +2,7 @@ var Index = function () {
 
     var initMenu = function(){
         $.ajax({
-            url : "system/getUserMenus.action",
+            url : "system/getUserMenus.action?="+Math.floor(Math.random() * (new Date()).getTime()),
             type : "POST",
             dataType : "json",
             success : function(_menus) {
@@ -41,7 +41,7 @@ var Index = function () {
         //main function
         init: function () {
             initMenu();
-            $.get('getLoginUser.action',function(resText){
+            $.get('getLoginUser.action?='+Math.floor(Math.random() * (new Date()).getTime()),function(resText){
                 $('.username').html(resText);
             });
         }

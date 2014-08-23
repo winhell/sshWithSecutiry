@@ -1,5 +1,6 @@
 package com.wansan.template.test;
 
+import com.wansan.template.core.Utils;
 import org.junit.Test;
 
 /**
@@ -9,8 +10,10 @@ public class OtherTest
 {
     @Test
     public void testme(){
-        short ns = 1;
-        Short i = ns;
-        System.out.print(i.toString());
+        String name = "abcdefg.jpg";
+        String nameWithoutEx = name.substring(0,name.indexOf("."));
+        String ext = name.substring(name.indexOf("."));
+        String newFile = Utils.getNewFilename();
+        System.out.print(newFile);
     }
 }
