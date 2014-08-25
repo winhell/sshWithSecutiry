@@ -50,9 +50,11 @@ public class AdContentController extends BaseController {
                 File orgFile = new File(path,nameWithoutExt+ext);
                 adpicture.transferTo(orgFile);
                 if(null!=adType&&!"".equals(adType)) {
+                    Thumbnails.of(orgFile).size(800,600).toFile(orgFile);
                     String smallFilename = nameWithoutExt + "_small" + ext;
-                    Thumbnails.of(orgFile).size(120, 100).toFile(new File(path, smallFilename));
-                }
+                    Thumbnails.of(orgFile).size(120, 90).toFile(new File(path, smallFilename));
+                }else
+                    Thumbnails.of(orgFile).size(1280,720).toFile(orgFile);
             } catch (IOException e) {
                 result.put("status",ResultEnum.FAIL);
                 result.put("msg",e.getMessage());

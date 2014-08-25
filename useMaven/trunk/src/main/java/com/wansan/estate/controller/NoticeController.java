@@ -42,4 +42,15 @@ public class NoticeController extends BaseController{
             return result(false);
         }
     }
+
+    @RequestMapping("/deletenotice")
+    public Map<String,Object> delete(String idList){
+        try {
+            notifyService.txDelete(idList,getLoginPerson());
+            return result(true);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            return result(false);
+        }
+    }
 }

@@ -33,14 +33,16 @@ public class UploadServlet extends HttpServlet
             request.setCharacterEncoding("UTF-8"); // 设置处理请求参数的编码格式
             response.setContentType("text/html;charset=UTF-8"); // 设置Content-Type字段值
             PrintWriter out = response.getWriter();
-
+            String query = request.getQueryString();
+            String path = query.substring(query.indexOf("=")+1);
+            String uploadPath = this.getServletContext().getRealPath("/upload/"+path);
             // 下面的代码开始使用Commons-UploadFile组件处理上传的文件数据
             FileItemFactory factory = new DiskFileItemFactory(); // 建立FileItemFactory对象
             ServletFileUpload upload = new ServletFileUpload(factory);
             // 分析请求，并得到上传文件的FileItem对象
             List<FileItem> items = upload.parseRequest(request);
             // 从web.xml文件中的参数中得到上传文件的路径
-            String uploadPath = this.getServletContext().getRealPath("/")+"\\upload\\";
+
             File file = new File(uploadPath);
             if (!file.exists())
             {

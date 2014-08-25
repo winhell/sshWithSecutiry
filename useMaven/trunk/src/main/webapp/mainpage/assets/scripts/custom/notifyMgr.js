@@ -54,6 +54,8 @@ var notifyMgr = function(){
     return{
         init:function(){
             handleButton();
+            $('.date').datetimepicker({ orientation: "left",
+                autoclose: true,language:"zh-CN"});
             $('#type').select2({
                 placeholder:"请选择通告对象"
             });

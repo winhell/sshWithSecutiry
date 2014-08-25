@@ -1001,6 +1001,9 @@ var App = function () {
     return {
 
         //main function to initiate the theme
+        refreshPage:function(page){
+            document.location=page;
+        },
         init: function () {
 
             //IMPORTANT!!!: Do not modify the core handlers call order.
