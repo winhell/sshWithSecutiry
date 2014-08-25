@@ -62,14 +62,8 @@ public class BaseController {
 
     @InitBinder
     protected void initBinder(HttpServletRequest request,ServletRequestDataBinder binder) throws Exception {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat dfLong = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         CustomDateEditor dateEditor = new CustomDateEditor(df, true);
-        CustomDateEditor datetimeEditor = new CustomDateEditor(dfLong, true);
         binder.registerCustomEditor(Date.class, dateEditor);
-        binder.registerCustomEditor(Timestamp.class, datetimeEditor);
-//        binder.registerCustomEditor(CodeEnum.class,new CodeEnumEditor());
-//        binder.registerCustomEditor(ResultEnum.class, new ResultEnumEditor());
-//        binder.registerCustomEditor(NoticetypeEnum.class,new NoticetypeEditor());
     }
 }

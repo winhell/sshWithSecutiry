@@ -74,8 +74,10 @@ var databaseUtil = function(){
             $('#formTitle').html('项目修改');
             //装入表单数据
             var rowData = rows[0];
-            for(var item in rowData)
+            for(var item in rowData){
                 $('#'+item).val(rowData[item]).trigger('change');
+            }
+
             formOptions.url=path+'/update'+funcPrefix+'.action?id='+rowData.id;
             $('#additemFormDiv').modal('show');
         });
