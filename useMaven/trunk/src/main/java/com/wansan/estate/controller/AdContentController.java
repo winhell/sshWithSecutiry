@@ -34,30 +34,30 @@ public class AdContentController extends BaseController {
     private final static String UploadPath = "/upload";
     @Resource
     private IAdcontentService adcontentService;
-    
+
     @RequestMapping(value = "/addadcontent")
-    public Map<String,Object> add(MultipartFile adpicture,HttpServletRequest request){
+    public Map<String, Object> add(MultipartFile adpicture, HttpServletRequest request) {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver(request.getServletContext());
         String adType = request.getParameter("colID");
-        Map<String,Object> result = new HashMap<>();
-        if(resolver.isMultipart(request)&&null!=adpicture){
+        Map<String, Object> result = new HashMap<>();
+        if (resolver.isMultipart(request) && null != adpicture) {
 
             String nameWithoutExt = Utils.getNewFilename();
             String ext = ".jpg";
 
             String path = request.getServletContext().getRealPath(UploadPath);
             try {
-                File orgFile = new File(path,nameWithoutExt+ext);
+                File orgFile = new File(path, nameWithoutExt + ext);
                 adpicture.transferTo(orgFile);
-                if(null!=adType&&!"".equals(adType)) {
-                    Thumbnails.of(orgFile).size(800,600).toFile(orgFile);
+                if (null != adType && !"".equals(adType)) {
+                    Thumbnails.of(orgFile).size(800, 600).toFile(orgFile);
                     String smallFilename = nameWithoutExt + "_small" + ext;
                     Thumbnails.of(orgFile).size(120, 90).toFile(new File(path, smallFilename));
-                }else
-                    Thumbnails.of(orgFile).size(1280,720).toFile(orgFile);
+                } else
+                    Thumbnails.of(orgFile).size(1280, 720).toFile(orgFile);
             } catch (IOException e) {
-                result.put("status",ResultEnum.FAIL);
-                result.put("msg",e.getMessage());
+                result.put("status", ResultEnum.FAIL);
+                result.put("msg", e.getMessage());
                 return result;
             }
             AdContent adContent = new AdContent();
@@ -66,19 +66,19 @@ public class AdContentController extends BaseController {
             adContent.setPicture(nameWithoutExt);
             adContent.setColID(adType);
             try {
-                String newID = (String) adcontentService.txSave(adContent,getLoginPerson());
-                EstateUtils.sendAdNotify(NoticetypeEnum.adContent,newID,OperEnum.CREATE);
-                result.put("status",ResultEnum.SUCCESS);
-                result.put("msg","添加成功！");
-            }catch (Exception e){
+                String newID = (String) adcontentService.txSave(adContent, getLoginPerson());
+                EstateUtils.sendAdNotify(NoticetypeEnum.adContent, newID, OperEnum.CREATE);
+                result.put("status", ResultEnum.SUCCESS);
+                result.put("msg", "添加成功！");
+            } catch (Exception e) {
                 logger.error(e.getMessage());
-                result.put("status",ResultEnum.FAIL);
-                result.put("msg","操作失败，"+e.getMessage());
+                result.put("status", ResultEnum.FAIL);
+                result.put("msg", "操作失败，" + e.getMessage());
             }
 
-        }else {
-            result.put("status",ResultEnum.FAIL);
-            result.put("msg","提交格式错误，或图片不存在！");
+        } else {
+            result.put("status", ResultEnum.FAIL);
+            result.put("msg", "提交格式错误，或图片不存在！");
         }
 //        try {
 //            String newID = (String) adcontentService.txSave(adContent,getLoginPerson());
@@ -90,35 +90,71 @@ public class AdContentController extends BaseController {
 //        }
         return result;
     }
-    
+
     @RequestMapping(value = "/updateadcontent")
-    public Map<String,Object> update(AdContent adContent){
-        try {
-            adcontentService.txUpdate(adContent,getLoginPerson());
-            EstateUtils.sendAdNotify(NoticetypeEnum.adContent,adContent.getId(), OperEnum.UPDATE);
-            return result(true);
-        }catch (Exception e){
-            logger.error(e.getMessage());
-            return result(false);
+    public Map<String, Object> update(MultipartFile adpicture, HttpServletRequest request) {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver(request.getServletContext());
+        String adType = request.getParameter("colID");
+        Map<String, Object> result = new HashMap<>();
+        String id = request.getParameter("id");
+        String oldName = adcontentService.findById(id).getPicture();
+
+        if (resolver.isMultipart(request) && null != adpicture) {
+
+            oldName = Utils.getNewFilename();
+            String ext = ".jpg";
+
+            String path = request.getServletContext().getRealPath(UploadPath);
+            try {
+                File orgFile = new File(path, oldName + ext);
+                adpicture.transferTo(orgFile);
+                if (null != adType && !"".equals(adType)) {
+                    Thumbnails.of(orgFile).size(800, 600).toFile(orgFile);
+                    String smallFilename = oldName + "_small" + ext;
+                    Thumbnails.of(orgFile).size(120, 90).toFile(new File(path, smallFilename));
+                } else
+                    Thumbnails.of(orgFile).size(1280, 720).toFile(orgFile);
+            } catch (IOException e) {
+                result.put("status", ResultEnum.FAIL);
+                result.put("msg", e.getMessage());
+                return result;
+            }
         }
+        AdContent adContent = new AdContent();
+        adContent.setName(request.getParameter("name"));
+        adContent.setContent(request.getParameter("content"));
+        adContent.setPicture(oldName);
+        adContent.setColID(adType);
+        adContent.setId(id);
+        try {
+            adcontentService.txUpdate(adContent, getLoginPerson());
+            EstateUtils.sendAdNotify(NoticetypeEnum.adContent, id, OperEnum.UPDATE);
+            result.put("status", ResultEnum.SUCCESS);
+            result.put("msg", "修改成功！");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            result.put("status", ResultEnum.FAIL);
+            result.put("msg", "操作失败，" + e.getMessage());
+        }
+        return result;
     }
-    
+
     @RequestMapping(value = "/deleteadcontent")
-    public Map<String,Object> delete(String idList){
+    public Map<String, Object> delete(String idList) {
         try {
-            adcontentService.txDelete(idList,getLoginPerson());
-            for(String id:idList.split(","))
-                EstateUtils.sendAdNotify(NoticetypeEnum.adContent,id,OperEnum.DELETE);
+            adcontentService.txDelete(idList, getLoginPerson());
+            for (String id : idList.split(","))
+                EstateUtils.sendAdNotify(NoticetypeEnum.adContent, id, OperEnum.DELETE);
             return result(true);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error(e.getMessage());
             return result(false);
         }
     }
-    
+
     @RequestMapping(value = "/listadcontent")
-    public Map<String,Object> list(int page,int rows){
-        Map<String,Object> result = adcontentService.findByMap(null,page,rows,"createtime",false);
+    public Map<String, Object> list(int page, int rows) {
+        Map<String, Object> result = adcontentService.findByMap(null, page, rows, "createtime", false);
         result.put("status", ResultEnum.SUCCESS);
         return result;
     }

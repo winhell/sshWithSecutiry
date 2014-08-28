@@ -7,5 +7,7 @@ public enum NoticetypeEnum {
     broadcast,
     specical,
     adcol,
-    adContent
+    adContent,
+    notify,
+    group
 }
