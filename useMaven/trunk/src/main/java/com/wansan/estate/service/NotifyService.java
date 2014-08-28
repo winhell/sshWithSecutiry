@@ -30,12 +30,10 @@ public class NotifyService extends BaseDao<Notice> implements INotifyService {
         String newID = (String)save(notice);
         switch (notice.getType()){
             case broadcast:
-                String msg = notice.getName()+":"+notice.getContent();
                 try {
-                    msg = URLEncoder.encode(msg,"UTF-8");
-                    String returnStr = EstateUtils.callOfService("/messageservice","type=0&msg="+msg);
+                    String returnStr = EstateUtils.callOfService("/messageservice","handleType=0&type=0&uuid="+newID);
                     logger.info(person.getName()+" send message "+returnStr);
-                    logger.info("Message:"+msg);
+                    logger.info("Message:"+returnStr);
                 } catch (IOException e) {
                     throw new RuntimeException("通知发送失败！"+e.getMessage());
                 }
@@ -45,13 +43,23 @@ public class NotifyService extends BaseDao<Notice> implements INotifyService {
                 for(Ofuser ofuser:ofusers){
                     String reciver="&receiver="+ofuser.getUsername();
                     try {
-                        EstateUtils.callOfService("/messageservice","type=1&message="+notice.getName()+reciver);
+                        EstateUtils.callOfService("/messageservice","handleType=0&type=2&uuid="+newID);
                         logger.info(person.getName()+" send to "+ofuser.getName());
                     } catch (IOException e) {
                         throw new RuntimeException();
                     }
                 }
                 break;
+            case group:
+                String returnStr = null;
+                try {
+                    returnStr = EstateUtils.callOfService("/messageservice", "handleType=0&type=1&uuid=" + newID);
+                    logger.info(person.getName()+" send message "+returnStr);
+                    logger.info("Message:"+returnStr);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
 
         }
         Syslog syslog = new Syslog();

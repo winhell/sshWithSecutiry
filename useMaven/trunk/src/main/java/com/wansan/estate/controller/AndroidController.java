@@ -2,9 +2,11 @@ package com.wansan.estate.controller;
 
 import com.wansan.estate.model.AdCol;
 import com.wansan.estate.model.AdContent;
+import com.wansan.estate.model.Notice;
 import com.wansan.estate.model.NoticetypeEnum;
 import com.wansan.estate.service.IAdcolService;
 import com.wansan.estate.service.IAdcontentService;
+import com.wansan.estate.service.INotifyService;
 import com.wansan.estate.service.IOfuserService;
 import com.wansan.template.controller.BaseController;
 import com.wansan.template.model.Ofuser;
@@ -40,6 +42,8 @@ public class AndroidController extends BaseController {
     private IAdcontentService adcontentService;
     @Resource
     private IAdcolService adcolService;
+    @Resource
+    private INotifyService notifyService;
 
     @RequestMapping(value = "/getOfuser")
     public List<Ofuser> getOfuser(String username,String roomName){
@@ -91,6 +95,15 @@ public class AndroidController extends BaseController {
                     result.add(itemMap);
                 }
                 break;
+            case notify:
+                List<Notice> notices = notifyService.listAll();
+                for(Notice item:notices){
+                    Map<String,Object> itemMap = new HashMap<>();
+                    itemMap.put("id",item.getId());
+                    itemMap.put("createtime",df.format(item.getCreatetime()));
+                    result.add(itemMap);
+                }
+                break;
         }
         return result;
     }
@@ -103,5 +116,10 @@ public class AndroidController extends BaseController {
     @RequestMapping(value = "/getAdcol")
     public AdCol getAdcol(String id){
         return adcolService.findById(id);
+    }
+
+    @RequestMapping(value = "/getNotice")
+    public Notice getNotice(String id){
+        return notifyService.findById(id);
     }
 }
