@@ -73,7 +73,7 @@ public class UploadServlet extends HttpServlet
                 }
             }
             // 将路径和上传文件名组合成完整的服务端路径
-            filename = uploadPath + filename;
+            filename = uploadPath + File.pathSeparator + filename;
             // 如果服务器已经存在和上传文件同名的文件，则输出提示信息
             if (new File(filename).exists())
             {

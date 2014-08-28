@@ -999,7 +999,9 @@ var App = function () {
     //* END:CORE HANDLERS *//
 
     return {
-
+        refreshPage:function(page){
+            document.location=page;
+        },
         //main function to initiate the theme
         init: function () {
 
