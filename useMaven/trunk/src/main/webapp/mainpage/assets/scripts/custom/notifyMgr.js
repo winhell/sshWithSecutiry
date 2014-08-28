@@ -20,7 +20,7 @@ var notifyMgr = function(){
     var handleButton = function(){
         $('#type').on('change',function(){          //更改按钮状态
             var n_type = $(this).val();
-            if(n_type=="broadcast"){
+            if(n_type!="specical"){
                 $('#buildingName').val("");
                 $('#buildingSelection').addClass("disabled");
             }
