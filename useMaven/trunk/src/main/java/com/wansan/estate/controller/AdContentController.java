@@ -52,7 +52,7 @@ public class AdContentController extends BaseController {
                 if (null != adType && !"".equals(adType)) {
                     Thumbnails.of(orgFile).size(800, 600).toFile(orgFile);
                     String smallFilename = nameWithoutExt + "_small" + ext;
-                    Thumbnails.of(orgFile).size(120, 90).toFile(new File(path, smallFilename));
+                    Thumbnails.of(orgFile).size(240, 240).toFile(new File(path, smallFilename));
                 } else
                     Thumbnails.of(orgFile).size(1280, 720).toFile(orgFile);
             } catch (IOException e) {

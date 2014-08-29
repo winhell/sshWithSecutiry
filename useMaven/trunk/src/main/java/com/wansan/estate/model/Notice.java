@@ -65,9 +65,15 @@ public class Notice extends BasePojo {
     @Transient
     public String getReceiver(){
         IBuildingService buildingService = (IBuildingService) SpringFactory.getBean("buildingService");
-        if(type==NoticetypeEnum.specical){
-            return buildingService.getBuildingName(to);
+        switch (type){
+            case specical:
+                return buildingService.getBuildingName(to);
+            case group:
+                return "门口机通告";
+            case broadcast:
+                return "所有人";
+            default:
+                return "none";
         }
-        return "所有人";
     }
 }

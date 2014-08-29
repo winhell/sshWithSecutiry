@@ -11,6 +11,7 @@ var databaseUtil = function(){
         if(data.status=='SUCCESS'){
             App.alert({message:data.msg,closeInSeconds:5});
             $('#additemForm').resetForm();
+            $('.ajaxselect').select2('val','');
             $("#gridtable").data("tableManager").initData();
             $('#additemFormDiv').modal('hide');
         }else{
@@ -147,6 +148,13 @@ var databaseUtil = function(){
             });
         }
     };
+
+    var handleTemplate = function(){
+        var selects = $('.ajaxselect');
+        $.each(selects,function(){
+            $(this).ajaxselect();
+        });
+    };
     return {
         init:function(){
 
@@ -154,6 +162,7 @@ var databaseUtil = function(){
             initTable();
             bindButtons();
             handleSearch();
+            handleTemplate();
         },
         checkboxRender:function (data, type, full) {
             return "<input class='checkboxes' type='checkbox' value='" + data + "'/>";
