@@ -6,14 +6,14 @@ var ofuserMgr = function(){
     var buildingTree = $('#buildingTree').jstree({
         'core' : {
             'data' : {
-                'url' : 'estate/getBuildingTree.action?id=-1'
+                'url' : 'estate/getBuildingTree.action?id=-1&='+Math.floor(Math.random() * (new Date()).getTime())
             }
         },'types':{
             'default':{
                 "icon" : "glyphicon glyphicon-home"
             }
         },
-        "plugins" : [ "types" ]
+        "plugins" : [ "types","sort" ]
     });
 
     var buildingID;
