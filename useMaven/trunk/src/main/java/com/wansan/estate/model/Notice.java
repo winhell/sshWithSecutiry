@@ -20,16 +20,16 @@ public class Notice extends BasePojo {
     private NoticetypeEnum type;
     private String to;
     private String content;
-    private Date endTime;
+    private Timestamp endTime;
 
     @Basic
     @Column(name = "endTime")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @JsonFormat(timezone="GMT+8",pattern = "yyyy-MM-dd HH:mm")
-    public Date getEndTime(){
+    public Timestamp getEndTime(){
         return endTime;
     }
-    public void setEndTime(Date endTime){
+    public void setEndTime(Timestamp endTime){
         this.endTime = endTime;
     }
 
