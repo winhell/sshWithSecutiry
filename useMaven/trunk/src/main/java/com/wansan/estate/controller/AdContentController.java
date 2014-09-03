@@ -64,6 +64,7 @@ public class AdContentController extends BaseController {
             adContent.setName(request.getParameter("name"));
             adContent.setContent(request.getParameter("content"));
             adContent.setPicture(nameWithoutExt);
+            adContent.setUrl(request.getParameter("url"));
             adContent.setColID(adType);
             try {
                 String newID = (String) adcontentService.txSave(adContent, getLoginPerson());
@@ -125,6 +126,7 @@ public class AdContentController extends BaseController {
         adContent.setContent(request.getParameter("content"));
         adContent.setPicture(oldName);
         adContent.setColID(adType);
+        adContent.setUrl(request.getParameter("url"));
         adContent.setId(id);
         try {
             adcontentService.txUpdate(adContent, getLoginPerson());
@@ -153,8 +155,15 @@ public class AdContentController extends BaseController {
     }
 
     @RequestMapping(value = "/listadcontent")
-    public Map<String, Object> list(int page, int rows) {
-        Map<String, Object> result = adcontentService.findByMap(null, page, rows, "createtime", false);
+    public Map<String, Object> list(String col,int page, int rows) {
+        Map<String, Object> result;
+        if("all".equals(col)) {
+            result = adcontentService.findByMap(null, page, rows, "colID", false);
+        }else {
+            Map<String,Object> params = new HashMap<>();
+            params.put("colID",col);
+            result = adcontentService.findByMap(params,page,rows,"colID",false);
+        }
         result.put("status", ResultEnum.SUCCESS);
         return result;
     }

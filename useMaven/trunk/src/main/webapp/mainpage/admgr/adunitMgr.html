@@ -6,6 +6,16 @@
             广告单项管理
         </h3>
         <ul class="page-breadcrumb breadcrumb">
+            <li class="btn-group">
+                <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+				<span>
+					类型过滤
+				</span>
+                    <i class="fa fa-angle-down"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu" id="filterList">
+                </ul>
+            </li>
             <li>
                 <i class="fa fa-home"></i>
                 首页
@@ -39,7 +49,7 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <table class="datatable table table-striped table-bordered table-hover table-condensedt" data-url="admgr/listadcontent.action" id="gridtable">
+                <table class="datatable table table-striped table-bordered table-hover table-condensedt" data-url="admgr/listadcontent.action?col=all" id="gridtable">
                     <thead>
                     <tr>
                         <th data-options="mData:'id',mRender:databaseUtil.checkboxRender" style="width:20px;">
@@ -47,6 +57,8 @@
                         </th>
                         <th data-options="mData:'name'">广告标题</th>
                         <th data-options="mData:'typeName'">广告分类</th>
+                        <th data-options="mData:'createtime'">上架时间</th>
+                        <th data-options="mData:'picture',mRender:picRender">查看广告图片</th>
 
                     </tr>
                     </thead>
@@ -72,6 +84,12 @@
                                 <label class="col-md-3 control-label">广告标题</label>
                                 <div class="col-md-8">
                                     <input id='name' type="text" name="name" class="form-control" placeholder="广告标题">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">广告网址</label>
+                                <div class="col-md-8">
+                                    <input id='url' type="text" name="url" class="form-control" placeholder="二维码扫描得到的网址">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -124,9 +142,12 @@
         </div>
     </div>
 </div>
+
 <link rel="stylesheet" href="assets/plugins/select2/select2.css" type="text/css"/>
+<link rel="stylesheet" href="assets/source/jquery.fancybox.css" type="text/css"/>
 <link rel="stylesheet" href="assets/plugins/select2/select2-metronic.css" type="text/css"/>
 <link rel="stylesheet" href="assets/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
+<script type="text/javascript" src="assets/source/jquery.fancybox.pack.js"></script>
 <script type="text/javascript" src="assets/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
 <script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
 <script type="text/javascript" src="assets/plugins/jquery-bootpag/jquery.bootpag.min.js"></script>
@@ -134,4 +155,12 @@
 <script type="text/javascript" src="assets/scripts/user/jquery.datatable.manager.js"></script>
 <script type="text/javascript" src="assets/scripts/user/jquery.form.js"></script>
 <script type="text/javascript" src="assets/scripts/user/jquery.ajaxselect.js"></script>
+<script type="text/javascript" src="assets/scripts/custom/adunitMgr.js"></script>
+
+<script>
+    function picRender(data){
+        return "<a href='../upload/"+data+".jpg' class='btn btn-xs blue fancybox-btn'>view</a>";
+    }
+    adunitMgr.init();
+</script>
 <script type="text/javascript" src="assets/scripts/user/jquery.database.js"></script>
