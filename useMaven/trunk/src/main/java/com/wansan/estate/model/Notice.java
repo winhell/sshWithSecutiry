@@ -54,7 +54,6 @@ public class Notice extends BasePojo {
 
     @Basic
     @Column(name = "content")
-    @JsonIgnore
     public String getContent(){
         return this.content;
     }

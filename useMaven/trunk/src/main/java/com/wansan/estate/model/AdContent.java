@@ -18,6 +18,17 @@ public class AdContent extends BasePojo {
     private String audio;
     private String video;
     private Integer priority;
+    private String url;
+
+    @Basic
+    @Column(name = "url")
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     @Basic
     @Column(name = "colId")
