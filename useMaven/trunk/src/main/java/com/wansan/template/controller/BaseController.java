@@ -3,6 +3,7 @@ package com.wansan.template.controller;
 import com.wansan.estate.model.NoticetypeEnum;
 import com.wansan.estate.utils.NoticetypeEditor;
 import com.wansan.template.core.CodeEnumEditor;
+import com.wansan.template.core.CustomTimestampEditor;
 import com.wansan.template.core.ResultEnumEditor;
 import com.wansan.template.model.CodeEnum;
 import com.wansan.template.model.Person;
@@ -63,7 +64,9 @@ public class BaseController {
     @InitBinder
     protected void initBinder(HttpServletRequest request,ServletRequestDataBinder binder) throws Exception {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        CustomDateEditor dateEditor = new CustomDateEditor(df, true);
-        binder.registerCustomEditor(Date.class, dateEditor);
+//        CustomDateEditor dateEditor = new CustomDateEditor(df, true);
+//        binder.registerCustomEditor(Date.class, dateEditor);
+        CustomTimestampEditor timeEditor = new CustomTimestampEditor(df,true);
+        binder.registerCustomEditor(Timestamp.class,timeEditor);
     }
 }

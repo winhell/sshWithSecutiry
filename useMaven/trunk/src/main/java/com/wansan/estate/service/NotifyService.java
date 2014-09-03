@@ -41,7 +41,6 @@ public class NotifyService extends BaseDao<Notice> implements INotifyService {
             case specical:
                 List<Ofuser> ofusers = buildingService.findUsersByBuilding(notice.getTo(),1,10);
                 for(Ofuser ofuser:ofusers){
-                    String reciver="&receiver="+ofuser.getUsername();
                     try {
                         EstateUtils.callOfService("/messageservice","handleType=0&type=2&uuid="+newID);
                         logger.info(person.getName()+" send to "+ofuser.getName());
@@ -51,7 +50,7 @@ public class NotifyService extends BaseDao<Notice> implements INotifyService {
                 }
                 break;
             case group:
-                String returnStr = null;
+                String returnStr;
                 try {
                     returnStr = EstateUtils.callOfService("/messageservice", "handleType=0&type=1&uuid=" + newID);
                     logger.info(person.getName()+" send message "+returnStr);
