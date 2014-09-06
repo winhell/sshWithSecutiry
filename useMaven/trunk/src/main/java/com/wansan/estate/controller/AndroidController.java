@@ -4,10 +4,7 @@ import com.wansan.estate.model.AdCol;
 import com.wansan.estate.model.AdContent;
 import com.wansan.estate.model.Notice;
 import com.wansan.estate.model.NoticetypeEnum;
-import com.wansan.estate.service.IAdcolService;
-import com.wansan.estate.service.IAdcontentService;
-import com.wansan.estate.service.INotifyService;
-import com.wansan.estate.service.IOfuserService;
+import com.wansan.estate.service.*;
 import com.wansan.template.controller.BaseController;
 import com.wansan.template.model.Ofuser;
 import com.wansan.template.model.ResultEnum;
@@ -44,6 +41,8 @@ public class AndroidController extends BaseController {
     private IAdcolService adcolService;
     @Resource
     private INotifyService notifyService;
+    @Resource
+    private ICallLogService callLogService;
 
     @RequestMapping(value = "/getOfuser")
     public List<Ofuser> getOfuser(String username,String roomName){
@@ -122,4 +121,10 @@ public class AndroidController extends BaseController {
     public Notice getNotice(String id){
         return notifyService.findById(id);
     }
+
+    @RequestMapping(value = "/getCallLogs")
+    public Map<String,Object> getCallLogs(String username){
+        return callLogService.getCallLogs(username,1,200,"","");
+    }
+
 }

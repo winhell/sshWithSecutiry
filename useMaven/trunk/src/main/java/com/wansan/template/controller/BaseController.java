@@ -1,5 +1,7 @@
 package com.wansan.template.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wansan.estate.model.NoticetypeEnum;
 import com.wansan.estate.utils.NoticetypeEditor;
 import com.wansan.template.core.CodeEnumEditor;
@@ -11,6 +13,7 @@ import com.wansan.template.model.ResultEnum;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -26,6 +29,8 @@ import java.util.Map;
  * Created by Administrator on 14-4-30.
  */
 public class BaseController {
+
+    private static ObjectMapper mapper=null;
 
     protected Person getLoginPerson(){
         Person oper=null;
@@ -59,6 +64,27 @@ public class BaseController {
             result.put("msg","操作失败");
         }
         return result;
+    }
+
+    protected String jsonpResult(String callback,Object object,Boolean isShort) throws JsonProcessingException {
+        StringBuilder sb = new StringBuilder();
+        if(null == mapper){
+            mapper = new ObjectMapper();
+        }
+        if(isShort)
+            mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+        else
+            mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        if(StringUtils.hasText(callback)){
+            sb.append(callback).append("(");
+        }else
+            sb.append("jsonpCallback(");
+        sb.append(mapper.writeValueAsString(object)).append(");");
+        return sb.toString();
+    }
+
+    protected String jsonpResult(Object object) throws JsonProcessingException {
+        return jsonpResult("",object,false);
     }
 
     @InitBinder

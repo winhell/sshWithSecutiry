@@ -80,6 +80,7 @@
                 <value>com.wansan.estate.model.Notice</value>
                 <value>com.wansan.estate.model.AdCol</value>
                 <value>com.wansan.estate.model.AdContent</value>
+                <value>com.wansan.estate.model.CallLog</value>
             </list>
         </property>
     </bean>
