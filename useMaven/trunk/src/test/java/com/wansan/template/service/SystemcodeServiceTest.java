@@ -17,6 +17,6 @@ public class SystemcodeServiceTest extends BaseTest{
     @Test
     public void testGetCodeList() throws Exception {
         CodeEnum type = CodeEnum.sex;
-        Assert.assertEquals(0,systemcodeService.getCodeList(type).size());
+        Assert.assertEquals(2,systemcodeService.getCodeList(type).size());
     }
 }
