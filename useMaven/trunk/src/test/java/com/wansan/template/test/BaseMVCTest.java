@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml","classpath:dispatcher-servlet.xml",
         "classpath:spring-security.xml"})
-public class BaseMVCTest {
+public abstract class BaseMVCTest {
     @Autowired
     protected WebApplicationContext wac;
 
@@ -38,10 +38,4 @@ public class BaseMVCTest {
         response = new MockHttpServletResponse();
         session = request.getSession();
     }
-
-    @Test
-    public void noTest(){
-
-    }
-
 }

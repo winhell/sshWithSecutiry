@@ -1,6 +1,6 @@
 package com.wansan.template.test;
 
-import com.wansan.template.core.Utils;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 /**
@@ -8,12 +8,9 @@ import org.junit.Test;
  */
 public class OtherTest
 {
+    private Logger logger = Logger.getLogger(this.getClass());
     @Test
     public void testme(){
-        String name = "abcdefg.jpg";
-        String nameWithoutEx = name.substring(0,name.indexOf("."));
-        String ext = name.substring(name.indexOf("."));
-        String newFile = Utils.getNewFilename();
-        System.out.print(newFile);
+
     }
 }
