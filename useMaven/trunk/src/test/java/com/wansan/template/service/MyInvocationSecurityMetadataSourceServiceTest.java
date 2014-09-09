@@ -12,8 +12,8 @@ public class MyInvocationSecurityMetadataSourceServiceTest {
     @Test
     public void testSupports() throws Exception {
         PathMatcher matcher = new AntPathMatcher();
-        String url = "/jsp/*.action";
-        String matchUrl = "/jsp/aaa.action";
+        String url = "/jsp/aaa.action";
+        String matchUrl = "/jsp/*.action";
         Assert.assertTrue("Should be match",matcher.match(matchUrl,url));
     }
 }

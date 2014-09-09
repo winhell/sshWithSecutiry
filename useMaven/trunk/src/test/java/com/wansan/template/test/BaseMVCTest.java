@@ -1,6 +1,7 @@
 package com.wansan.template.test;
 
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -26,16 +27,21 @@ public class BaseMVCTest {
     @Autowired
     protected WebApplicationContext wac;
 
-    protected MockMvc mockMvc;
-    protected HttpServletResponse response;
-    protected HttpServletRequest request;
-    protected HttpSession session;
+    protected static MockMvc mockMvc;
+    protected static HttpServletResponse response;
+    protected static HttpServletRequest request;
+    protected static HttpSession session;
 
     @BeforeClass
-    void evnSetup(){
+    public static void evnSetup(){
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         session = request.getSession();
+    }
+
+    @Test
+    public void noTest(){
+
     }
 
 }
