@@ -1,0 +1,108 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">
+            通话记录管理
+        </h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                门禁管理
+                <i class="fa fa-angle-right"></i>
+                通话记录管理
+            </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>日志列表
+                </div>
+                <div class="actions">
+                    <a href="#" class="btn blue" id="searchButton"><i class="fa fa-search"></i> 日志查询</a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-6 panel panel-info display-hide" id="searchPanel">
+                        <div class="panel-heading">
+                            <div class="panel-title"> 查询条件</div>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="searchForm" method="post">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <label for="fromuser" class="col-md-3 control-label">主叫人</label>
+                                        <div class="col-md-8">
+                                            <input id='fromuser' type="text" name="fromuser" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="touser" class="col-md-3 control-label">被叫人</label>
+                                        <div class="col-md-8">
+                                            <input id='touser' type="text" name="touser" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="type" class="col-md-3 control-label">呼叫类型</label>
+                                        <div class="col-md-8">
+                                            <input id='type' type="text" name="type" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="status" class="col-md-3 control-label">呼叫状态</label>
+                                        <div class="col-md-8">
+                                            <input id='status' type="text" name="status" class="form-control"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">时间范围</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group date-picker input-daterange" data-date="2014-01-01" data-date-format="yyyy-mm-dd">
+                                            <input type="text" class="form-control" name="fromDate">
+															<span class="input-group-addon">
+															至 </span>
+                                            <input type="text" class="form-control" name="toDate">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="col-md-offset-6 col-md-9">
+                                        <button type="button" class="btn yellow" id="searchSubmit">查询</button>
+                                        <button type="button" class="btn default" id="closeSearchForm">关闭</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <table class="datatable table table-striped table-bordered table-hover" data-url="estate/getcallLogs.action" id="calllogtable">
+                    <thead>
+                    <tr>
+                        <th data-options="mData:'fromUser'" >主叫人</th>
+                        <th data-options="mData:'toUser'" >被叫人</th>
+                        <th data-options="mData:'type'" style="width:180px;">呼叫类型</th>
+                        <th data-options="mData:'status'" >呼叫状态</th>
+                        <th data-options="mData:'beginTime'" style="width:180px;">开始时间</th>
+                        <th data-options="mData:'endTime'" style="width:180px;">结束时间</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+<link type="text/css" rel="stylesheet" href="assets/plugins/bootstrap-datepicker/css/datepicker.css"/>
+<script type="text/javascript" src="assets/plugins/jquery-bootpag/jquery.bootpag.min.js"></script>
+<script type="text/javascript" src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script type="text/javascript" src="assets/plugins/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.datatable.manager.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.form.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.database.js"></script>
+<script type="text/javascript" src="assets/scripts/custom/calllogMgr.js"></script>
