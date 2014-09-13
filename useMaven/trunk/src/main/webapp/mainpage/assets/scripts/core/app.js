@@ -227,7 +227,7 @@ var App = function () {
         });
 
         // handle ajax links within sidebar menu
-        jQuery('.page-sidebar').on('click', ' li > a.ajaxify', function (e) {
+        jQuery('.page-sidebar,.navbar').on('click   ', ' li > a.ajaxify', function (e) {
             e.preventDefault();
             App.scrollTop();
 
