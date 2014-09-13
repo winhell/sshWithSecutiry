@@ -54,7 +54,6 @@ public class Building extends BasePojo {
     public Integer getLft(){
         return this.lft;
     }
-
     public void setLft(Integer lft){
         this.lft = lft;
     }
