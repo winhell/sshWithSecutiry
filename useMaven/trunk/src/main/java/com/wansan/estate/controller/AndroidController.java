@@ -1,9 +1,6 @@
 package com.wansan.estate.controller;
 
-import com.wansan.estate.model.AdCol;
-import com.wansan.estate.model.AdContent;
-import com.wansan.estate.model.Notice;
-import com.wansan.estate.model.NoticetypeEnum;
+import com.wansan.estate.model.*;
 import com.wansan.estate.service.*;
 import com.wansan.template.controller.BaseController;
 import com.wansan.template.model.Ofuser;
@@ -43,6 +40,8 @@ public class AndroidController extends BaseController {
     private INotifyService notifyService;
     @Resource
     private ICallLogService callLogService;
+    @Resource
+    private IBuildingService buildingService;
 
     @RequestMapping(value = "/getOfuser")
     public List<Ofuser> getOfuser(String username,String roomName){
@@ -106,11 +105,27 @@ public class AndroidController extends BaseController {
         }
         return result;
     }
-
-    @RequestMapping(value = "/getAdItem")
-    public AdContent getAdItem(String id){
-        return adcontentService.findById(id);
+    @RequestMapping(value = "/getBuilding")
+    public List<Building> getBuilding(String parent){
+        String hql=" from Building where parent=:parent ";
+        Map map =new HashMap<>();
+        map.put("parent",parent);
+        System.out.println(parent);
+        List<Building> list = buildingService.findByMap(hql,map);
+        System.out.print(list.get(0).getCreatetime());
+        System.out.print(list.toString());
+        return list;
     }
+
+    @RequestMapping(value = "/getCallLog")
+    public List<CallLog> getCalllog(String username){
+        Map<String,Object> map =new HashMap<>();
+        map=callLogService.getCallLogs(username,1,200,"","");
+        List<CallLog> list = (List<CallLog>) map.get("rows");
+
+        return list;
+    }
+
 
     @RequestMapping(value = "/getAdcol")
     public AdCol getAdcol(String id){
