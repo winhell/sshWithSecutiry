@@ -119,10 +119,8 @@ public class AndroidController extends BaseController {
 
     @RequestMapping(value = "/getCallLog")
     public List<CallLog> getCalllog(String username){
-        Map<String,Object> map =new HashMap<>();
-        map=callLogService.getCallLogs(username,1,200,"","");
+        Map<String,Object> map = callLogService.getCallLogs(username,1,200,"","");
         List<CallLog> list = (List<CallLog>) map.get("rows");
-
         return list;
     }
 
