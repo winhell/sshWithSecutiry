@@ -121,10 +121,4 @@ public class AndroidController extends BaseController {
     public Notice getNotice(String id){
         return notifyService.findById(id);
     }
-
-    @RequestMapping(value = "/getCallLogs")
-    public Map<String,Object> getCallLogs(String username){
-        return callLogService.getCallLogs(username,1,200,"","");
-    }
-
 }
