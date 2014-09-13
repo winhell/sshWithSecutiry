@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">
+            门禁记录管理
+        </h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                门禁管理
+                <i class="fa fa-angle-right"></i>
+                门禁记录管理
+            </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>门禁记录列表
+                </div>
+                <div class="actions">
+                    <a href="#" class="btn blue" id="searchButton"><i class="fa fa-search"></i> 记录查询</a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-6 panel panel-info display-hide" id="searchPanel">
+                        <div class="panel-heading">
+                            <div class="panel-title"> 查询条件</div>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="searchForm" method="post">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <label for="name" class="col-md-3 control-label">小区名</label>
+                                        <div class="col-md-8">
+                                            <input id='name' type="text" name="name" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="personid" class="col-md-3 control-label">开锁人</label>
+                                        <div class="col-md-8">
+                                            <input id='personid' type="text" name="personid" class="form-control"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="unitid" class="col-md-3 control-label">单元号</label>
+                                        <div class="col-md-8">
+                                            <input id='unitid' type="text" name="unitid" class="form-control"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">开门时间范围</label>
+                                    <div class="col-md-8">
+                                        <div class="input-group date-picker input-daterange" data-date="2014-01-01" data-date-format="yyyy-mm-dd">
+                                            <input type="text" class="form-control" name="fromDate">
+															<span class="input-group-addon">
+															至 </span>
+                                            <input type="text" class="form-control" name="toDate">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <div class="col-md-offset-6 col-md-9">
+                                        <button type="button" class="btn yellow" id="searchSubmit">查询</button>
+                                        <button type="button" class="btn default" id="closeSearchForm">关闭</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <table class="datatable table table-striped table-bordered table-hover" data-url="estate/getEnterLogs.action" id="gridtable">
+                    <thead>
+                    <tr>
+                        <th data-options="mData:'name'">小区名</th>
+                        <th data-options="mData:'createtime'">开门时间</th>
+                        <th data-options="mData:'comment'">备注</th>
+                        <th data-options="mData:'personId'">开锁人</th>
+                        <th data-options="mData:'unitId'">单元号</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<link type="text/css" rel="stylesheet" href="assets/plugins/bootstrap-datepicker/css/datepicker.css"/>
+<script type="text/javascript" src="assets/plugins/jquery-bootpag/jquery.bootpag.min.js"></script>
+<script type="text/javascript" src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script type="text/javascript" src="assets/plugins/data-tables/jquery.dataTables.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.datatable.manager.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.form.js"></script>
+<script type="text/javascript" src="assets/scripts/user/jquery.database.js"></script>
+<script type="text/javascript" src="assets/scripts/custom/enterlogMgr.js"></script>
