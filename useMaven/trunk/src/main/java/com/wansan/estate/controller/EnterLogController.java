@@ -26,8 +26,9 @@ public class EnterLogController extends BaseController{
 
     @RequestMapping(value = "/getEnterLogs")
     public Map<String,Object> getenterLogs(int page,int rows){
-        Map<String,Object> result = enterLogService.findByMap(null,page,rows,"createtime",false);
-        result.put("status", ResultEnum.SUCCESS);
+//        Map<String,Object> result = enterLogService.findByMap(null,page,rows,"createtime",false);
+        Map<String,Object> result = new HashMap<>();
+                result.put("status", ResultEnum.SUCCESS);
         return result;
     }
 
