@@ -29,17 +29,14 @@ public class EnterLogService implements IEnterLogService   {
             date = format.parse(params.get("toDate"));
             newParams.put("createtime <=", new Timestamp(date.getTime()));
         }
-        if(!"".equals(params.get("fromUser"))){
-            newParams.put("fromUser =", params.get("fromUser"));
+        if(!"".equals(params.get("name"))){
+            newParams.put("name =", params.get("name"));
         }
-        if(!"".equals(params.get("toUser"))){
-            newParams.put("toUser =", params.get("toUser"));
+        if(!"".equals(params.get("unitid"))){
+            newParams.put("unitid =", params.get("unitid"));
         }
-        if(!"".equals(params.get("type"))){
-            newParams.put("type =", params.get("type"));
-        }
-        if(!"".equals(params.get("status"))){
-            newParams.put("status =", params.get("status"));
+        if(!"".equals(params.get("personid"))){
+            newParams.put("personid =", params.get("personid"));
         }
         int page = Integer.valueOf(params.get("page"));
         int rows = Integer.valueOf(params.get("rows"));
