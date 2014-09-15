@@ -10,13 +10,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Administrator on 2014/9/4.
  */
 @Service
-public class EnterLogService implements IEnterLogService   {
+public class EnterLogService extends BaseDao<EnterLog> implements IEnterLogService   {
     public Map<String,Object> search(Map<String,String> params) throws ParseException {
         Map<String,Object> newParams = new HashMap<>();
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -40,7 +41,7 @@ public class EnterLogService implements IEnterLogService   {
         }
         int page = Integer.valueOf(params.get("page"));
         int rows = Integer.valueOf(params.get("rows"));
-        return null;
+        return findByMapWithCond(newParams,page,rows,null,false);
     }
 
 }

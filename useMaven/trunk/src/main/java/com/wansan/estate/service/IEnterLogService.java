@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2014/9/4.
  */
-public interface IEnterLogService{
+public interface IEnterLogService extends IBaseDao<EnterLog>{
     public Map<String,Object> search(Map<String,String> params) throws ParseException;
 
 }
