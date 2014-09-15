@@ -40,12 +40,19 @@ public class CallLogService extends BaseDao<CallLog> implements ICallLogService 
             date = format.parse(params.get("toDate"));
             newParams.put("createtime <=", new Timestamp(date.getTime()));
         }
-        if(!"".equals(params.get("name"))){
-            newParams.put("name =", params.get("name"));
+        if(!"".equals(params.get("fromuser"))){
+            newParams.put("fromuser =", params.get("fromuser"));
         }
-        if(!"".equals(params.get("userid"))){
-            newParams.put("userid =", params.get("userid"));
+        if(!"".equals(params.get("touser"))){
+            newParams.put("touser =", params.get("touser"));
         }
+        if(!"".equals(params.get("type"))){
+            newParams.put("type =", Integer.valueOf(params.get("type")));
+        }
+        if(!"".equals(params.get("status"))){
+            newParams.put("status =", Integer.valueOf(params.get("status")));
+        }
+
         int page = Integer.valueOf(params.get("page"));
         int rows = Integer.valueOf(params.get("rows"));
         return findByMapWithCond(newParams,page,rows,null,false);
