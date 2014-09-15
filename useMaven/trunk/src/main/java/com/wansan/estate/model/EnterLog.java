@@ -1,5 +1,9 @@
 package com.wansan.estate.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wansan.template.model.BasePojo;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -8,53 +12,10 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "enter_log")
-public class EnterLog {
-    private String id;
-    private String name;
-    private Timestamp createtime;
-    private String comment;
+public class EnterLog extends BasePojo{
+
     private String personId;
     private String unitId;
-
-    @Id
-    @Column(name = "id")
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Basic
-    @Column(name = "createtime")
-    public Timestamp getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Timestamp createtime) {
-        this.createtime = createtime;
-    }
-
-    @Basic
-    @Column(name = "comment")
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 
     @Basic
     @Column(name = "personId")
